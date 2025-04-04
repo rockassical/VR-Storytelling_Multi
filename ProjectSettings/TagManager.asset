@@ -10,6 +10,7 @@ TagManager:
   - PlayerHand
   - Destroyer
   - Hole
+  - Protein
   layers:
   - Default
   - TransparentFX
