@@ -54,7 +54,7 @@ public class TalkToAI : MonoBehaviour
     /*
         Record a 10 second audio clip when the input is pressed
     */
-    public async void MicrophoneToAudioClip(){
+    public void MicrophoneToAudioClip(){
         //get microphone device
         string MicName = Microphone.devices[0];
 
