@@ -26,6 +26,20 @@ public class TalkToAI : MonoBehaviour
 
     private OpenAIAPI api;
 
+    public InputActionProperty triggerAction;
+
+    void OnEnable(){
+        triggerAction.action.started += StartRecording;
+        triggerAction.action.canceled += StopRecording;
+        triggerAction.action.Enable();
+    }
+
+    void OnDisable(){
+        triggerAction.action.started -= StartRecording;
+        triggerAction.action.canceled -= StopRecording;
+        triggerAction.action.Disable();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,34 +47,93 @@ public class TalkToAI : MonoBehaviour
         api = new OpenAIAPI("");
 
         //set the prompt for the system
-        new ChatMessage(ChatMessageRole.System, "You are a my friend");
+        new ChatMessage(ChatMessageRole.System, "You are a my friend, keep responses EXTREMELY brief, no longer than 3 sentences. YOUR FAVORITE COLOR IS BLUE");
 
         recording = false;
+
+        if (Microphone.devices.Length > 0)
+        {
+            StartCoroutine(WarmUpMicrophone());
+        }
+        else
+        {
+            Debug.LogError("No microphone detected.");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if(timer <= 0 && timerFinished == false){
-            timerFinished = true;
-            recording = false;
-            TranscribeAudio(MicClip);
-        }else if(recording){
-            timer -= Time.deltaTime;
-        }
     }
 
     /*
-        Record a 10 second audio clip when the input is pressed
+        Warmup the mic to stop freezing on first recording
     */
-    public void MicrophoneToAudioClip(){
-        //get microphone device
-        string MicName = Microphone.devices[0];
+    IEnumerator WarmUpMicrophone()
+    {
+        if (Microphone.devices.Length == 0)
+            yield break;
 
-        //get 10 second audio clip
+        string micName = Microphone.devices[0];
+
+        AudioClip warmupClip = Microphone.Start(micName, false, 1, 16000);
+
+        while (Microphone.GetPosition(micName) <= 0)
+            yield return null;
+
+        Microphone.End(micName);
+
+        Debug.Log("Microphone warmed up.");
+    }
+
+    /*
+        Start/Stop a recording
+    */
+    public void StartRecording(InputAction.CallbackContext ctx)
+    {
+        if (recording) return;
+
+        string micName = Microphone.devices[0];
+
         recording = true;
-        MicClip = Microphone.Start(MicName, false, 10, AudioSettings.outputSampleRate);
+        MicClip = Microphone.Start(micName, false, 30, 16000);
+
+        Debug.Log("Recording started...");
+    }
+
+    public void StopRecording(InputAction.CallbackContext ctx)
+    {
+        if (!recording) return;
+
+        string micName = Microphone.devices[0];
+
+        int position = Microphone.GetPosition(micName);
+        Microphone.End(micName);
+        recording = false;
+
+        if (position <= 0)
+        {
+            Debug.LogWarning("No audio recorded.");
+            return;
+        }
+
+        float[] samples = new float[position];
+        MicClip.GetData(samples, 0);
+
+        AudioClip trimmedClip = AudioClip.Create(
+            "TrimmedClip",
+            position,
+            1,
+            16000,
+            false
+        );
+
+        trimmedClip.SetData(samples, 0);
+
+        Debug.Log("Recording stopped. Length: " + (position / 16000f) + " seconds");
+
+        TranscribeAudio(trimmedClip);
     }
 
     /*
@@ -93,7 +166,7 @@ public class TalkToAI : MonoBehaviour
         var chatResult = await api.Chat.CreateChatCompletionAsync(new ChatRequest()
         {
             
-            Model = Model.ChatGPTTurbo,
+            Model = "gpt-4o-mini",
             Temperature = 0.3,      //amount of fluff in the message
             MaxTokens = 75,         //max number of tokens in AI response
             Messages = new ChatMessage[] {
@@ -111,7 +184,7 @@ public class TalkToAI : MonoBehaviour
             voice: "alloy",
             speed: 1.0,
             responseFormat: "wav",
-            model: Model.TTS_HD))
+            model: "tts-1"))
         {
             byte[] audioData;
             using (MemoryStream ms = new MemoryStream())

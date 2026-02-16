@@ -1725,19 +1725,7 @@ MonoBehaviour:
     m_ActionId: b8c0ccd3-e1b6-4913-96b3-e0864c9ac6bd
     m_ActionName: XRI Right/Thumbstick
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 697775943}
-        m_TargetAssemblyTypeName: TalkToAI, Assembly-CSharp
-        m_MethodName: MicrophoneToAudioClip
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 738b0df4-5e34-44bc-8f80-168057932455
     m_ActionName: XRI Right/Talk To LLM
   - m_PersistentCalls:
@@ -2592,6 +2580,26 @@ MonoBehaviour:
   MicClip: {fileID: 0}
   SpeechToText: 
   audioSource: {fileID: 1585063946}
+  triggerAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Trigger
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 1ca3bf42-7c75-4b1b-a637-f333beae7dcd
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: b785a749-3163-4b02-baa5-c306ebbbc97c
+        m_Path: <XRController>{RightHand}/{PrimaryButton}
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Trigger
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
 --- !u!1 &714684804
 GameObject:
   m_ObjectHideFlags: 0
