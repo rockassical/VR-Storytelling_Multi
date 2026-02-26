@@ -97,17 +97,15 @@ public class Phase3_Trimming : NHEJPhaseHandler
         return false;
     }
 
-    public void ServerMarkTrimmed(int pointIndex, ulong clientId)
+    public void ServerMarkTrimmed(int pointIndex, int role)
     {
-        int role = manager.GetPlayerRole(clientId);
-
-        if (role == 1 && player1TrimPoints.Length > 0)
+        if (role == 1 && player1TrimPoints != null && player1TrimPoints.Length > 0)
         {
             player1Trimmed++;
             if (player1Trimmed >= player1TrimPoints.Length)
                 manager.ServerMarkPlayerComplete(1);
         }
-        else if (role == 2 && player2TrimPoints.Length > 0)
+        else if (role == 2 && player2TrimPoints != null && player2TrimPoints.Length > 0)
         {
             player2Trimmed++;
             if (player2Trimmed >= player2TrimPoints.Length)

@@ -17271,10 +17271,11 @@ MonoBehaviour:
   - {fileID: 678797567}
   - {fileID: 928731895}
   - {fileID: 424371595}
+  - {fileID: 1487308692}
   includeGapFill: 0
   dsbScenario: 1
   debugBypass: 1
-  debugAutoCompletePlayerPhases: 1
+  debugAutoCompletePlayerPhases: 0
   debugPlayerPhaseDelay: 3
   leftDNAEnd: {fileID: 1236071008}
   rightDNAEnd: {fileID: 1896224075}

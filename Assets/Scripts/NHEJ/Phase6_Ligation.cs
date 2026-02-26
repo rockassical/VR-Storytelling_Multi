@@ -77,21 +77,19 @@ public class Phase6_Ligation : NHEJPhaseHandler
         return false;
     }
 
-    public void ServerMarkSealed(int pointIndex, ulong clientId)
+    public void ServerMarkSealed(int pointIndex, int role)
     {
-        int role = manager.GetPlayerRole(clientId);
-
         if (role == 1)
         {
             player1Sealed++;
             if (player1Sealed >= (player1LigationPoints != null ? player1LigationPoints.Length : 0))
-                manager.ReportPlayerCompleteServerRpc(clientId);
+                manager.ServerMarkPlayerComplete(1);
         }
         else if (role == 2)
         {
             player2Sealed++;
             if (player2Sealed >= (player2LigationPoints != null ? player2LigationPoints.Length : 0))
-                manager.ReportPlayerCompleteServerRpc(clientId);
+                manager.ServerMarkPlayerComplete(2);
         }
     }
 

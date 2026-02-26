@@ -28,14 +28,19 @@ public class TrimPoint : MonoBehaviour
         if (NHEJManager.Instance == null) return;
         if (NHEJManager.Instance.CurrentPhase != NHEJPhase.Phase3_Trimming) return;
 
-        int role = NHEJManager.Instance.GetPlayerRole(clientId);
-        if (role != assignedPlayerRole)
+        // In single-player debug mode both roles belong to the local client,
+        // so skip the role check and let the server use the point's assignedPlayerRole.
+        if (!NHEJManager.Instance.DebugBypass)
         {
-            Debug.Log($"[NHEJ] TrimPoint {pointIndex}: wrong player role {role}, expected {assignedPlayerRole}");
-            return;
+            int role = NHEJManager.Instance.GetPlayerRole(clientId);
+            if (role != assignedPlayerRole)
+            {
+                Debug.Log($"[NHEJ] TrimPoint {pointIndex}: wrong player role {role}, expected {assignedPlayerRole}");
+                return;
+            }
         }
 
-        NHEJManager.Instance.ReportTrimServerRpc(pointIndex, clientId);
+        NHEJManager.Instance.ReportTrimServerRpc(pointIndex, clientId, assignedPlayerRole);
     }
 
     public void PerformTrim()

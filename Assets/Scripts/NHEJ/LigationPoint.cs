@@ -29,14 +29,19 @@ public class LigationPoint : MonoBehaviour
         if (NHEJManager.Instance == null) return;
         if (NHEJManager.Instance.CurrentPhase != NHEJPhase.Phase6_Ligation) return;
 
-        int role = NHEJManager.Instance.GetPlayerRole(clientId);
-        if (role != assignedPlayerRole)
+        // In single-player debug mode both roles belong to the local client,
+        // so skip the role check and let the server use the point's assignedPlayerRole.
+        if (!NHEJManager.Instance.DebugBypass)
         {
-            Debug.Log($"[NHEJ] LigationPoint {pointIndex}: wrong player role {role}, expected {assignedPlayerRole}");
-            return;
+            int role = NHEJManager.Instance.GetPlayerRole(clientId);
+            if (role != assignedPlayerRole)
+            {
+                Debug.Log($"[NHEJ] LigationPoint {pointIndex}: wrong player role {role}, expected {assignedPlayerRole}");
+                return;
+            }
         }
 
-        NHEJManager.Instance.ReportLigationServerRpc(pointIndex, clientId);
+        NHEJManager.Instance.ReportLigationServerRpc(pointIndex, clientId, assignedPlayerRole);
     }
 
     // Called on all clients when server confirms the ligation.

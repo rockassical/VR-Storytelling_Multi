@@ -64,6 +64,7 @@ public class NHEJManager : NetworkBehaviour
     public bool Player1PhaseComplete => player1PhaseComplete.Value;
     public bool Player2PhaseComplete => player2PhaseComplete.Value;
     public bool IncludeGapFill => includeGapFill;
+    public bool DebugBypass => debugBypass;
 
     int assignedCount;
 
@@ -317,19 +318,28 @@ public class NHEJManager : NetworkBehaviour
     #region Trim / Ligation RPCs
 
     [ServerRpc(RequireOwnership = false)]
-    public void ReportTrimServerRpc(int pointIndex, ulong clientId)
+    public void ReportTrimServerRpc(int pointIndex, ulong clientId, int pointRole = 0)
     {
         if (currentPhase.Value != NHEJPhase.Phase3_Trimming) return;
 
-        int role = GetPlayerRole(clientId);
-        if (role == 0) return;
+        // In debug single-player mode the same clientId holds both roles,
+        // so use the point's own assignedPlayerRole instead.
+        int role;
+        if (debugBypass && pointRole != 0)
+        {
+            role = pointRole;
+        }
+        else
+        {
+            role = GetPlayerRole(clientId);
+            if (role == 0) return;
+        }
 
-        // Validate this point belongs to the player
         var handler = phaseHandlers[3] as Phase3_Trimming;
         if (handler != null && handler.ValidateTrim(pointIndex, role))
         {
             ReportTrimClientRpc(pointIndex, clientId);
-            handler.ServerMarkTrimmed(pointIndex, clientId);
+            handler.ServerMarkTrimmed(pointIndex, role);
         }
     }
 
@@ -344,18 +354,27 @@ public class NHEJManager : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void ReportLigationServerRpc(int pointIndex, ulong clientId)
+    public void ReportLigationServerRpc(int pointIndex, ulong clientId, int pointRole = 0)
     {
         if (currentPhase.Value != NHEJPhase.Phase6_Ligation) return;
 
-        int role = GetPlayerRole(clientId);
-        if (role == 0) return;
+        // In debug single-player mode use the point's own assignedPlayerRole.
+        int role;
+        if (debugBypass && pointRole != 0)
+        {
+            role = pointRole;
+        }
+        else
+        {
+            role = GetPlayerRole(clientId);
+            if (role == 0) return;
+        }
 
         var handler = phaseHandlers[6] as Phase6_Ligation;
         if (handler != null && handler.ValidateLigation(pointIndex, role))
         {
             ReportLigationClientRpc(pointIndex, clientId);
-            handler.ServerMarkSealed(pointIndex, clientId);
+            handler.ServerMarkSealed(pointIndex, role);
         }
     }
 
