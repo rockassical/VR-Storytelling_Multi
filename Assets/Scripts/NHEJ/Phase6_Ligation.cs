@@ -1,16 +1,14 @@
 using Unity.Netcode;
 using UnityEngine;
 
-// Phase 6: Both players seal one strand nick each using the Ligase tool
-// Player 1 seals strand 1, Player 2 seals strand 2
+// Phase 6: Ligase IV orbits the DNA break site like a conveyor. Players grab it
+// as it passes and place it at their assigned LigationPoint to seal the nick.
+// Placing within snapRadius of the correct point auto-fires the ligation;
+// once both players' nicks are sealed the phase advances automatically.
 public class Phase6_Ligation : NHEJPhaseHandler
 {
-    [Header("Tool Prefabs (NetworkObject)")]
+    [Header("Tool Prefab (NetworkObject — must also have LigaseOrbitController)")]
     [SerializeField] GameObject ligaseToolPrefab;
-
-    [Header("Tool Spawn Positions")]
-    [SerializeField] Transform player1ToolSpawn;
-    [SerializeField] Transform player2ToolSpawn;
 
     [Header("Ligation Points")]
     [SerializeField] LigationPoint[] player1LigationPoints;
@@ -20,8 +18,7 @@ public class Phase6_Ligation : NHEJPhaseHandler
 
     int player1Sealed;
     int player2Sealed;
-    NetworkObject player1Tool;
-    NetworkObject player2Tool;
+    NetworkObject ligaseObject; // single shared Ligase
 
     public override void Setup()
     {
@@ -34,19 +31,13 @@ public class Phase6_Ligation : NHEJPhaseHandler
         SetPointsActive(player1LigationPoints, true);
         SetPointsActive(player2LigationPoints, true);
 
-        // Server spawns ligase tools
         if (manager.IsServer && ligaseToolPrefab != null)
         {
-            Vector3 p1Pos = player1ToolSpawn != null ? player1ToolSpawn.position : manager.LeftDNAEnd.position + Vector3.up * 0.1f;
-            Vector3 p2Pos = player2ToolSpawn != null ? player2ToolSpawn.position : manager.RightDNAEnd.position + Vector3.up * 0.1f;
-
-            var p1Obj = Instantiate(ligaseToolPrefab, p1Pos, Quaternion.identity);
-            player1Tool = p1Obj.GetComponent<NetworkObject>();
-            player1Tool.SpawnWithOwnership(manager.Player1Id);
-
-            var p2Obj = Instantiate(ligaseToolPrefab, p2Pos, Quaternion.identity);
-            player2Tool = p2Obj.GetComponent<NetworkObject>();
-            player2Tool.SpawnWithOwnership(manager.Player2Id);
+            // Spawn one Ligase at the DNA center; LigaseOrbitController handles orbit + placement.
+            Vector3 spawnPos = GetDNACenter();
+            var go = Instantiate(ligaseToolPrefab, spawnPos, Quaternion.identity);
+            ligaseObject = go.GetComponent<NetworkObject>();
+            ligaseObject.Spawn(); // server-owned until a player grabs it
         }
 
         if (NHEJAudio.Instance != null)
@@ -57,11 +48,8 @@ public class Phase6_Ligation : NHEJPhaseHandler
 
     public override void CompletePhase()
     {
-        if (manager.IsServer)
-        {
-            if (player1Tool != null && player1Tool.IsSpawned) player1Tool.Despawn();
-            if (player2Tool != null && player2Tool.IsSpawned) player2Tool.Despawn();
-        }
+        if (manager.IsServer && ligaseObject != null && ligaseObject.IsSpawned)
+            ligaseObject.Despawn();
     }
 
     public bool ValidateLigation(int pointIndex, int playerRole)
@@ -107,6 +95,15 @@ public class Phase6_Ligation : NHEJPhaseHandler
 
         if (NHEJAudio.Instance != null)
             NHEJAudio.Instance.PlayLigationSuccess();
+    }
+
+    Vector3 GetDNACenter()
+    {
+        if (manager.LeftDNAEnd != null && manager.RightDNAEnd != null)
+            return (manager.LeftDNAEnd.position + manager.RightDNAEnd.position) * 0.5f;
+        if (manager.LeftDNAEnd != null) return manager.LeftDNAEnd.position;
+        if (manager.RightDNAEnd != null) return manager.RightDNAEnd.position;
+        return Vector3.zero;
     }
 
     void SetPointsActive(LigationPoint[] points, bool active)

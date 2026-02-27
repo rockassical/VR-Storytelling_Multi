@@ -2,16 +2,14 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-// Phase 3: Both players trim their assigned DNA end using the Artemis tool.
-// Player 1 trims the left end, Player 2 trims the right end. (right?)
+// Phase 3: Artemis orbits the DNA break site like a conveyor. Players grab it
+// as it passes and place it at their assigned TrimPoint to trim the overhang.
+// Placing it within snapRadius of the correct TrimPoint auto-fires the trim;
+// once both players' ends are trimmed the phase advances automatically.
 public class Phase3_Trimming : NHEJPhaseHandler
 {
-    [Header("Tool Prefabs (NetworkObject)")]
+    [Header("Tool Prefab (NetworkObject — must also have ArtemisOrbitController)")]
     [SerializeField] GameObject artemisToolPrefab;
-
-    [Header("Tool Spawn Positions")]
-    [SerializeField] Transform player1ToolSpawn;
-    [SerializeField] Transform player2ToolSpawn;
 
     [Header("Trim Points")]
     [SerializeField] TrimPoint[] player1TrimPoints;
@@ -21,8 +19,7 @@ public class Phase3_Trimming : NHEJPhaseHandler
 
     int player1Trimmed;
     int player2Trimmed;
-    NetworkObject player1Tool;
-    NetworkObject player2Tool;
+    NetworkObject artemisObject; // single shared Artemis
 
     public override void Setup()
     {
@@ -38,31 +35,20 @@ public class Phase3_Trimming : NHEJPhaseHandler
 
         Debug.Log($"[NHEJ] Phase3 scenario={scenario} p1Trim={p1NeedsTrim} p2Trim={p2NeedsTrim}");
 
-        // Activate only relevant trim point visuals
+        // Activate only the TrimPoints relevant to this scenario
         SetTrimPointsActive(player1TrimPoints, p1NeedsTrim);
         SetTrimPointsActive(player2TrimPoints, p2NeedsTrim);
 
-        // Server spawns tools only for players who need to trim,
-        // and auto-completes players whose end is blunt
         if (manager.IsServer)
         {
-            if (artemisToolPrefab != null)
+            // Spawn one Artemis for whichever ends need trimming.
+            // ArtemisOrbitController handles orbit + grab + placement on all clients.
+            if ((p1NeedsTrim || p2NeedsTrim) && artemisToolPrefab != null)
             {
-                if (p1NeedsTrim)
-                {
-                    Vector3 p1Pos = player1ToolSpawn != null ? player1ToolSpawn.position : manager.LeftDNAEnd.position + Vector3.up * 0.1f;
-                    var p1Obj = Instantiate(artemisToolPrefab, p1Pos, Quaternion.identity);
-                    player1Tool = p1Obj.GetComponent<NetworkObject>();
-                    player1Tool.SpawnWithOwnership(manager.Player1Id);
-                }
-
-                if (p2NeedsTrim)
-                {
-                    Vector3 p2Pos = player2ToolSpawn != null ? player2ToolSpawn.position : manager.RightDNAEnd.position + Vector3.up * 0.1f;
-                    var p2Obj = Instantiate(artemisToolPrefab, p2Pos, Quaternion.identity);
-                    player2Tool = p2Obj.GetComponent<NetworkObject>();
-                    player2Tool.SpawnWithOwnership(manager.Player2Id);
-                }
+                Vector3 spawnPos = GetDNACenter();
+                var go = Instantiate(artemisToolPrefab, spawnPos, Quaternion.identity);
+                artemisObject = go.GetComponent<NetworkObject>();
+                artemisObject.Spawn(); // server-owned until a player grabs it
             }
 
             if (!p1NeedsTrim) manager.ServerMarkPlayerComplete(1);
@@ -77,11 +63,8 @@ public class Phase3_Trimming : NHEJPhaseHandler
 
     public override void CompletePhase()
     {
-        if (manager.IsServer)
-        {
-            if (player1Tool != null && player1Tool.IsSpawned) player1Tool.Despawn();
-            if (player2Tool != null && player2Tool.IsSpawned) player2Tool.Despawn();
-        }
+        if (manager.IsServer && artemisObject != null && artemisObject.IsSpawned)
+            artemisObject.Despawn();
     }
 
     public bool ValidateTrim(int pointIndex, int playerRole)
@@ -128,6 +111,15 @@ public class Phase3_Trimming : NHEJPhaseHandler
 
         if (NHEJAudio.Instance != null)
             NHEJAudio.Instance.PlayTrimSuccess();
+    }
+
+    Vector3 GetDNACenter()
+    {
+        if (manager.LeftDNAEnd != null && manager.RightDNAEnd != null)
+            return (manager.LeftDNAEnd.position + manager.RightDNAEnd.position) * 0.5f;
+        if (manager.LeftDNAEnd != null) return manager.LeftDNAEnd.position;
+        if (manager.RightDNAEnd != null) return manager.RightDNAEnd.position;
+        return Vector3.zero;
     }
 
     void SetTrimPointsActive(TrimPoint[] points, bool active)
