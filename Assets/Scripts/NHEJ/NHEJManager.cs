@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -195,9 +196,7 @@ public class NHEJManager : NetworkBehaviour
 
         if (debugBypass && debugAutoCompletePlayerPhases && IsServer)
         {
-            bool isPlayerPhase = phase == NHEJPhase.Phase3_Trimming
-                              || phase == NHEJPhase.Phase4_GapFill
-                              || phase == NHEJPhase.Phase6_Ligation;
+            bool isPlayerPhase = handler != null && !handler.IsAutomatic;
             if (isPlayerPhase)
             {
                 Debug.Log($"[NHEJ DEBUG] Auto-completing player phase {phase} in {debugPlayerPhaseDelay}s");
@@ -311,9 +310,33 @@ public class NHEJManager : NetworkBehaviour
         if (playerRole == 1) player1PhaseComplete.Value = true;
         else if (playerRole == 2) player2PhaseComplete.Value = true;
 
+        BroadcastPlayerRoleCompleteClientRpc(playerRole);
+
         if (player1PhaseComplete.Value && player2PhaseComplete.Value)
             AdvancePhase();
     }
+
+    /// <summary>Fires on ALL clients whenever a player role marks complete. Subscribe for local visual feedback.</summary>
+    public event Action<int> OnPlayerRoleMarkedComplete;
+
+    [ClientRpc]
+    void BroadcastPlayerRoleCompleteClientRpc(int playerRole)
+    {
+        OnPlayerRoleMarkedComplete?.Invoke(playerRole);
+    }
+
+    /// <summary>
+    /// Called server-side by ProteinOrbitController when a player places their pickup protein.
+    /// Routes to the current phase handler's OnProteinPlaced().
+    /// </summary>
+    public void ReportProteinPickup(int playerRole)
+    {
+        if (!IsServer) return;
+        GetCurrentHandler()?.OnProteinPlaced(playerRole);
+    }
+
+    /// <summary>Returns the handler for the currently active phase (null if none).</summary>
+    public NHEJPhaseHandler GetCurrentPhaseHandler() => GetCurrentHandler();
 
     #region Trim / Ligation RPCs
 

@@ -1,91 +1,72 @@
-using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
-
-// Phase 1: Ku70/80 NPC fly-in animation. Two Ku rings slide onto each DNA end. Currently yellow Spheres.
+// Phase 1: Two Ku70/80 proteins orbit the DNA break site.
+// P1 grabs their Ku and places it at the left DNA end; P2 places theirs at the right end.
+// Placement snaps the protein in place with a glow effect. Both placed → advance to Phase 2.
+// The placed Ku objects remain in the scene; Phase 7 references them for the removal animation.
 public class Phase1_KuBinding : NHEJPhaseHandler
 {
-    [Header("Ku70/80 Prefab")]
-    [SerializeField] GameObject ku7080Prefab;
+    [Header("Ku70/80 Pickup Prefab")]
+    [Tooltip("NetworkObject + NHEJTool + ProteinOrbitController + NHEJProteinNPC")]
+    [SerializeField] GameObject kuPickupPrefab;
 
-    [Header("Spawn & Target Positions")]
-    [SerializeField] Transform leftSpawnPoint;
-    [SerializeField] Transform leftTargetPoint;
-    [SerializeField] Transform rightSpawnPoint;
-    [SerializeField] Transform rightTargetPoint;
+    [Header("Placement Targets")]
+    [SerializeField] Transform leftDNATarget;    // P1 places Ku here (left DNA end)
+    [SerializeField] Transform rightDNATarget;   // P2 places Ku here (right DNA end)
 
-    [Header("Timing")]
-    [SerializeField] float flyInDuration = 2f;
-    [SerializeField] float snapPause = 0.5f;
-    [SerializeField] float glowDuration = 1.5f;
+    public override bool IsAutomatic => false;
 
-    GameObject leftKu;
-    GameObject rightKu;
-    Coroutine activeCoroutine;
+    NetworkObject leftKuObject;
+    NetworkObject rightKuObject;
 
-    public override bool IsAutomatic => true;
+    // Phase 7 reads these to animate Ku departure.
+    public GameObject LeftKu  => leftKuObject  != null ? leftKuObject.gameObject  : null;
+    public GameObject RightKu => rightKuObject != null ? rightKuObject.gameObject : null;
+    public NetworkObject LeftKuNetworkObject  => leftKuObject;
+    public NetworkObject RightKuNetworkObject => rightKuObject;
 
     public override void Setup() { }
 
     public override void StartPhase()
     {
-        activeCoroutine = StartCoroutine(RunPhase());
+        if (NHEJAudio.Instance != null) NHEJAudio.Instance.PlayPhaseAdvance();
+
+        if (!manager.IsServer || kuPickupPrefab == null) return;
+
+        Vector3 center = GetDNACenter();
+        Vector3 p1Snap = leftDNATarget  != null ? leftDNATarget.position  : manager.LeftDNAEnd.position;
+        Vector3 p2Snap = rightDNATarget != null ? rightDNATarget.position : manager.RightDNAEnd.position;
+
+        leftKuObject  = SpawnProtein(center, 1, p1Snap);
+        rightKuObject = SpawnProtein(center, 2, p2Snap);
+    }
+
+    NetworkObject SpawnProtein(Vector3 spawnPos, int role, Vector3 snapPos)
+    {
+        var go = Instantiate(kuPickupPrefab, spawnPos, Quaternion.identity);
+        go.GetComponent<ProteinOrbitController>()?.Configure(role, snapPos);
+        var no = go.GetComponent<NetworkObject>();
+        no?.Spawn();
+        return no;
     }
 
     public override void UpdatePhase() { }
 
     public override void CompletePhase()
     {
-        if (activeCoroutine != null)
-        {
-            StopCoroutine(activeCoroutine);
-            activeCoroutine = null;
-        }
+        // Ku proteins stay in the scene after placement — they're now bound to the DNA ends.
+        // Phase 7 will animate and despawn them. Clear references only.
+        leftKuObject  = null;
+        rightKuObject = null;
     }
 
-    IEnumerator RunPhase()
+    // OnProteinPlaced: base implementation calls ServerMarkPlayerComplete directly — no override needed.
+
+    Vector3 GetDNACenter()
     {
-        // Spawn Ku proteins
-        if (ku7080Prefab != null)
-        {
-            Vector3 leftStart = leftSpawnPoint != null ? leftSpawnPoint.position : manager.LeftDNAEnd.position + Vector3.left * 2f;
-            Vector3 leftTarget = leftTargetPoint != null ? leftTargetPoint.position : manager.LeftDNAEnd.position;
-            Vector3 rightStart = rightSpawnPoint != null ? rightSpawnPoint.position : manager.RightDNAEnd.position + Vector3.right * 2f;
-            Vector3 rightTarget = rightTargetPoint != null ? rightTargetPoint.position : manager.RightDNAEnd.position;
-
-            leftKu = Instantiate(ku7080Prefab, leftStart, Quaternion.identity);
-            rightKu = Instantiate(ku7080Prefab, rightStart, Quaternion.identity);
-
-            var leftNPC = leftKu.GetComponent<NHEJProteinNPC>();
-            var rightNPC = rightKu.GetComponent<NHEJProteinNPC>();
-
-            // Animate fly-in
-            if (leftNPC != null) StartCoroutine(leftNPC.MoveToTarget(leftTarget, flyInDuration));
-            if (rightNPC != null) StartCoroutine(rightNPC.MoveToTarget(rightTarget, flyInDuration));
-
-            yield return new WaitForSeconds(flyInDuration);
-
-            // Snap effect
-            if (NHEJAudio.Instance != null) NHEJAudio.Instance.PlaySnap();
-            yield return new WaitForSeconds(snapPause);
-
-            // Glow
-            if (leftNPC != null) leftNPC.SetGlow(true);
-            if (rightNPC != null) rightNPC.SetGlow(true);
-            if (NHEJAudio.Instance != null) NHEJAudio.Instance.PlayGlow();
-            yield return new WaitForSeconds(glowDuration);
-        }
-        else
-        {
-            yield return new WaitForSeconds(3.5f);
-        }
-
-        if (manager != null && manager.IsServer)
-        {
-            manager.AdvancePhase();
-        }
+        if (manager.LeftDNAEnd != null && manager.RightDNAEnd != null)
+            return (manager.LeftDNAEnd.position + manager.RightDNAEnd.position) * 0.5f;
+        return manager.LeftDNAEnd != null ? manager.LeftDNAEnd.position : Vector3.zero;
     }
-
-    public GameObject LeftKu => leftKu;
-    public GameObject RightKu => rightKu;
 }

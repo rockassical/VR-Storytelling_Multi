@@ -1,84 +1,82 @@
-using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
-// Phase 2: DNA-PKcs docking onto Ku rings + autophosphorylation animation
+// Phase 2: Two DNA-PKcs proteins orbit the DNA break site.
+// P1 grabs theirs and places it at the left Ku dock point; P2 docks the right side.
+// Placement triggers a glow (autophosphorylation cue). Both placed → advance to Phase 3.
+// The placed PKcs objects stay in the scene; Phase 5 references them for the departure animation.
 public class Phase2_DNAPKcs : NHEJPhaseHandler
 {
-    [Header("DNA-PKcs Prefab")]
-    [SerializeField] GameObject dnaPKcsPrefab;
+    [Header("DNA-PKcs Pickup Prefab")]
+    [Tooltip("NetworkObject + NHEJTool + ProteinOrbitController + NHEJProteinNPC")]
+    [SerializeField] GameObject dnaPKcsPickupPrefab;
 
-    [Header("Spawn & Target Positions")]
-    [SerializeField] Transform leftSpawnPoint;
-    [SerializeField] Transform leftDockPoint;
-    [SerializeField] Transform rightSpawnPoint;
-    [SerializeField] Transform rightDockPoint;
+    [Header("Placement Targets")]
+    [SerializeField] Transform leftDockTarget;    // P1 docks here (on top of left Ku)
+    [SerializeField] Transform rightDockTarget;   // P2 docks here (on top of right Ku)
 
-    [Header("Timing")]
-    [SerializeField] float dockDuration = 2f;
-    [SerializeField] float phosphorylationDuration = 2.5f;
+    public override bool IsAutomatic => false;
 
-    GameObject leftPKcs;
-    GameObject rightPKcs;
-    Coroutine activeCoroutine;
+    NetworkObject leftPKcsObject;
+    NetworkObject rightPKcsObject;
 
-    public override bool IsAutomatic => true;
-
-    public GameObject LeftPKcs => leftPKcs;
-    public GameObject RightPKcs => rightPKcs;
+    // Phase 5 reads these to animate PKcs departure.
+    public GameObject LeftPKcs  => leftPKcsObject  != null ? leftPKcsObject.gameObject  : null;
+    public GameObject RightPKcs => rightPKcsObject != null ? rightPKcsObject.gameObject : null;
+    public NetworkObject LeftPKcsNetworkObject  => leftPKcsObject;
+    public NetworkObject RightPKcsNetworkObject => rightPKcsObject;
 
     public override void Setup() { }
 
     public override void StartPhase()
     {
-        activeCoroutine = StartCoroutine(RunPhase());
+        if (NHEJAudio.Instance != null) NHEJAudio.Instance.PlayPhaseAdvance();
+
+        if (!manager.IsServer || dnaPKcsPickupPrefab == null) return;
+
+        Vector3 center = GetDNACenter();
+        Vector3 p1Snap = leftDockTarget  != null ? leftDockTarget.position  : manager.LeftDNAEnd.position  + Vector3.up * 0.3f;
+        Vector3 p2Snap = rightDockTarget != null ? rightDockTarget.position : manager.RightDNAEnd.position + Vector3.up * 0.3f;
+
+        leftPKcsObject  = SpawnProtein(center, 1, p1Snap);
+        rightPKcsObject = SpawnProtein(center, 2, p2Snap);
+    }
+
+    NetworkObject SpawnProtein(Vector3 spawnPos, int role, Vector3 snapPos)
+    {
+        var go = Instantiate(dnaPKcsPickupPrefab, spawnPos, Quaternion.identity);
+        go.GetComponent<ProteinOrbitController>()?.Configure(role, snapPos);
+        var no = go.GetComponent<NetworkObject>();
+        no?.Spawn();
+        return no;
     }
 
     public override void UpdatePhase() { }
 
     public override void CompletePhase()
     {
-        if (activeCoroutine != null)
-        {
-            StopCoroutine(activeCoroutine);
-            activeCoroutine = null;
-        }
+        // PKcs proteins stay in the scene after placement.
+        // Phase 5 will animate their departure and despawn them.
+        leftPKcsObject  = null;
+        rightPKcsObject = null;
     }
 
-    IEnumerator RunPhase()
+    // OnProteinPlacedLocal: trigger autophosphorylation pulse on the placed protein.
+    public override void OnProteinPlacedLocal(int playerRole)
     {
-        if (dnaPKcsPrefab != null)
-        {
-            Vector3 leftStart = leftSpawnPoint != null ? leftSpawnPoint.position : manager.LeftDNAEnd.position + Vector3.up * 2f;
-            Vector3 leftTarget = leftDockPoint != null ? leftDockPoint.position : manager.LeftDNAEnd.position + Vector3.up * 0.3f;
-            Vector3 rightStart = rightSpawnPoint != null ? rightSpawnPoint.position : manager.RightDNAEnd.position + Vector3.up * 2f;
-            Vector3 rightTarget = rightDockPoint != null ? rightDockPoint.position : manager.RightDNAEnd.position + Vector3.up * 0.3f;
+        var go = playerRole == 1 ? LeftPKcs : RightPKcs;
+        if (go == null) return;
 
-            leftPKcs = Instantiate(dnaPKcsPrefab, leftStart, Quaternion.identity);
-            rightPKcs = Instantiate(dnaPKcsPrefab, rightStart, Quaternion.identity);
+        var npc = go.GetComponent<NHEJProteinNPC>();
+        if (npc != null) StartCoroutine(npc.PulseGlow(2.5f));
+    }
 
-            var leftNPC = leftPKcs.GetComponent<NHEJProteinNPC>();
-            var rightNPC = rightPKcs.GetComponent<NHEJProteinNPC>();
+    // OnProteinPlaced: base implementation calls ServerMarkPlayerComplete directly — no override needed.
 
-            if (leftNPC != null) StartCoroutine(leftNPC.MoveToTarget(leftTarget, dockDuration));
-            if (rightNPC != null) StartCoroutine(rightNPC.MoveToTarget(rightTarget, dockDuration));
-
-            yield return new WaitForSeconds(dockDuration);
-
-            if (NHEJAudio.Instance != null) NHEJAudio.Instance.PlaySnap();
-
-            if (leftNPC != null) StartCoroutine(leftNPC.PulseGlow(phosphorylationDuration));
-            if (rightNPC != null) StartCoroutine(rightNPC.PulseGlow(phosphorylationDuration));
-
-            yield return new WaitForSeconds(phosphorylationDuration);
-        }
-        else
-        {
-            yield return new WaitForSeconds(4.5f);
-        }
-
-        if (manager != null && manager.IsServer)
-        {
-            manager.AdvancePhase();
-        }
+    Vector3 GetDNACenter()
+    {
+        if (manager.LeftDNAEnd != null && manager.RightDNAEnd != null)
+            return (manager.LeftDNAEnd.position + manager.RightDNAEnd.position) * 0.5f;
+        return manager.LeftDNAEnd != null ? manager.LeftDNAEnd.position : Vector3.zero;
     }
 }
