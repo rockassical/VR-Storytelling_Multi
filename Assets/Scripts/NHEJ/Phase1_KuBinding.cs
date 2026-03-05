@@ -45,9 +45,9 @@ public class Phase1_KuBinding : NHEJPhaseHandler
     NetworkObject SpawnProtein(Vector3 spawnPos, int role, Vector3 snapPos)
     {
         var go = Instantiate(kuPickupPrefab, spawnPos, Quaternion.identity);
-        go.GetComponent<ProteinOrbitController>()?.Configure(role, snapPos);
         var no = go.GetComponent<NetworkObject>();
         no?.Spawn();
+        go.GetComponent<ProteinOrbitController>()?.Configure(role, snapPos);
         return no;
     }
 

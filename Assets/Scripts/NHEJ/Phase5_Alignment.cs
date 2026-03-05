@@ -146,9 +146,9 @@ public class Phase5_Alignment : NHEJPhaseHandler
     NetworkObject SpawnPickupProtein(Vector3 spawnPos, int role, Vector3 snapPos)
     {
         var go = Instantiate(xrcc4PickupPrefab, spawnPos, Quaternion.identity);
-        go.GetComponent<ProteinOrbitController>()?.Configure(role, snapPos);
         var no = go.GetComponent<NetworkObject>();
         no?.Spawn();
+        go.GetComponent<ProteinOrbitController>()?.Configure(role, snapPos);
         return no;
     }
 

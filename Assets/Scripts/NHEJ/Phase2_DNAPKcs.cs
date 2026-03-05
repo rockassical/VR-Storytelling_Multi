@@ -45,9 +45,9 @@ public class Phase2_DNAPKcs : NHEJPhaseHandler
     NetworkObject SpawnProtein(Vector3 spawnPos, int role, Vector3 snapPos)
     {
         var go = Instantiate(dnaPKcsPickupPrefab, spawnPos, Quaternion.identity);
-        go.GetComponent<ProteinOrbitController>()?.Configure(role, snapPos);
         var no = go.GetComponent<NetworkObject>();
         no?.Spawn();
+        go.GetComponent<ProteinOrbitController>()?.Configure(role, snapPos);
         return no;
     }
 

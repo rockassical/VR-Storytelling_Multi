@@ -343,6 +343,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orbitRadius: 0.35
-  orbitSpeed: 45
+  orbitSpeed: 15
   orbitHeight: 0.05
   snapRadius: 0.12

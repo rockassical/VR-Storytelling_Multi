@@ -1,4 +1,5 @@
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -8,7 +9,9 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 // (values ride in the spawn snapshot). Owner drives orbit; NetworkTransform syncs to all clients.
 // On release within snapRadius of the snap target, the protein locks in and reports to the
 // current phase handler via NHEJManager.ReportProteinPickup().
-[RequireComponent(typeof(NHEJTool))]
+// Does NOT require NHEJTool — ownership transfer is handled inline via RequestOwnershipServerRpc.
+[RequireComponent(typeof(XRGrabInteractable))]
+[RequireComponent(typeof(NetworkTransform))]
 public class ProteinOrbitController : NetworkBehaviour
 {
     [Header("Orbit")]
@@ -33,8 +36,8 @@ public class ProteinOrbitController : NetworkBehaviour
     public int AssignedRole => assignedRole.Value;
 
     /// <summary>
-    /// Call on the server BEFORE Spawn(). Sets the player role and world-space snap destination.
-    /// P1 orbits start at 0° and P2 at 180° so they don't overlap.
+    /// Call on the server AFTER Spawn(). Sets the player role and world-space snap destination.
+    /// Uses OnValueChanged so all clients initialize correctly when the values replicate.
     /// </summary>
     public void Configure(int role, Vector3 snapPos)
     {
@@ -50,9 +53,6 @@ public class ProteinOrbitController : NetworkBehaviour
             orbitCenterPos = (NHEJManager.Instance.LeftDNAEnd.position
                             + NHEJManager.Instance.RightDNAEnd.position) * 0.5f;
 
-        // Stagger starting angles so P1/P2 proteins don't spawn on top of each other.
-        currentAngle = assignedRole.Value == 2 ? 180f : 0f;
-
         grab = GetComponent<XRGrabInteractable>();
         if (grab != null)
         {
@@ -60,17 +60,30 @@ public class ProteinOrbitController : NetworkBehaviour
             grab.selectExited.AddListener(OnReleased);
         }
 
-        if (IsOwner) ApplyOrbitPosition();
+        // Configure() is called AFTER Spawn(), so role arrives via OnValueChanged.
+        // Handle late-join case where value is already set when we spawn.
+        assignedRole.OnValueChanged += OnRoleChanged;
+        if (assignedRole.Value != 0)
+            OnRoleChanged(0, assignedRole.Value);
     }
 
     public override void OnNetworkDespawn()
     {
         base.OnNetworkDespawn();
+        assignedRole.OnValueChanged -= OnRoleChanged;
         if (grab != null)
         {
             grab.selectEntered.RemoveListener(OnGrabbed);
             grab.selectExited.RemoveListener(OnReleased);
         }
+    }
+
+    void OnRoleChanged(int _, int role)
+    {
+        if (role == 0) return;
+        // Stagger starting angles so P1/P2 proteins don't overlap.
+        currentAngle = role == 2 ? 180f : 0f;
+        if (IsOwner) ApplyOrbitPosition();
     }
 
     void Update()
@@ -90,7 +103,18 @@ public class ProteinOrbitController : NetworkBehaviour
         transform.LookAt(orbitCenterPos);
     }
 
-    void OnGrabbed(SelectEnterEventArgs _) => isGrabbed = true;
+    void OnGrabbed(SelectEnterEventArgs _)
+    {
+        isGrabbed = true;
+        // Transfer ownership to the grabbing client so they drive position locally.
+        RequestOwnershipServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void RequestOwnershipServerRpc(ServerRpcParams rpcParams = default)
+    {
+        NetworkObject.ChangeOwnership(rpcParams.Receive.SenderClientId);
+    }
 
     void OnReleased(SelectExitEventArgs _)
     {
