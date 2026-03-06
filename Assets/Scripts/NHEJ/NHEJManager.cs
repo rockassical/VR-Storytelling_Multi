@@ -74,7 +74,7 @@ public class NHEJManager : NetworkBehaviour
 
     int assignedCount;
     readonly System.Collections.Generic.List<NetworkObject> spawnedEnemies = new();
-    int enemyCount; // increments each time a player-interactive phase completes
+    int enemyCount = 3; // increments each time a player-interactive phase completes
     Coroutine pendingAdvanceCoroutine;
 
     void Awake()
@@ -206,7 +206,7 @@ public class NHEJManager : NetworkBehaviour
         // One extra enemy is added each time a player phase completes.
         if (IsServer && handler != null && !handler.IsAutomatic && enemyPrefab != null)
         {
-            enemyCount++;
+            // enemyCount++;
             Vector3 basePos = leftDNAEnd != null
                 ? leftDNAEnd.position + Vector3.up * 0.5f + Vector3.back * 0.8f
                 : Vector3.zero;
