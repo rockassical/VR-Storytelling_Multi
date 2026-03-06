@@ -44,6 +44,7 @@ public class ProteinOrbitController : NetworkBehaviour
 
     public int AssignedRole => assignedRole.Value;
     public bool IsCorrectlyPlaced => isCorrectlyPlaced.Value;
+    public bool IsEnemyCarrying => isEnemyCarrying;
     public Vector3 SnapTargetPosition => snapTargetPosition.Value;
 
     /// <summary>
@@ -150,6 +151,9 @@ public class ProteinOrbitController : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     void RequestOwnershipServerRpc(ServerRpcParams rpcParams = default)
     {
+        // If the enemy is carrying this protein, a player is stealing it back — cancel the carry.
+        if (isEnemyCarrying)
+            EnemyCancelCarrying();
         NetworkObject.ChangeOwnership(rpcParams.Receive.SenderClientId);
     }
 

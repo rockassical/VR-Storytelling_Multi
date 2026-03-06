@@ -143,9 +143,9 @@ public class NHEJEnemyAI : NetworkBehaviour
         if (targetProtein == null) { EnterIdle(); return; }
 
         // If a player grabbed the protein away from us, abort carry.
-        if (targetProtein.NetworkObject.OwnerClientId != NetworkManager.ServerClientId)
+        // (Cannot rely on OwnerClientId — in host mode ServerClientId == host's LocalClientId == 0.)
+        if (!targetProtein.IsEnemyCarrying)
         {
-            targetProtein.EnemyCancelCarrying();
             targetProtein = null;
             EnterIdle();
             return;
