@@ -27,7 +27,7 @@ public class NHEJEnemyAI : NetworkBehaviour
     [SerializeField] float dnaOrbitSpeed = 25f;     // degrees per second while idle
 
     [Header("Stun")]
-    [SerializeField] float stunDistance = 2.5f;     // metres from DNA centre to trigger stun
+    [SerializeField] float stunDistance = 2.0f;     // metres from DNA centre to trigger stun
     [SerializeField] float stunDuration = 6f;
 
     [Header("Steal")]
@@ -37,11 +37,9 @@ public class NHEJEnemyAI : NetworkBehaviour
     EnemyState currentState = EnemyState.Idle;
     float stateTimer;
     float orbitAngle;
-    Vector3 dnaCenter;
     ProteinOrbitController targetProtein;
     Vector3 dropPosition;
 
-    // Tracked on both server and grabbing client.
     bool isGrabbedByPlayer;
 
     XRGrabInteractable grab;
@@ -63,28 +61,24 @@ public class NHEJEnemyAI : NetworkBehaviour
             grab.selectExited.AddListener(OnPlayerRelease);
         }
 
-        if (NHEJManager.Instance != null
-            && NHEJManager.Instance.LeftDNAEnd != null
-            && NHEJManager.Instance.RightDNAEnd != null)
-        {
-            dnaCenter = (NHEJManager.Instance.LeftDNAEnd.position
-                       + NHEJManager.Instance.RightDNAEnd.position) * 0.5f;
-        }
-
         if (IsServer)
         {
             stateTimer = idleDuration;
             currentState = EnemyState.Idle;
+            // Place on orbit circle at current angle so it doesn't start at origin.
+            Vector3 c = GetDNACenter();
+            float rad = orbitAngle * Mathf.Deg2Rad;
+            transform.position = c + new Vector3(
+                Mathf.Cos(rad) * dnaOrbitRadius, dnaOrbitHeight, Mathf.Sin(rad) * dnaOrbitRadius);
         }
     }
 
     public override void OnNetworkDespawn()
     {
         base.OnNetworkDespawn();
-        // Release any protein being carried before we despawn.
         if (IsServer && targetProtein != null)
         {
-            targetProtein.EnemyRelease(transform.position);
+            targetProtein.EnemyCancelCarrying();
             targetProtein = null;
         }
         if (grab != null)
@@ -100,10 +94,10 @@ public class NHEJEnemyAI : NetworkBehaviour
 
         switch (currentState)
         {
-            case EnemyState.Idle:    UpdateIdle();    break;
-            case EnemyState.Seeking: UpdateSeeking(); break;
+            case EnemyState.Idle:     UpdateIdle();     break;
+            case EnemyState.Seeking:  UpdateSeeking();  break;
             case EnemyState.Stealing: UpdateStealing(); break;
-            case EnemyState.Stunned: UpdateStunned(); break;
+            case EnemyState.Stunned:  UpdateStunned();  break;
         }
     }
 
@@ -111,13 +105,14 @@ public class NHEJEnemyAI : NetworkBehaviour
 
     void UpdateIdle()
     {
-        // Orbit lazily around the DNA break site.
         orbitAngle = (orbitAngle + dnaOrbitSpeed * Time.deltaTime) % 360f;
         float rad = orbitAngle * Mathf.Deg2Rad;
-        transform.position = dnaCenter + new Vector3(
-            Mathf.Cos(rad) * dnaOrbitRadius,
-            dnaOrbitHeight,
-            Mathf.Sin(rad) * dnaOrbitRadius);
+        Vector3 orbitPos = GetDNACenter() + new Vector3(
+            Mathf.Cos(rad) * dnaOrbitRadius, dnaOrbitHeight, Mathf.Sin(rad) * dnaOrbitRadius);
+
+        // Smoothly return to orbit rather than teleporting (fixes snap-back after player drops).
+        transform.position = Vector3.MoveTowards(
+            transform.position, orbitPos, moveSpeed * 2f * Time.deltaTime);
 
         stateTimer -= Time.deltaTime;
         if (stateTimer <= 0f)
@@ -126,7 +121,6 @@ public class NHEJEnemyAI : NetworkBehaviour
 
     void UpdateSeeking()
     {
-        // Abort if the target was moved away from its correct position already.
         if (targetProtein == null || !targetProtein.IsCorrectlyPlaced)
         {
             EnterIdle();
@@ -147,6 +141,15 @@ public class NHEJEnemyAI : NetworkBehaviour
     void UpdateStealing()
     {
         if (targetProtein == null) { EnterIdle(); return; }
+
+        // If a player grabbed the protein away from us, abort carry.
+        if (targetProtein.NetworkObject.OwnerClientId != NetworkManager.ServerClientId)
+        {
+            targetProtein.EnemyCancelCarrying();
+            targetProtein = null;
+            EnterIdle();
+            return;
+        }
 
         // Move toward drop position, dragging the protein along.
         transform.position = Vector3.MoveTowards(
@@ -170,15 +173,27 @@ public class NHEJEnemyAI : NetworkBehaviour
 
     // ── Helpers ───────────────────────────────────────────────────────────────
 
+    Vector3 GetDNACenter()
+    {
+        if (NHEJManager.Instance?.LeftDNAEnd != null && NHEJManager.Instance?.RightDNAEnd != null)
+            return (NHEJManager.Instance.LeftDNAEnd.position
+                  + NHEJManager.Instance.RightDNAEnd.position) * 0.5f;
+        return transform.position; // fallback: stay put if manager not ready
+    }
+
     void EnterIdle()
     {
         currentState = EnemyState.Idle;
         stateTimer = idleDuration;
+        // Initialise orbitAngle from current position so orbit starts smoothly here.
+        Vector3 flat = transform.position - GetDNACenter();
+        flat.y = 0f;
+        if (flat.magnitude > 0.01f)
+            orbitAngle = Mathf.Atan2(flat.z, flat.x) * Mathf.Rad2Deg;
     }
 
     void SeekTarget()
     {
-        // Collect all correctly-placed proteins and pick one at random.
         var proteins = FindObjectsOfType<ProteinOrbitController>();
         var candidates = new System.Collections.Generic.List<ProteinOrbitController>();
         foreach (var p in proteins)
@@ -194,7 +209,6 @@ public class NHEJEnemyAI : NetworkBehaviour
     {
         if (targetProtein == null) { EnterIdle(); return; }
 
-        // Choose a drop position ~stealDropRadius metres from the snap target.
         Vector3 snapPos = targetProtein.SnapTargetPosition;
         Vector2 rnd = Random.insideUnitCircle.normalized;
         dropPosition = snapPos + new Vector3(rnd.x, 0f, rnd.y) * stealDropRadius;
@@ -216,23 +230,24 @@ public class NHEJEnemyAI : NetworkBehaviour
     {
         isGrabbedByPlayer = true;
 
-        // If carrying a protein, release it in place so it isn't stuck while player drags enemy.
+        // Cancel any protein carry — use CancelCarrying (not Release) so the protein
+        // doesn't get dropped at/near the snap target causing false completion.
         if (targetProtein != null)
         {
-            targetProtein.EnemyRelease(targetProtein.transform.position);
+            targetProtein.EnemyCancelCarrying();
             targetProtein = null;
         }
 
-        // Transfer ownership so the XR hand attachment drives position.
         NetworkObject.ChangeOwnership(rpcParams.Receive.SenderClientId);
     }
 
     void OnPlayerRelease(SelectExitEventArgs _)
     {
-        if (!isGrabbedByPlayer) return; // only the grabbing client should act
+        if (!isGrabbedByPlayer) return;
         isGrabbedByPlayer = false;
 
-        float dist = Vector3.Distance(transform.position, dnaCenter);
+        // Compute distance fresh so dnaCenter is always accurate.
+        float dist = Vector3.Distance(transform.position, GetDNACenter());
         NotifyReleasedServerRpc(transform.position, dist > stunDistance);
     }
 
@@ -243,7 +258,9 @@ public class NHEJEnemyAI : NetworkBehaviour
         NetworkObject.ChangeOwnership(NetworkManager.ServerClientId);
         transform.position = releasePos;
 
-        if (shouldStun)
+        // Verify stun on server side too (guards against client-side error).
+        float dist = Vector3.Distance(releasePos, GetDNACenter());
+        if (shouldStun && dist > stunDistance)
         {
             currentState = EnemyState.Stunned;
             stateTimer = stunDuration;
@@ -251,7 +268,6 @@ public class NHEJEnemyAI : NetworkBehaviour
         }
         else
         {
-            // Dropped close to DNA — resume idle patrol.
             EnterIdle();
         }
     }

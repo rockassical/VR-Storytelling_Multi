@@ -38,6 +38,7 @@ public class ProteinOrbitController : NetworkBehaviour
     bool isGrabbed;
     bool isPlaced;
     bool isEnemyCarrying;
+    float correctlyPlacedCooldown; // server-only: prevents false completion on enemy release
 
     XRGrabInteractable grab;
 
@@ -112,7 +113,10 @@ public class ProteinOrbitController : NetworkBehaviour
         // Server continuously checks whether this protein is correctly placed.
         if (IsServer && snapTargetPosition.Value != Vector3.zero)
         {
-            bool nowCorrect = !isEnemyCarrying &&
+            if (correctlyPlacedCooldown > 0f)
+                correctlyPlacedCooldown -= Time.deltaTime;
+
+            bool nowCorrect = correctlyPlacedCooldown <= 0f && !isEnemyCarrying &&
                 Vector3.Distance(transform.position, snapTargetPosition.Value) <= snapRadius;
 
             if (nowCorrect != isCorrectlyPlaced.Value)
@@ -195,6 +199,7 @@ public class ProteinOrbitController : NetworkBehaviour
     {
         if (!IsServer) return;
         isEnemyCarrying = true;
+        correctlyPlacedCooldown = 0f;
         NetworkObject.ChangeOwnership(NetworkManager.ServerClientId);
         ResetPlacementClientRpc();
     }
@@ -207,8 +212,20 @@ public class ProteinOrbitController : NetworkBehaviour
     {
         if (!IsServer) return;
         isEnemyCarrying = false;
+        correctlyPlacedCooldown = 0.8f; // brief window before completion can register
         transform.position = dropPos;
-        // isCorrectlyPlaced will auto-update next frame based on distance.
+        // isCorrectlyPlaced will auto-update after cooldown.
+    }
+
+    /// <summary>
+    /// Called when a player grabs this protein away from the enemy mid-carry.
+    /// Clears carry state without moving the protein (player now owns it).
+    /// </summary>
+    public void EnemyCancelCarrying()
+    {
+        if (!IsServer) return;
+        isEnemyCarrying = false;
+        correctlyPlacedCooldown = 0.8f;
     }
 
     /// <summary>Resets placement state on all clients (called when enemy steals or re-grab needed).</summary>

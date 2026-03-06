@@ -73,7 +73,8 @@ public class NHEJManager : NetworkBehaviour
     public bool DebugBypass => debugBypass;
 
     int assignedCount;
-    NetworkObject spawnedEnemy;
+    readonly System.Collections.Generic.List<NetworkObject> spawnedEnemies = new();
+    int enemyCount; // increments each time a player-interactive phase completes
     Coroutine pendingAdvanceCoroutine;
 
     void Awake()
@@ -201,16 +202,25 @@ public class NHEJManager : NetworkBehaviour
             StartCoroutine(DelayedAdvance(1f));
         }
 
-        // Spawn enemy for non-automatic (player-interactive) phases.
+        // Spawn enemies for non-automatic (player-interactive) phases.
+        // One extra enemy is added each time a player phase completes.
         if (IsServer && handler != null && !handler.IsAutomatic && enemyPrefab != null)
         {
-            Vector3 spawnPos = leftDNAEnd != null
+            enemyCount++;
+            Vector3 basePos = leftDNAEnd != null
                 ? leftDNAEnd.position + Vector3.up * 0.5f + Vector3.back * 0.8f
                 : Vector3.zero;
-            var go = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
-            spawnedEnemy = go.GetComponent<NetworkObject>();
-            spawnedEnemy?.Spawn();
-            Debug.Log($"[NHEJ] Enemy spawned for phase {phase}");
+
+            for (int i = 0; i < enemyCount; i++)
+            {
+                // Spread spawns slightly so they don't stack.
+                Vector3 offset = new Vector3(Mathf.Cos(i * 1.2f), 0f, Mathf.Sin(i * 1.2f)) * 0.4f;
+                var go = Instantiate(enemyPrefab, basePos + offset, Quaternion.identity);
+                var no = go.GetComponent<NetworkObject>();
+                no?.Spawn();
+                if (no != null) spawnedEnemies.Add(no);
+            }
+            Debug.Log($"[NHEJ] Spawned {enemyCount} enemies for phase {phase}");
         }
 
         if (debugBypass && debugAutoCompletePlayerPhases && IsServer)
@@ -278,12 +288,10 @@ public class NHEJManager : NetworkBehaviour
             pendingAdvanceCoroutine = null;
         }
 
-        // Despawn enemy before moving to next phase.
-        if (spawnedEnemy != null && spawnedEnemy.IsSpawned)
-        {
-            spawnedEnemy.Despawn();
-            spawnedEnemy = null;
-        }
+        // Despawn all enemies before moving to next phase.
+        foreach (var enemy in spawnedEnemies)
+            if (enemy != null && enemy.IsSpawned) enemy.Despawn();
+        spawnedEnemies.Clear();
 
         NHEJPhase next = currentPhase.Value switch
         {
