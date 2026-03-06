@@ -110,12 +110,30 @@ public class ArtemisOrbitController : NetworkBehaviour
 
         if (closest != null)
         {
-            // Snap into place and fire the trim
             isPlaced = true;
             transform.position = closest.transform.position;
-            // LocalClientId is always the releasing player regardless of ownership state
             closest.OnToolActivated(NetworkManager.Singleton.LocalClientId);
+            // Reset after a short delay so the next player can use the tool for their end.
+            ResetOrbitServerRpc();
         }
         // If not close enough: isGrabbed=false, isPlaced=false → orbit resumes in Update
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void ResetOrbitServerRpc()
+    {
+        StartCoroutine(DelayedReset());
+    }
+
+    System.Collections.IEnumerator DelayedReset()
+    {
+        yield return new WaitForSeconds(0.75f);
+        ResetOrbitClientRpc();
+    }
+
+    [ClientRpc]
+    void ResetOrbitClientRpc()
+    {
+        isPlaced = false;
     }
 }

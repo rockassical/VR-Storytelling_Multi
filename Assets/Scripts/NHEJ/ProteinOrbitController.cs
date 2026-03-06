@@ -53,6 +53,10 @@ public class ProteinOrbitController : NetworkBehaviour
             orbitCenterPos = (NHEJManager.Instance.LeftDNAEnd.position
                             + NHEJManager.Instance.RightDNAEnd.position) * 0.5f;
 
+        // Rigidbody must be kinematic — NetworkTransform owns the position.
+        var rb = GetComponent<Rigidbody>();
+        if (rb != null) { rb.isKinematic = true; rb.useGravity = false; }
+
         grab = GetComponent<XRGrabInteractable>();
         if (grab != null)
         {

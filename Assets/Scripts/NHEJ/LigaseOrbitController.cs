@@ -105,7 +105,28 @@ public class LigaseOrbitController : NetworkBehaviour
             isPlaced = true;
             transform.position = closest.transform.position;
             closest.OnToolActivated(NetworkManager.Singleton.LocalClientId);
+            // Reset after a short delay so the next player can use the tool for their nick.
+            ResetOrbitServerRpc();
         }
         // If not close enough: isGrabbed=false, isPlaced=false → orbit resumes in Update
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void ResetOrbitServerRpc()
+    {
+        StartCoroutine(DelayedReset());
+    }
+
+    System.Collections.IEnumerator DelayedReset()
+    {
+        yield return new WaitForSeconds(0.75f);
+        ResetOrbitClientRpc();
+    }
+
+    [ClientRpc]
+    void ResetOrbitClientRpc()
+    {
+        isPlaced = false;
+        // isGrabbed stays as-is; if still held, orbit won't run until released.
     }
 }
