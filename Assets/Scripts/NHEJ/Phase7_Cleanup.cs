@@ -35,6 +35,8 @@ public class Phase7_Cleanup : NHEJPhaseHandler
     // Server-side tracking
     bool serverP1Placed;
     bool serverP2Placed;
+    bool serverBothHandled; // prevents duplicate FinishCleanup coroutines
+    Coroutine cleanupCoroutine;
 
     // Local tracking (all clients)
     bool localP1Placed;
@@ -42,8 +44,9 @@ public class Phase7_Cleanup : NHEJPhaseHandler
 
     public override void Setup()
     {
-        serverP1Placed = serverP2Placed = false;
+        serverP1Placed = serverP2Placed = serverBothHandled = false;
         localP1Placed  = localP2Placed  = false;
+        cleanupCoroutine = null;
     }
 
     public override void StartPhase()
@@ -88,8 +91,23 @@ public class Phase7_Cleanup : NHEJPhaseHandler
         if (playerRole == 1) serverP1Placed = true;
         else if (playerRole == 2) serverP2Placed = true;
 
+        if (serverBothHandled) return;
         if (serverP1Placed && serverP2Placed)
-            StartCoroutine(FinishCleanup());
+        {
+            serverBothHandled = true;
+            cleanupCoroutine = StartCoroutine(FinishCleanup());
+        }
+    }
+
+    public override void OnEnemyStolenProtein(int playerRole)
+    {
+        // Reset so FinishCleanup can start again when the protein is re-placed.
+        serverBothHandled = false;
+        if (cleanupCoroutine != null)
+        {
+            StopCoroutine(cleanupCoroutine);
+            cleanupCoroutine = null;
+        }
     }
 
     // ── All-client visual handler ────────────────────────────────────────────────

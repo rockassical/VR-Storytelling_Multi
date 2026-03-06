@@ -26,4 +26,11 @@ public abstract class NHEJPhaseHandler : MonoBehaviour
     /// Use this to drive local visual/audio responses that must run everywhere.
     /// </summary>
     public virtual void OnProteinPlacedLocal(int playerRole) { }
+
+    /// <summary>
+    /// Called SERVER-ONLY by NHEJManager when the enemy steals a protein for this phase.
+    /// Override in phases that track internal server state (e.g. Phase5, Phase7) so they
+    /// can reset their "both placed" guard and allow re-triggering after the steal.
+    /// </summary>
+    public virtual void OnEnemyStolenProtein(int playerRole) { }
 }

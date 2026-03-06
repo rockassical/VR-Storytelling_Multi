@@ -17,6 +17,11 @@ public class NHEJManager : NetworkBehaviour
 
     public DSBScenario Scenario => dsbScenario;
 
+    [Header("Enemy AI")]
+    [SerializeField] GameObject enemyPrefab;
+    [Tooltip("Seconds both proteins must stay correctly placed before the phase advances.")]
+    [SerializeField] float placementConfirmDelay = 3f;
+
     [Header("Debug")]
     [SerializeField] bool debugBypass = false;
     [SerializeField] bool debugAutoCompletePlayerPhases = true;
@@ -68,6 +73,8 @@ public class NHEJManager : NetworkBehaviour
     public bool DebugBypass => debugBypass;
 
     int assignedCount;
+    NetworkObject spawnedEnemy;
+    Coroutine pendingAdvanceCoroutine;
 
     void Awake()
     {
@@ -194,6 +201,18 @@ public class NHEJManager : NetworkBehaviour
             StartCoroutine(DelayedAdvance(1f));
         }
 
+        // Spawn enemy for non-automatic (player-interactive) phases.
+        if (IsServer && handler != null && !handler.IsAutomatic && enemyPrefab != null)
+        {
+            Vector3 spawnPos = leftDNAEnd != null
+                ? leftDNAEnd.position + Vector3.up * 0.5f + Vector3.back * 0.8f
+                : Vector3.zero;
+            var go = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+            spawnedEnemy = go.GetComponent<NetworkObject>();
+            spawnedEnemy?.Spawn();
+            Debug.Log($"[NHEJ] Enemy spawned for phase {phase}");
+        }
+
         if (debugBypass && debugAutoCompletePlayerPhases && IsServer)
         {
             bool isPlayerPhase = handler != null && !handler.IsAutomatic;
@@ -251,6 +270,20 @@ public class NHEJManager : NetworkBehaviour
     public void AdvancePhase()
     {
         if (!IsServer) return;
+
+        // Cancel any pending confirmation delay.
+        if (pendingAdvanceCoroutine != null)
+        {
+            StopCoroutine(pendingAdvanceCoroutine);
+            pendingAdvanceCoroutine = null;
+        }
+
+        // Despawn enemy before moving to next phase.
+        if (spawnedEnemy != null && spawnedEnemy.IsSpawned)
+        {
+            spawnedEnemy.Despawn();
+            spawnedEnemy = null;
+        }
 
         NHEJPhase next = currentPhase.Value switch
         {
@@ -312,8 +345,40 @@ public class NHEJManager : NetworkBehaviour
 
         BroadcastPlayerRoleCompleteClientRpc(playerRole);
 
+        // Start confirmation window so enemy has time to steal before phase advances.
+        if (player1PhaseComplete.Value && player2PhaseComplete.Value
+            && pendingAdvanceCoroutine == null)
+        {
+            pendingAdvanceCoroutine = StartCoroutine(ConfirmAndAdvance());
+        }
+    }
+
+    IEnumerator ConfirmAndAdvance()
+    {
+        yield return new WaitForSeconds(placementConfirmDelay);
+        pendingAdvanceCoroutine = null;
+        // Re-check in case enemy stole during the window.
         if (player1PhaseComplete.Value && player2PhaseComplete.Value)
             AdvancePhase();
+    }
+
+    /// <summary>
+    /// Called server-side by ProteinOrbitController when a protein leaves its correct location.
+    /// Cancels any pending phase-advance and notifies the phase handler.
+    /// </summary>
+    public void ServerUnmarkPlayerComplete(int playerRole)
+    {
+        if (!IsServer) return;
+        if (playerRole == 1) player1PhaseComplete.Value = false;
+        else if (playerRole == 2) player2PhaseComplete.Value = false;
+
+        if (pendingAdvanceCoroutine != null)
+        {
+            StopCoroutine(pendingAdvanceCoroutine);
+            pendingAdvanceCoroutine = null;
+        }
+
+        GetCurrentHandler()?.OnEnemyStolenProtein(playerRole);
     }
 
     /// <summary>Fires on ALL clients whenever a player role marks complete. Subscribe for local visual feedback.</summary>

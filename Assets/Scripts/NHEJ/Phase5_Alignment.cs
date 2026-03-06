@@ -44,6 +44,8 @@ public class Phase5_Alignment : NHEJPhaseHandler
     // Server-side placement tracking
     bool serverP1Placed;
     bool serverP2Placed;
+    bool serverBothHandled; // prevents duplicate WaitThenAdvance coroutines
+    Coroutine advanceCoroutine;
 
     // Local placement tracking (all clients — driven by OnProteinPlacedLocal)
     bool localP1Placed;
@@ -55,9 +57,10 @@ public class Phase5_Alignment : NHEJPhaseHandler
     public override void Setup()
     {
         scaffoldSegments.Clear();
-        serverP1Placed = serverP2Placed = false;
+        serverP1Placed = serverP2Placed = serverBothHandled = false;
         localP1Placed  = localP2Placed  = false;
         localAnimCoroutine = null;
+        advanceCoroutine = null;
     }
 
     public override void StartPhase()
@@ -87,13 +90,26 @@ public class Phase5_Alignment : NHEJPhaseHandler
         if (playerRole == 1) serverP1Placed = true;
         else if (playerRole == 2) serverP2Placed = true;
 
+        if (serverBothHandled) return;
         if (serverP1Placed && serverP2Placed)
         {
+            serverBothHandled = true;
             // Scaffold build + alignment happen locally (OnProteinPlacedLocal).
             // Wait for them to finish, then advance.
             float segBuildTime = scaffoldSegmentCount * 0.3f;
             float totalDelay   = segBuildTime + alignDuration + postAlignPause + advanceBuffer;
-            StartCoroutine(WaitThenAdvance(totalDelay));
+            advanceCoroutine = StartCoroutine(WaitThenAdvance(totalDelay));
+        }
+    }
+
+    public override void OnEnemyStolenProtein(int playerRole)
+    {
+        // Reset so WaitThenAdvance can start again when the protein is re-placed.
+        serverBothHandled = false;
+        if (advanceCoroutine != null)
+        {
+            StopCoroutine(advanceCoroutine);
+            advanceCoroutine = null;
         }
     }
 
