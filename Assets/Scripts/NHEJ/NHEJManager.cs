@@ -74,7 +74,7 @@ public class NHEJManager : NetworkBehaviour
 
     int assignedCount;
     readonly System.Collections.Generic.List<NetworkObject> spawnedEnemies = new();
-    int enemyCount = 3; // increments each time a player-interactive phase completes
+    int enemyCount = 1; // increments each time a player-interactive phase completes
     Coroutine pendingAdvanceCoroutine;
 
     void Awake()
