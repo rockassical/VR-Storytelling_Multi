@@ -16,7 +16,36 @@ public class TrimPoint : MonoBehaviour
     [SerializeField] float fragmentDriftSpeed = 0.5f;
     [SerializeField] float fragmentLifetime = 3f;
 
+    [Header("Placement Indicator")]
+    [SerializeField] Material indicatorMaterial;
+    [SerializeField] float indicatorRadius = 0.12f;
+
     bool isTrimmed;
+    GameObject indicatorSphere;
+
+    void Awake()
+    {
+        var col = GetComponent<SphereCollider>();
+        float radius = col != null ? col.radius : indicatorRadius;
+
+        indicatorSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        indicatorSphere.name = "PlacementIndicator";
+        indicatorSphere.transform.SetParent(transform, false);
+        indicatorSphere.transform.localPosition = Vector3.zero;
+        indicatorSphere.transform.localScale = Vector3.one * radius * 2f;
+        Destroy(indicatorSphere.GetComponent<Collider>());
+
+        if (indicatorMaterial != null)
+            indicatorSphere.GetComponent<MeshRenderer>().material = indicatorMaterial;
+
+        indicatorSphere.SetActive(false);
+    }
+
+    public void SetIndicatorVisible(bool visible)
+    {
+        if (indicatorSphere != null)
+            indicatorSphere.SetActive(visible);
+    }
 
     public int PointIndex => pointIndex;
     public int AssignedPlayerRole => assignedPlayerRole;

@@ -13,6 +13,7 @@ public class NHEJManager : NetworkBehaviour
 
     [Header("Options")]
     [SerializeField] bool includeGapFill = true;
+    [SerializeField] bool showPlacementIndicators = true;
     [SerializeField] DSBScenario dsbScenario = DSBScenario.LeftOverhangOnly;
 
     public DSBScenario Scenario => dsbScenario;
@@ -70,11 +71,12 @@ public class NHEJManager : NetworkBehaviour
     public bool Player1PhaseComplete => player1PhaseComplete.Value;
     public bool Player2PhaseComplete => player2PhaseComplete.Value;
     public bool IncludeGapFill => includeGapFill;
+    public bool ShowPlacementIndicators => showPlacementIndicators;
     public bool DebugBypass => debugBypass;
 
     int assignedCount;
     readonly System.Collections.Generic.List<NetworkObject> spawnedEnemies = new();
-    int enemyCount = 3; // increments each time a player-interactive phase completes
+    int enemyCount = 3;
     Coroutine pendingAdvanceCoroutine;
 
     void Awake()
@@ -85,6 +87,10 @@ public class NHEJManager : NetworkBehaviour
             return;
         }
         Instance = this;
+
+        // Start all placement indicators hidden; each phase reveals its own when active.
+        foreach (var point in FindObjectsOfType<ProteinPlacementPoint>())
+            point.SetIndicatorVisible(false);
     }
 
     public override void OnNetworkSpawn()

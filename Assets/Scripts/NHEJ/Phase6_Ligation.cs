@@ -31,6 +31,12 @@ public class Phase6_Ligation : NHEJPhaseHandler
         SetPointsActive(player1LigationPoints, true);
         SetPointsActive(player2LigationPoints, true);
 
+        if (manager.ShowPlacementIndicators)
+        {
+            SetLigationPointIndicators(player1LigationPoints, true);
+            SetLigationPointIndicators(player2LigationPoints, true);
+        }
+
         if (manager.IsServer && ligaseToolPrefab != null)
         {
             // Spawn one Ligase at the DNA center; LigaseOrbitController handles orbit + placement.
@@ -48,6 +54,9 @@ public class Phase6_Ligation : NHEJPhaseHandler
 
     public override void CompletePhase()
     {
+        SetLigationPointIndicators(player1LigationPoints, false);
+        SetLigationPointIndicators(player2LigationPoints, false);
+
         if (manager.IsServer && ligaseObject != null && ligaseObject.IsSpawned)
             ligaseObject.Despawn();
     }
@@ -113,6 +122,13 @@ public class Phase6_Ligation : NHEJPhaseHandler
         {
             if (lp != null) lp.gameObject.SetActive(active);
         }
+    }
+
+    void SetLigationPointIndicators(LigationPoint[] points, bool visible)
+    {
+        if (points == null) return;
+        foreach (var lp in points)
+            if (lp != null) lp.SetIndicatorVisible(visible);
     }
 
     static T[] CombineArrays<T>(T[] a, T[] b)

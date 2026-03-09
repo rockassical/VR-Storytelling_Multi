@@ -39,6 +39,12 @@ public class Phase3_Trimming : NHEJPhaseHandler
         SetTrimPointsActive(player1TrimPoints, p1NeedsTrim);
         SetTrimPointsActive(player2TrimPoints, p2NeedsTrim);
 
+        if (manager.ShowPlacementIndicators)
+        {
+            if (p1NeedsTrim) SetTrimPointIndicators(player1TrimPoints, true);
+            if (p2NeedsTrim) SetTrimPointIndicators(player2TrimPoints, true);
+        }
+
         if (manager.IsServer)
         {
             // Spawn one Artemis for whichever ends need trimming.
@@ -63,6 +69,9 @@ public class Phase3_Trimming : NHEJPhaseHandler
 
     public override void CompletePhase()
     {
+        SetTrimPointIndicators(player1TrimPoints, false);
+        SetTrimPointIndicators(player2TrimPoints, false);
+
         if (manager.IsServer && artemisObject != null && artemisObject.IsSpawned)
             artemisObject.Despawn();
     }
@@ -129,6 +138,13 @@ public class Phase3_Trimming : NHEJPhaseHandler
         {
             if (tp != null) tp.gameObject.SetActive(active);
         }
+    }
+
+    void SetTrimPointIndicators(TrimPoint[] points, bool visible)
+    {
+        if (points == null) return;
+        foreach (var tp in points)
+            if (tp != null) tp.SetIndicatorVisible(visible);
     }
 
     static T[] CombineArrays<T>(T[] a, T[] b)

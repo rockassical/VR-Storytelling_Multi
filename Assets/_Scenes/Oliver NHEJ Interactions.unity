@@ -10907,6 +10907,7 @@ GameObject:
   m_Component:
   - component: {fileID: 601981900}
   - component: {fileID: 601981901}
+  - component: {fileID: 601981902}
   m_Layer: 0
   m_Name: ScaffoldingPoint_L0
   m_TagString: Untagged
@@ -10944,6 +10945,21 @@ MonoBehaviour:
   color: {r: 1, g: 0.8107188, b: 0, a: 1}
   radius: 0.05
   drawLabel: 1
+--- !u!114 &601981902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601981899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 500b4e95fc48bb543ac895e83adb4152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerRole: 1
+  indicatorMaterial: {fileID: 2100000, guid: aa1f3314c83364845a37173fc64607d5, type: 2}
+  indicatorRadius: 0.03
 --- !u!1 &606537585
 GameObject:
   m_ObjectHideFlags: 0
@@ -12246,7 +12262,6 @@ GameObject:
   - component: {fileID: 685339469}
   - component: {fileID: 685339472}
   - component: {fileID: 685339471}
-  - component: {fileID: 685339470}
   m_Layer: 0
   m_Name: LigationPoint_R0
   m_TagString: Untagged
@@ -12269,27 +12284,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1896224075}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &685339470
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 685339468}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.08
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &685339471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12323,6 +12317,8 @@ MonoBehaviour:
   sealedVisual: {fileID: 0}
   atpParticles: {fileID: 0}
   sealFlashDuration: 0.5
+  indicatorMaterial: {fileID: 2100000, guid: aa1f3314c83364845a37173fc64607d5, type: 2}
+  indicatorRadius: 0.03
 --- !u!1 &689368388
 GameObject:
   m_ObjectHideFlags: 0
@@ -17317,6 +17313,7 @@ MonoBehaviour:
   - {fileID: 424371595}
   - {fileID: 1487308692}
   includeGapFill: 0
+  showPlacementIndicators: 1
   dsbScenario: 1
   enemyPrefab: {fileID: 8560433527279040947, guid: f4e7c28c37030564481becba40c574cf,
     type: 3}
@@ -19110,6 +19107,8 @@ MonoBehaviour:
   cutLineIndicator: {fileID: 0}
   fragmentDriftSpeed: 0.5
   fragmentLifetime: 3
+  indicatorMaterial: {fileID: 2100000, guid: aa1f3314c83364845a37173fc64607d5, type: 2}
+  indicatorRadius: 0.03
 --- !u!1 &1149450358
 GameObject:
   m_ObjectHideFlags: 0
@@ -19952,6 +19951,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1236071008}
   - component: {fileID: 1236071009}
+  - component: {fileID: 1236071010}
   m_Layer: 0
   m_Name: LeftDNAEnd
   m_TagString: Untagged
@@ -19993,6 +19993,21 @@ MonoBehaviour:
   color: {r: 0, g: 1, b: 0.9294118, a: 1}
   radius: 0.05
   drawLabel: 1
+--- !u!114 &1236071010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1236071007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 500b4e95fc48bb543ac895e83adb4152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerRole: 1
+  indicatorMaterial: {fileID: 2100000, guid: aa1f3314c83364845a37173fc64607d5, type: 2}
+  indicatorRadius: 0.03
 --- !u!1 &1236377297
 GameObject:
   m_ObjectHideFlags: 0
@@ -24485,6 +24500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1544884701}
   - component: {fileID: 1544884702}
+  - component: {fileID: 1544884703}
   m_Layer: 0
   m_Name: ScaffoldingPoint_R0
   m_TagString: Untagged
@@ -24522,6 +24538,21 @@ MonoBehaviour:
   color: {r: 1, g: 0.8107188, b: 0, a: 1}
   radius: 0.05
   drawLabel: 1
+--- !u!114 &1544884703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544884700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 500b4e95fc48bb543ac895e83adb4152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerRole: 2
+  indicatorMaterial: {fileID: 2100000, guid: aa1f3314c83364845a37173fc64607d5, type: 2}
+  indicatorRadius: 0.03
 --- !u!1 &1545139554
 GameObject:
   m_ObjectHideFlags: 0
@@ -24876,6 +24907,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ku70_80
+      objectReference: {fileID: 0}
+    - target: {fileID: 1721865746461059749, guid: 16a76d0d1e9e77642a3d845263156bc1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4927164272691883196, guid: 16a76d0d1e9e77642a3d845263156bc1,
         type: 3}
@@ -25567,6 +25603,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1635004737}
   - component: {fileID: 1635004738}
+  - component: {fileID: 1635004739}
   m_Layer: 0
   m_Name: DNAPKcsPoint_R0
   m_TagString: Untagged
@@ -25604,6 +25641,21 @@ MonoBehaviour:
   color: {r: 0.18212414, g: 1, b: 0, a: 1}
   radius: 0.05
   drawLabel: 1
+--- !u!114 &1635004739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635004736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 500b4e95fc48bb543ac895e83adb4152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerRole: 2
+  indicatorMaterial: {fileID: 2100000, guid: aa1f3314c83364845a37173fc64607d5, type: 2}
+  indicatorRadius: 0.03
 --- !u!1 &1635796392
 GameObject:
   m_ObjectHideFlags: 0
@@ -28490,6 +28542,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1847204166}
   - component: {fileID: 1847204167}
+  - component: {fileID: 1847204168}
   m_Layer: 0
   m_Name: DNAPKcsPoint_L0
   m_TagString: Untagged
@@ -28527,6 +28580,21 @@ MonoBehaviour:
   color: {r: 0.18212414, g: 1, b: 0, a: 1}
   radius: 0.05
   drawLabel: 1
+--- !u!114 &1847204168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847204165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 500b4e95fc48bb543ac895e83adb4152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerRole: 1
+  indicatorMaterial: {fileID: 2100000, guid: aa1f3314c83364845a37173fc64607d5, type: 2}
+  indicatorRadius: 0.03
 --- !u!1 &1848867994
 GameObject:
   m_ObjectHideFlags: 0
@@ -28704,7 +28772,6 @@ GameObject:
   - component: {fileID: 1850322677}
   - component: {fileID: 1850322680}
   - component: {fileID: 1850322679}
-  - component: {fileID: 1850322678}
   m_Layer: 0
   m_Name: LigationPoint_L0
   m_TagString: Untagged
@@ -28727,27 +28794,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1236071008}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1850322678
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1850322676}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.08
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1850322679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28781,6 +28827,8 @@ MonoBehaviour:
   sealedVisual: {fileID: 0}
   atpParticles: {fileID: 0}
   sealFlashDuration: 0.5
+  indicatorMaterial: {fileID: 2100000, guid: aa1f3314c83364845a37173fc64607d5, type: 2}
+  indicatorRadius: 0.03
 --- !u!1 &1854418436
 GameObject:
   m_ObjectHideFlags: 0
@@ -29504,6 +29552,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1896224075}
   - component: {fileID: 1896224076}
+  - component: {fileID: 1896224077}
   m_Layer: 0
   m_Name: RightDNAEnd
   m_TagString: Untagged
@@ -29545,6 +29594,21 @@ MonoBehaviour:
   color: {r: 0, g: 1, b: 0.92941177, a: 1}
   radius: 0.05
   drawLabel: 1
+--- !u!114 &1896224077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896224074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 500b4e95fc48bb543ac895e83adb4152, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerRole: 2
+  indicatorMaterial: {fileID: 2100000, guid: aa1f3314c83364845a37173fc64607d5, type: 2}
+  indicatorRadius: 0.03
 --- !u!1 &1901451641
 GameObject:
   m_ObjectHideFlags: 0
@@ -32927,6 +32991,8 @@ MonoBehaviour:
   cutLineIndicator: {fileID: 0}
   fragmentDriftSpeed: 0.5
   fragmentLifetime: 3
+  indicatorMaterial: {fileID: 2100000, guid: aa1f3314c83364845a37173fc64607d5, type: 2}
+  indicatorRadius: 0.03
 --- !u!33 &21860653946618861
 MeshFilter:
   m_ObjectHideFlags: 0
