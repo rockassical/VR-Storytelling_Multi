@@ -271,7 +271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1784229896
+  GlobalObjectIdHash: 4039696390
   InScenePlacedSourceGlobalObjectIdHash: 4039696390
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -326,7 +326,7 @@ MonoBehaviour:
   moveSpeed: 0.5
   grabDistance: 0.15
   idleDuration: 2.5
-  dnaOrbitRadius: 0.55
+  dnaOrbitRadius: 5.5
   dnaOrbitHeight: 0.4
   dnaOrbitSpeed: 25
   stunDistance: 2.5
