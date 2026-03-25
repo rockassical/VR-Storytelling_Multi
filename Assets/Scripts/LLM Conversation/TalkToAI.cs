@@ -28,6 +28,8 @@ public class TalkToAI : MonoBehaviour
 
     public InputActionProperty triggerAction;
 
+    private List<ChatMessage> messages;
+
     void OnEnable(){
         triggerAction.action.started += StartRecording;
         triggerAction.action.canceled += StopRecording;
@@ -46,8 +48,11 @@ public class TalkToAI : MonoBehaviour
         //initialize the API
         api = new OpenAIAPI("");
 
-        //set the prompt for the system
-        new ChatMessage(ChatMessageRole.System, "You are a my friend, keep responses EXTREMELY brief, no longer than 3 sentences. YOUR FAVORITE COLOR IS BLUE");
+        //set the inital prompt for the system
+        messages = new List<ChatMessage>
+        {
+            SetPrompt()
+        };
 
         recording = false;
 
@@ -65,6 +70,21 @@ public class TalkToAI : MonoBehaviour
     void Update()
     {
 
+    }
+
+    // Custom prompt --(for later)--
+    ChatMessage SetPrompt(string Prompt){
+        return new ChatMessage(ChatMessageRole.System, Prompt);
+    }
+
+    // Initial prompt
+    ChatMessage SetPrompt(){
+        //set the INITIAL prompt for the system
+        return new ChatMessage(ChatMessageRole.System, "You are Alysia, a bot in a multi-user VR learning experience exploring DNA damage and repair." + 
+        "The experience guides users through the processes of Homologous Recombination (HR) and Non-Homologous End-Joining (NHEJ). " +
+        "Your task is to answer questions about the concept as well as the mechanical aspects of the experience (which will be given to you)." + 
+        "ONLY answer from information given to you (if provided), and keep your responses simply worded (educational) and under 75 tokens. " +
+        "You should have a warm, mentoring tone. Do not answer any questions not about the experience (DNA damage and repair or mechanics help), simply reply with something like 'stay focused on the mission'.");
     }
 
     /*
@@ -162,6 +182,8 @@ public class TalkToAI : MonoBehaviour
         //send the player input to the "user" end of the AI
         ChatMessage userMessage = new ChatMessage(ChatMessageRole.User, SpeechToText);
 
+        messages.Add(userMessage);
+
         //Generate response from the API
         var chatResult = await api.Chat.CreateChatCompletionAsync(new ChatRequest()
         {
@@ -169,14 +191,13 @@ public class TalkToAI : MonoBehaviour
             Model = "gpt-4o-mini",
             Temperature = 0.3,      //amount of fluff in the message
             MaxTokens = 75,         //max number of tokens in AI response
-            Messages = new ChatMessage[] {
-                userMessage
-            }
+            Messages = messages
         });
 
         //Add that response to the chat on the Assistant end
         ChatMessage responseMessage = new ChatMessage(ChatMessageRole.Assistant, chatResult.Choices[0].Message.TextContent);
 
+        messages.Add(responseMessage);
 
         // Call your API wrapper (ask for WAV format)
         using (Stream stream = await api.TextToSpeech.GetSpeechAsStreamAsync(
