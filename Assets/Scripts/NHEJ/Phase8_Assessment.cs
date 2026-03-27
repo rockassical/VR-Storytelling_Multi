@@ -43,26 +43,42 @@ public class Phase8_Assessment : NHEJPhaseHandler
         if (phaseTitle != null)
             phaseTitle.text = "NHEJ Repair Complete";
 
-        // Calculate a simple score based on total repair time
-        float score = Mathf.Clamp(maxScore - (totalTime * 0.5f), 10f, maxScore);
+        // Scores from each phase
+        float placementScore = NHEJManager.Instance != null
+            ? NHEJManager.Instance.GapFillScore : maxScore;
+        float trimScore = NHEJManager.Instance != null
+            ? NHEJManager.Instance.TrimmingScore * 100f : 100f;
+
+        // Weighted: 60% gap fill accuracy + 25% trim precision + 15% time bonus
+        float timeBonus  = Mathf.Clamp(15f - totalTime * 0.08f, 0f, 15f);
+        float finalScore = Mathf.Clamp(placementScore * 0.6f + trimScore * 0.25f + timeBonus, 0f, maxScore);
+
+        string trimRating = trimScore >= 80f ? "Clean cut" :
+                            trimScore >= 50f ? "Some waste" : "Excessive trim";
+
+        string placementRating = placementScore >= 80f ? "Excellent" :
+                                 placementScore >= 60f ? "Good" :
+                                 placementScore >= 40f ? "Fair" : "Needs Work";
 
         if (scoreText != null)
-            scoreText.text = $"Score: {score:F0} / {maxScore:F0}\nTime: {totalTime:F1}s";
+            scoreText.text = $"Score: {finalScore:F0} / {maxScore:F0}\n" +
+                             $"Trim precision:    {trimScore:F0}%  ({trimRating})\n" +
+                             $"Placement accuracy: {placementScore:F0}%  ({placementRating})\n" +
+                             $"Time: {totalTime:F1}s";
 
         if (summaryText != null)
         {
             summaryText.text =
                 "Non-Homologous End Joining (NHEJ) is the primary pathway for repairing " +
                 "DNA double-strand breaks in human cells.\n\n" +
-                "Key steps completed:\n" +
-                "1. Ku70/80 recognized and bound the broken ends\n" +
-                "2. DNA-PKcs docked and autophosphorylated\n" +
-                "3. Artemis trimmed incompatible overhangs\n" +
-                "4. XRCC4/XLF scaffold aligned the ends\n" +
-                "5. DNA Ligase IV sealed the nicks\n" +
-                "6. VCP/p97 removed Ku for final cleanup\n\n" +
+                "Steps completed in this session:\n" +
+                "1. Artemis trimmed the incompatible overhang from the broken end\n" +
+                "2. DNA wall segments were manually repositioned to bridge the gap\n" +
+                "3. LigaseIV sealed each segment in place, locking the repair\n\n" +
+                "The closer your segments were to the correct positions when sealed, " +
+                "the higher your placement accuracy score.\n\n" +
                 "NHEJ is fast but error-prone — small insertions or deletions " +
-                "may occur at the repair site.";
+                "may occur at the repair site, especially when overhangs are trimmed.";
         }
 
         // Show DNA comparison

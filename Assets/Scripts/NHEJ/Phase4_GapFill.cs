@@ -1,107 +1,198 @@
 using System.Collections;
+using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-// Phase 4 (not implemented fully yet): Gap fill — players place nucleotides into gap positions (to test, make sure Include Gap Fill is true in NHEJManager)
+// Phase 4 (revamped): Gap Fill
+//
+// Flow:
+//   1. Ask NHEJBreakPoint for the gap positions left by the explosion in Phase 3.
+//   2. Show gap-fill glow indicators at each gap slot.
+//   3. Server spawns one DNAWallSegment (gapSegmentPrefab) per gap slot, scattered nearby.
+//      Each segment's correct position = the matching gap slot position.
+//   4. Server spawns LigaseIV spray can(s).
+//   5. Players grab segments and move them toward the gap; yellow glow hints "close enough".
+//      Pull the spray can trigger near a segment to seal it — score = placement accuracy.
+//   6. When all segments are sealed → average score → report → advance to Phase8_Assessment.
+//
+// Scene setup:
+//   - Assign gapSegmentPrefab (DNAWallSegment prefab, registered in NetworkPrefabs).
+//   - Assign ligaseSprayCanPrefab (LigaseSprayCan + NetworkObject, in NetworkPrefabs).
+//   - Optionally assign sprayCanSpawnPoints; otherwise cans spawn near DNA centre.
+//   - NHEJBreakPoint on the DNA_testcuts root is referenced via manager.BreakPoint.
 public class Phase4_GapFill : NHEJPhaseHandler
 {
-    [Header("Gap Sockets")]
-    [SerializeField] GameObject[] player1GapSockets;
-    [SerializeField] GameObject[] player2GapSockets;
+    [Header("Gap Segment Prefab (spawned at runtime per gap slot)")]
+    [Tooltip("DNAWallSegment prefab — one instance spawned per explosion gap slot.")]
+    [SerializeField] GameObject gapSegmentPrefab;
+    [Tooltip("How far above and to the side of the gap slot to scatter spawned segments.")]
+    [SerializeField] float spawnScatterRadius = 0.25f;
 
-    [Header("Nucleotide Prefabs")]
-    [SerializeField] GameObject nucleotidePrefab;
-    [SerializeField] Transform[] nucleotideSpawnPoints;
+    [Header("LigaseIV Spray Can")]
+    [Tooltip("Prefab with LigaseSprayCan + NetworkObject. Must be in NetworkPrefabs list.")]
+    [SerializeField] GameObject ligaseSprayCanPrefab;
+    [Tooltip("Where spray cans are spawned. One can per point. Leave empty for a single can at DNA centre.")]
+    [SerializeField] Transform[] sprayCanSpawnPoints;
 
-    [Header("Feedback")]
-    [SerializeField] float wrongPlacementWobbleDuration = 0.5f;
+    [Header("Timing")]
+    [SerializeField] float completionPause = 1.2f;
 
     public override bool IsAutomatic => false;
 
-    bool[] player1SocketFilled;
-    bool[] player2SocketFilled;
+    readonly List<NetworkObject> spawnedSprayCans = new();
+    readonly List<DNAWallSegment> spawnedSegments = new();
+    int sealedCount;
+    float totalScore;
+    bool phaseEnded;
+
+    // ── NHEJPhaseHandler ──────────────────────────────────────────────────────
 
     public override void Setup()
     {
-        player1SocketFilled = new bool[player1GapSockets != null ? player1GapSockets.Length : 0];
-        player2SocketFilled = new bool[player2GapSockets != null ? player2GapSockets.Length : 0];
+        sealedCount = 0;
+        totalScore  = 0f;
+        phaseEnded  = false;
+        spawnedSegments.Clear();
     }
 
     public override void StartPhase()
     {
-        SetSocketsActive(player1GapSockets, true);
-        SetSocketsActive(player2GapSockets, true);
-
         if (NHEJAudio.Instance != null)
             NHEJAudio.Instance.PlayPhaseAdvance();
+
+        // Show gap-fill glow indicators on all clients.
+        manager.BreakPoint?.ShowGapFillGlows();
+
+        if (manager.IsServer)
+            StartCoroutine(RunPhase());
     }
 
-    public override void UpdatePhase()
-    {
-        // Check if all sockets are filled
-        if (AllFilled(player1SocketFilled) && AllFilled(player2SocketFilled))
-        {
-            if (manager != null && manager.IsServer)
-            {
-                manager.AdvancePhase();
-            }
-        }
-    }
+    public override void UpdatePhase() { }
 
     public override void CompletePhase()
     {
-        SetSocketsActive(player1GapSockets, false);
-        SetSocketsActive(player2GapSockets, false);
-    }
+        manager.BreakPoint?.HideGapFillGlows();
 
-
-    public void FillSocket(GameObject socket, ulong clientId)
-    {
-        int role = manager.GetPlayerRole(clientId);
-
-        if (role == 1 && TryFillSocket(player1GapSockets, player1SocketFilled, socket))
+        if (manager.IsServer)
         {
-            if (NHEJAudio.Instance != null) NHEJAudio.Instance.PlaySnap();
-            if (AllFilled(player1SocketFilled))
-                manager.ReportPlayerCompleteServerRpc(clientId);
-        }
-        else if (role == 2 && TryFillSocket(player2GapSockets, player2SocketFilled, socket))
-        {
-            if (NHEJAudio.Instance != null) NHEJAudio.Instance.PlaySnap();
-            if (AllFilled(player2SocketFilled))
-                manager.ReportPlayerCompleteServerRpc(clientId);
+            foreach (var no in spawnedSprayCans)
+                if (no != null && no.IsSpawned) no.Despawn();
+            spawnedSprayCans.Clear();
+
+            foreach (var seg in spawnedSegments)
+                if (seg != null && seg.NetworkObject != null && seg.NetworkObject.IsSpawned)
+                    seg.NetworkObject.Despawn();
+            spawnedSegments.Clear();
         }
     }
 
-    bool TryFillSocket(GameObject[] sockets, bool[] filled, GameObject socket)
+    // ── Server orchestration ──────────────────────────────────────────────────
+
+    IEnumerator RunPhase()
     {
-        if (sockets == null) return false;
-        for (int i = 0; i < sockets.Length; i++)
+        // Small pause so glow indicators register before segments appear.
+        yield return new WaitForSeconds(0.5f);
+
+        SpawnGapSegments();
+        SpawnSprayCans();
+    }
+
+    // ── Gap Segment Spawning ──────────────────────────────────────────────────
+
+    void SpawnGapSegments()
+    {
+        if (gapSegmentPrefab == null || manager.BreakPoint == null)
         {
-            if (sockets[i] == socket && !filled[i])
+            Debug.LogWarning("[NHEJ Phase4] gapSegmentPrefab or BreakPoint not assigned.");
+            return;
+        }
+
+        var positions = manager.BreakPoint.GetGapFillPositions();
+        for (int i = 0; i < positions.Count; i++)
+        {
+            Vector3 gapPos = positions[i];
+
+            // Scatter spawn position near the gap so players have to move it back.
+            Vector3 scatter = new Vector3(
+                UnityEngine.Random.Range(-spawnScatterRadius, spawnScatterRadius),
+                UnityEngine.Random.Range(0.1f, spawnScatterRadius),
+                UnityEngine.Random.Range(-spawnScatterRadius, spawnScatterRadius));
+            Vector3 spawnPos = gapPos + scatter;
+
+            var go  = Instantiate(gapSegmentPrefab, spawnPos, Quaternion.identity);
+            var no  = go.GetComponent<NetworkObject>();
+            var seg = go.GetComponent<DNAWallSegment>();
+            no?.Spawn();
+
+            if (seg != null && no != null)
             {
-                filled[i] = true;
-                return true;
+                seg.SetCorrectPosition(gapPos);
+                spawnedSegments.Add(seg);
             }
         }
-        return false;
+
+        Debug.Log($"[NHEJ Phase4] Spawned {positions.Count} gap segment(s).");
     }
 
-    bool AllFilled(bool[] filled)
+    // ── Spray Can Spawning ────────────────────────────────────────────────────
+
+    void SpawnSprayCans()
     {
-        if (filled == null || filled.Length == 0) return true;
-        foreach (bool f in filled)
+        if (ligaseSprayCanPrefab == null) return;
+
+        int count = sprayCanSpawnPoints != null && sprayCanSpawnPoints.Length > 0
+            ? sprayCanSpawnPoints.Length : 1;
+
+        for (int i = 0; i < count; i++)
         {
-            if (!f) return false;
+            Vector3 pos = sprayCanSpawnPoints != null && i < sprayCanSpawnPoints.Length
+                ? sprayCanSpawnPoints[i].position
+                : GetDNACenter() + Vector3.up * 0.3f + Vector3.right * (i * 0.3f);
+
+            var go = Instantiate(ligaseSprayCanPrefab, pos, Quaternion.identity);
+            var no = go.GetComponent<NetworkObject>();
+            no?.Spawn();
+            if (no != null) spawnedSprayCans.Add(no);
         }
-        return true;
+
+        Debug.Log($"[NHEJ Phase4] Spawned {count} LigaseSprayCan(s).");
     }
 
-    void SetSocketsActive(GameObject[] sockets, bool active)
+    // ── Called by LigaseSprayCan (server-side) ────────────────────────────────
+
+    /// <summary>Server-only. Called by LigaseSprayCan.RequestSealServerRpc when a segment is sealed.</summary>
+    public void OnSegmentSealed(DNAWallSegment segment, float score)
     {
-        if (sockets == null) return;
-        foreach (var s in sockets)
-        {
-            if (s != null) s.SetActive(active);
-        }
+        if (!manager.IsServer || phaseEnded) return;
+
+        sealedCount++;
+        totalScore += Mathf.Clamp01(score);
+
+        int total = spawnedSegments.Count;
+        Debug.Log($"[NHEJ Phase4] Segment sealed — score={score:P0} ({sealedCount}/{total})");
+
+        if (sealedCount >= total)
+            StartCoroutine(FinishPhase());
+    }
+
+    IEnumerator FinishPhase()
+    {
+        phaseEnded = true;
+        yield return new WaitForSeconds(completionPause);
+
+        int total = spawnedSegments.Count;
+        float avgScore = total > 0 ? (totalScore / total) * 100f : 100f;
+
+        manager.ReportGapFillScore(avgScore);
+        manager.AdvancePhase();
+    }
+
+    // ── Helpers ───────────────────────────────────────────────────────────────
+
+    Vector3 GetDNACenter()
+    {
+        if (manager.LeftDNAEnd != null && manager.RightDNAEnd != null)
+            return (manager.LeftDNAEnd.position + manager.RightDNAEnd.position) * 0.5f;
+        return manager.LeftDNAEnd?.position ?? Vector3.zero;
     }
 }

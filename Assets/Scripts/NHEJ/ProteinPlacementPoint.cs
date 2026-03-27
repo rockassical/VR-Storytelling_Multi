@@ -1,5 +1,5 @@
 using UnityEngine;
-//e
+
 public class ProteinPlacementPoint : MonoBehaviour
 {
     [Tooltip("Which player role this target is for (1 = P1/p53, 2 = P2/ATM)")]

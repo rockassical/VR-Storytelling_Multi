@@ -69,7 +69,8 @@ public class TrimPoint : MonoBehaviour
             }
         }
 
-        NHEJManager.Instance.ReportTrimServerRpc(pointIndex, clientId, assignedPlayerRole);
+        // DISABLED — ReportTrimServerRpc replaced by ArtemisBlade/ReportCutServerRpc.
+        // NHEJManager.Instance.ReportTrimServerRpc(pointIndex, clientId, assignedPlayerRole);
     }
 
     public void PerformTrim()
