@@ -10,12 +10,16 @@ using OpenAI_API.Audio;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEngine.Networking;
+using TMPro;
+using UnityEngine.UI;
 
 public class TalkToAI : MonoBehaviour
 {
     
     [SerializeField] private AudioClip MicClip;
     [SerializeField] private string SpeechToText;
+
+    public GameObject Camera;
 
     float timer = 10f;
     bool timerFinished = false;
@@ -29,6 +33,14 @@ public class TalkToAI : MonoBehaviour
     public InputActionProperty triggerAction;
 
     private List<ChatMessage> messages;
+
+    [Header("UI Elements")]
+    public GameObject LLMUI;
+    public GameObject RecordingUI;
+    public GameObject ConfirmationUI;
+    public TextMeshProUGUI ConfirmationText;
+    public Button ConfirmButton;
+    public Button CancelButton;
 
     void OnEnable(){
         triggerAction.action.started += StartRecording;
@@ -64,12 +76,9 @@ public class TalkToAI : MonoBehaviour
         {
             Debug.LogError("No microphone detected.");
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
+        ConfirmButton.onClick.AddListener(() => ConfirmInput());
+        CancelButton.onClick.AddListener(() => CancelInput());
     }
 
     // Custom prompt --(for later)--
@@ -84,7 +93,27 @@ public class TalkToAI : MonoBehaviour
         "The experience guides users through the processes of Homologous Recombination (HR) and Non-Homologous End-Joining (NHEJ). " +
         "Your task is to answer questions about the concept as well as the mechanical aspects of the experience (which will be given to you)." + 
         "ONLY answer from information given to you (if provided), and keep your responses simply worded (educational) and under 75 tokens. " +
-        "You should have a warm, mentoring tone. Do not answer any questions not about the experience (DNA damage and repair or mechanics help), simply reply with something like 'stay focused on the mission'.");
+        "You should have a warm, mentoring tone. Do not answer any questions not about the experience (i.e. not questions about DNA damage and repair or mechanics help), " +
+        "simply reply with something like 'stay focused on the mission'.");
+    }
+
+    void ShowRecordingUI(){
+        LLMUI.SetActive(true);
+        RecordingUI.SetActive(true);
+        ConfirmationUI.SetActive(false);
+
+        //LLMUI.transform.parent = Camera.transform.parent;
+    }
+
+    void CloseRecordingUI(){
+        LLMUI.SetActive(false);
+    }
+
+    void ShowConfirmationUI(string message){
+        RecordingUI.SetActive(false);
+        ConfirmationUI.SetActive(true);
+
+        ConfirmationText.text = message;
     }
 
     /*
@@ -120,6 +149,8 @@ public class TalkToAI : MonoBehaviour
         MicClip = Microphone.Start(micName, false, 30, 16000);
 
         Debug.Log("Recording started...");
+
+        ShowRecordingUI();
     }
 
     public void StopRecording(InputAction.CallbackContext ctx)
@@ -172,7 +203,17 @@ public class TalkToAI : MonoBehaviour
 
         //print it
         Debug.Log(SpeechToText);
+
+        ShowConfirmationUI(SpeechToText);
+    }
+
+    void ConfirmInput(){
         AiTalk();
+        CloseRecordingUI();
+    }
+
+    void CancelInput(){
+        CloseRecordingUI();
     }
 
     /*
