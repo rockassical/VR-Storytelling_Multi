@@ -10,6 +10,9 @@ public class GunInputXR : MonoBehaviour
     [Header("Input")]
     [SerializeField] InputActionProperty scanAction;
 
+    [Header("Socket Interaction Objects")]
+    public GameObject[] Sockets;
+
     void Awake()
     {
         grab = GetComponent<XRGrabInteractable>();
@@ -34,11 +37,30 @@ public class GunInputXR : MonoBehaviour
         {
             Scan();
         }
+        else if(scanAction.action.WasReleasedThisFrame())
+        {
+            UnScan();
+        }
     }
 
 
     void Scan(){
         ScanPulse.SetActive(true);
+    }
+
+    void UnScan(){
+        ScanPulse.SetActive(false);
+    }
+
+    public void OnTriggerEnter(Collider col){
+        if(col.gameObject.tag.Equals("Scannable")){
+
+            Debug.Log("TEMPLATE SCANNED");
+
+            foreach(GameObject Socket in Sockets){
+                Socket.SetActive(true);
+            }
+        }
     }
 
 }
