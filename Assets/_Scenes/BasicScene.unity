@@ -39,7 +39,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1998452, g: 0.39221776, b: 0.78463286, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -365,7 +364,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ResetTransform: {fileID: 1519829579}
-  m_ResetTime: 0.25
 --- !u!1 &297582240
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,7 +459,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ResetTransform: {fileID: 1519829579}
-  m_ResetTime: 0.25
 --- !u!1001 &333690195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -922,7 +919,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ResetTransform: {fileID: 1519829579}
-  m_ResetTime: 0.25
 --- !u!1001 &367510380
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3886,7 +3882,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ResetTransform: {fileID: 1519829579}
-  m_ResetTime: 0.25
 --- !u!1 &2008523592 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5087823492143518475, guid: 3967f87296c892e40b57e37bc8601550,
@@ -4002,7 +3997,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ResetTransform: {fileID: 1519829579}
-  m_ResetTime: 0.25
 --- !u!1 &2035227294
 GameObject:
   m_ObjectHideFlags: 0
@@ -4098,7 +4092,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ResetTransform: {fileID: 1519829579}
-  m_ResetTime: 0.25
 --- !u!1001 &2053311401
 PrefabInstance:
   m_ObjectHideFlags: 0

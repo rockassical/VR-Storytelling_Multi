@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 5185231984917197338}
   - component: {fileID: 1715446783570025663}
   - component: {fileID: 3293349416794078848}
+  - component: {fileID: -7192894992763684593}
+  - component: {fileID: -3408338615113986394}
   m_Layer: 5
   m_Name: Input Field Global Keyboard
   m_TagString: Untagged
@@ -204,6 +206,49 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RaycastTriggerInteraction: 1
+--- !u!114 &-7192894992763684593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5185231984917197337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: 0}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &-3408338615113986394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5185231984917197337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017c5e3933235514c9520e1dace2a4b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ActionAssets: []
 --- !u!1 &8437028974135710644
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,6 +445,7 @@ MonoBehaviour:
   m_MonitorInputFieldCharacterLimit: 0
   m_ClearTextOnSubmit: 0
   m_ClearTextOnOpen: 0
+  m_HideKeyboardOnDisable: 1
   m_OnTextSubmitted:
     m_PersistentCalls:
       m_Calls: []
