@@ -1,84 +1,61 @@
 using UnityEngine;
-using TMPro;
-using UnityEngine.XR.Interaction.Toolkit.Interactors; // Required for XRRayInteractor
-using UnityEngine.EventSystems; // Required for RaycastResult (UI)
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
-public class XRPointerInspector : MonoBehaviour
+public class InteractableObjectsUI : MonoBehaviour
 {
-    [Header("Interactors to Watch")]
-    public XRRayInteractor leftHandRay;
-    public XRRayInteractor rightHandRay;
+    public XRRayInteractor _leftInteractor, _rightInteractor;
 
-    [Header("UI Output (Optional)")]
-    public TextMeshProUGUI infoLabel;
-
-    [Header("Current Data (Read Only)")]
-    [SerializeField] private GameObject currentObject;
-    [SerializeField] private string objectTag;
-    [SerializeField] private string objectLayer;
-
-    private void Update()
+    private void OnEnable()
     {
-        // Check both hands, prioritizing the right hand
-        if (!CheckPointer(rightHandRay))
+        // In XRI 3.x, we subscribe to the interactor's hoverEvents
+        if (_leftInteractor != null)
         {
-            if (!CheckPointer(leftHandRay))
-            {
-                ClearInfo();
-            }
+            _leftInteractor.hoverEntered.AddListener(OnLeftHoverEnter);
+            _leftInteractor.hoverExited.AddListener(OnLeftHoverExit);
+        }
+
+        if (_rightInteractor != null)
+        {
+            _rightInteractor.hoverEntered.AddListener(OnRightHoverEnter);
+            _rightInteractor.hoverExited.AddListener(OnRightHoverExit);
         }
     }
 
-    private bool CheckPointer(XRRayInteractor interactor)
+    private void OnDisable()
     {
-        if (interactor == null) return false;
-
-        // 1. Check for UI Hits (Canvas Buttons, Sliders, etc.)
-        if (interactor.TryGetCurrentUIRaycastResult(out RaycastResult uiHit))
+        if (_leftInteractor != null)
         {
-            UpdateInfo(uiHit.gameObject);
-            return true;
+            _leftInteractor.hoverEntered.RemoveListener(OnLeftHoverEnter);
+            _leftInteractor.hoverExited.RemoveListener(OnLeftHoverExit);
         }
 
-        // 2. Check for 3D Hits (Cubes, Props, Doors)
-        if (interactor.TryGetCurrent3DRaycastHit(out RaycastHit hit))
+        if (_rightInteractor != null)
         {
-            UpdateInfo(hit.collider.gameObject);
-            return true;
+            _rightInteractor.hoverEntered.RemoveListener(OnRightHoverEnter);
+            _rightInteractor.hoverExited.RemoveListener(OnRightHoverExit);
         }
-
-        return false;
     }
 
-    private void UpdateInfo(GameObject target)
+    // Event handlers for the Left Hand
+    private void OnLeftHoverEnter(HoverEnterEventArgs args)
     {
-        // Only update logic if the object actually changed to save performance
-        if (currentObject == target) return;
-
-        currentObject = target;
-        objectTag = target.tag;
-        objectLayer = LayerMask.LayerToName(target.layer);
-
-        string message = $"<b>Pointing At:</b> {target.name}\n" +
-                        $"<b>Tag:</b> {objectTag}\n" +
-                        $"<b>Layer:</b> {objectLayer}";
-
-        if (infoLabel != null) infoLabel.text = message;
-
-        Debug.Log($"Pointer is over: {target.name}");
+        Debug.Log($"<color=cyan>Left Hand</color> hovering over: {args.interactableObject.transform.name}");
     }
 
-    private void ClearInfo()
+    private void OnLeftHoverExit(HoverExitEventArgs args)
     {
-        if (currentObject == null) return;
-
-        currentObject = null;
-        objectTag = "";
-        objectLayer = "";
-
-        if (infoLabel != null) infoLabel.text = "Searching for targets...";
+        Debug.Log("<color=cyan>Left Hand</color> stopped hovering.");
     }
 
-    // Public helper method to let other scripts get the object easily
-    public GameObject GetLookedAtObject() => currentObject;
+    // Event handlers for the Right Hand
+    private void OnRightHoverEnter(HoverEnterEventArgs args)
+    {
+        Debug.Log($"<color=yellow>Right Hand</color> hovering over: {args.interactableObject.transform.name}");
+    }
+
+    private void OnRightHoverExit(HoverExitEventArgs args)
+    {
+        Debug.Log("<color=yellow>Right Hand</color> stopped hovering.");
+    }
 }

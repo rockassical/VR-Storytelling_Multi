@@ -6126,6 +6126,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2748768652705426562, guid: 77ac6b10722bcca4a8baf70e44d89e78,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2841105847340944790, guid: 77ac6b10722bcca4a8baf70e44d89e78,
         type: 3}
       propertyPath: m_IsActive
@@ -13065,7 +13070,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MicClip: {fileID: 0}
   SpeechToText: 
+  Camera: {fileID: 0}
   audioSource: {fileID: 1585063946}
+  triggerAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: 
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: dcf18d37-12e5-46a3-aaee-f1c2516048fb
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
+  LLMUI: {fileID: 0}
+  RecordingUI: {fileID: 0}
+  ConfirmationUI: {fileID: 0}
+  ConfirmationText: {fileID: 0}
+  ConfirmButton: {fileID: 0}
+  CancelButton: {fileID: 0}
 --- !u!1 &712534819
 GameObject:
   m_ObjectHideFlags: 0
@@ -23236,12 +23260,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb86b739a1cd8045a018590491baa21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftHandRay: {fileID: 275202719}
-  rightHandRay: {fileID: 993763179}
-  infoLabel: {fileID: 142401701}
-  currentObject: {fileID: 0}
-  objectTag: 
-  objectLayer: 
+  _leftInteractor: {fileID: 275202719}
+  _rightInteractor: {fileID: 993763179}
 --- !u!1 &1433617929
 GameObject:
   m_ObjectHideFlags: 0
@@ -27200,6 +27220,7 @@ MonoBehaviour:
         m_Flags: 0
       m_Flags: 0
     m_Reference: {fileID: 0}
+  Sockets: []
 --- !u!114 &1674552402
 MonoBehaviour:
   m_ObjectHideFlags: 0
