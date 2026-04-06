@@ -8,6 +8,15 @@ public class InteractableObjectsUI : MonoBehaviour
     public TextMeshProUGUI rightControllerUIText, leftControllerUIText;
     public XRInteractionGroup rightTargetGroup, leftTargetGroup;
 
+    private Transform mainCameraTransform;
+    //public Transform _rightControllerTransform, _leftControllerTransform, rightControllerUITransform, leftControllerUITranform;
+    //public Transform interactionUITransform;
+    private void Start()
+    {
+        if (Camera.main != null)
+            mainCameraTransform = Camera.main.transform;
+    }
+
     void Update()
     {
         string rightInteractableObjName = GetRightHoveredObjectName();
@@ -20,6 +29,24 @@ public class InteractableObjectsUI : MonoBehaviour
         {
             leftControllerUIText.text = leftInteractableObjName;
         }
+
+        //PositionUI();
+    }
+
+    private void PositionUI()
+    {
+        //if(_leftControllerTransform != null && leftControllerUITranform != null)
+        //{
+        //    leftControllerUITranform = _leftControllerTransform;
+        //    leftControllerUITranform.LookAt(mainCameraTransform);
+        //}
+        //if(_rightControllerTransform != null && rightControllerUIText != null)
+        //{
+        //    rightControllerUITransform = _rightControllerTransform;
+        //    rightControllerUITransform.LookAt(mainCameraTransform);
+        //}
+
+        
     }
 
     public string GetRightHoveredObjectName()
