@@ -32,6 +32,12 @@ public class Phase1_KuBinding : NHEJPhaseHandler
     {
         if (NHEJAudio.Instance != null) NHEJAudio.Instance.PlayPhaseAdvance();
 
+        if (manager.ShowPlacementIndicators)
+        {
+            leftDNATarget?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(true);
+            rightDNATarget?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(true);
+        }
+
         if (!manager.IsServer || kuPickupPrefab == null) return;
 
         Vector3 center = GetDNACenter();
@@ -55,6 +61,9 @@ public class Phase1_KuBinding : NHEJPhaseHandler
 
     public override void CompletePhase()
     {
+        leftDNATarget?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(false);
+        rightDNATarget?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(false);
+
         // Ku proteins stay in the scene after placement — they're now bound to the DNA ends.
         // Phase 7 will animate and despawn them. Clear references only.
         leftKuObject  = null;

@@ -1,12 +1,39 @@
 using UnityEngine;
 
-// Visual scene marker indicating where a player should place their orbiting protein.
-// Phase handlers reference these Transforms via serialized fields to pass snap positions
-// to ProteinOrbitController.Configure(). No runtime logic — purely a placement guide.
 public class ProteinPlacementPoint : MonoBehaviour
 {
     [Tooltip("Which player role this target is for (1 = P1/p53, 2 = P2/ATM)")]
     public int playerRole = 1;
+
+    [Tooltip("Translucent material for the runtime placement indicator sphere. Assign a URP/Standard transparent material in the inspector.")]
+    [SerializeField] Material indicatorMaterial;
+
+    [Tooltip("Fallback radius if no SphereCollider is attached. Should match ProteinOrbitController.snapRadius.")]
+    [SerializeField] float indicatorRadius = 0.06f;
+
+    GameObject indicatorSphere;
+
+    void Awake()
+    {
+        var col = GetComponent<SphereCollider>();
+        float radius = col != null ? col.radius : indicatorRadius;
+
+        indicatorSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        indicatorSphere.name = "PlacementIndicator";
+        indicatorSphere.transform.SetParent(transform, false);
+        indicatorSphere.transform.localPosition = Vector3.zero;
+        indicatorSphere.transform.localScale = Vector3.one * radius * 2f;
+
+        Destroy(indicatorSphere.GetComponent<Collider>());
+
+        if (indicatorMaterial != null)
+            indicatorSphere.GetComponent<MeshRenderer>().material = indicatorMaterial;
+    }
+    public void SetIndicatorVisible(bool visible)
+    {
+        if (indicatorSphere != null)
+            indicatorSphere.SetActive(visible);
+    }
 
     void OnDrawGizmos()
     {

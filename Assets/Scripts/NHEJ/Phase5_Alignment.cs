@@ -73,6 +73,9 @@ public class Phase5_Alignment : NHEJPhaseHandler
 
     public override void CompletePhase()
     {
+        scaffoldStartPoint?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(false);
+        scaffoldEndPoint?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(false);
+
         if (runCoroutine != null) { StopCoroutine(runCoroutine); runCoroutine = null; }
         if (localAnimCoroutine != null) { StopCoroutine(localAnimCoroutine); localAnimCoroutine = null; }
 
@@ -137,6 +140,12 @@ public class Phase5_Alignment : NHEJPhaseHandler
             if (rightNPC != null) StartCoroutine(rightNPC.Depart(Vector3.up + Vector3.right, 3f, pkcsDepartDuration));
         }
         yield return new WaitForSeconds(pkcsDepartDuration);
+
+        if (manager.ShowPlacementIndicators)
+        {
+            scaffoldStartPoint?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(true);
+            scaffoldEndPoint?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(true);
+        }
 
         // Server despawns the PKcs NetworkObjects after departure animation.
         if (manager.IsServer && phase2Handler != null)

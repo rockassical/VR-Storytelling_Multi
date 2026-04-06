@@ -5,9 +5,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 // Drives the Artemis tool in a circular orbit around the DNA break site.
-// Orbit pauses when a player grabs the tool. On release, if the tool is within
-// snapRadius of a valid TrimPoint, it snaps there and fires the trim.
-// Otherwise the tool resumes orbiting.
+// Orbit pauses when a player grabs the tool.
+// Cutting is now handled by ArtemisBlade (child component with trigger collider) — the
+// snap-to-TrimPoint release mechanic is disabled but preserved below for easy reversion.
 [RequireComponent(typeof(NHEJTool))]
 public class ArtemisOrbitController : NetworkBehaviour
 {
@@ -92,12 +92,13 @@ public class ArtemisOrbitController : NetworkBehaviour
     void OnReleased(SelectExitEventArgs _)
     {
         isGrabbed = false;
-        if (isPlaced) return;
+        // Orbit resumes automatically in Update() since isGrabbed is now false.
+        // Cut detection is handled by ArtemisBlade (child trigger collider) — no snap needed here.
 
-        // Find the nearest unfinished TrimPoint within snap range
+        /* DISABLED (snap-to-TrimPoint — preserved for reversion):
+        if (isPlaced) return;
         TrimPoint closest = null;
         float bestDist = snapRadius;
-
         if (trimPoints != null)
         {
             foreach (var tp in trimPoints)
@@ -107,16 +108,14 @@ public class ArtemisOrbitController : NetworkBehaviour
                 if (d < bestDist) { bestDist = d; closest = tp; }
             }
         }
-
         if (closest != null)
         {
             isPlaced = true;
             transform.position = closest.transform.position;
             closest.OnToolActivated(NetworkManager.Singleton.LocalClientId);
-            // Reset after a short delay so the next player can use the tool for their end.
             ResetOrbitServerRpc();
         }
-        // If not close enough: isGrabbed=false, isPlaced=false → orbit resumes in Update
+        */
     }
 
     [ServerRpc(RequireOwnership = false)]

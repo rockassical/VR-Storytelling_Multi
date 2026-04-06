@@ -53,6 +53,12 @@ public class Phase7_Cleanup : NHEJPhaseHandler
     {
         if (NHEJAudio.Instance != null) NHEJAudio.Instance.PlayPhaseAdvance();
 
+        if (manager.ShowPlacementIndicators)
+        {
+            leftKuTarget?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(true);
+            rightKuTarget?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(true);
+        }
+
         if (!manager.IsServer || vcpPickupPrefab == null) return;
 
         Vector3 center = GetDNACenter();
@@ -79,6 +85,9 @@ public class Phase7_Cleanup : NHEJPhaseHandler
 
     public override void CompletePhase()
     {
+        leftKuTarget?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(false);
+        rightKuTarget?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(false);
+
         if (!manager.IsServer) return;
         if (vcp1Object != null && vcp1Object.IsSpawned) vcp1Object.Despawn();
         if (vcp2Object != null && vcp2Object.IsSpawned) vcp2Object.Despawn();

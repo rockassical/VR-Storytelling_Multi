@@ -1,144 +1,131 @@
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-// Phase 3: Artemis orbits the DNA break site like a conveyor. Players grab it
-// as it passes and place it at their assigned TrimPoint to trim the overhang.
-// Placing it within snapRadius of the correct TrimPoint auto-fires the trim;
-// once both players' ends are trimmed the phase advances automatically.
+// Phase 3: NHEJBreakPoint picks a random cut site in the DNA helix, blows up the centre,
+// and leaves glowing overhangs. Players grab Artemis and swing it through the overhang zone
+// (ArtemisBlade child trigger + runtime-generated OverhangZone). The cut fires wherever the
+// blade enters. Overhang segments are hidden and seam indicators removed by NHEJBreakPoint.
+// Phase advances when all required overhangs are cut.
 public class Phase3_Trimming : NHEJPhaseHandler
 {
-    [Header("Tool Prefab (NetworkObject — must also have ArtemisOrbitController)")]
+    [Header("Tool Prefab")]
     [SerializeField] GameObject artemisToolPrefab;
-
-    [Header("Trim Points")]
-    [SerializeField] TrimPoint[] player1TrimPoints;
-    [SerializeField] TrimPoint[] player2TrimPoints;
 
     public override bool IsAutomatic => false;
 
-    int player1Trimmed;
-    int player2Trimmed;
-    NetworkObject artemisObject; // single shared Artemis
+    bool player1Cut;
+    bool player2Cut;
+    NetworkObject artemisObject;
+
+    // ── NHEJPhaseHandler ──────────────────────────────────────────────────────
 
     public override void Setup()
     {
-        player1Trimmed = 0;
-        player2Trimmed = 0;
+        player1Cut = false;
+        player2Cut = false;
     }
 
     public override void StartPhase()
     {
-        DSBScenario scenario = manager.Scenario;
-        bool p1NeedsTrim = scenario == DSBScenario.LeftOverhangOnly || scenario == DSBScenario.BothOverhangs;
-        bool p2NeedsTrim = scenario == DSBScenario.RightOverhangOnly || scenario == DSBScenario.BothOverhangs;
+        DSBScenario scenario   = manager.Scenario;
+        bool p1NeedsCut = scenario == DSBScenario.LeftOverhangOnly  || scenario == DSBScenario.BothOverhangs;
+        bool p2NeedsCut = scenario == DSBScenario.RightOverhangOnly || scenario == DSBScenario.BothOverhangs;
 
-        Debug.Log($"[NHEJ] Phase3 scenario={scenario} p1Trim={p1NeedsTrim} p2Trim={p2NeedsTrim}");
-
-        // Activate only the TrimPoints relevant to this scenario
-        SetTrimPointsActive(player1TrimPoints, p1NeedsTrim);
-        SetTrimPointsActive(player2TrimPoints, p2NeedsTrim);
+        Debug.Log($"[NHEJ] Phase3 scenario={scenario} p1Cut={p1NeedsCut} p2Cut={p2NeedsCut}");
 
         if (manager.IsServer)
         {
-            // Spawn one Artemis for whichever ends need trimming.
-            // ArtemisOrbitController handles orbit + grab + placement on all clients.
-            if ((p1NeedsTrim || p2NeedsTrim) && artemisToolPrefab != null)
+            // Generate the random break on all clients (same seed = deterministic result everywhere).
+            int seed = UnityEngine.Random.Range(0, int.MaxValue);
+            manager.TriggerBreakGeneration(seed);
+
+            // Listen for overhang result. If the explosion left no overhangs (no red walls),
+            // skip Artemis entirely and advance straight to the next phase.
+            if (manager.BreakPoint != null)
+                manager.BreakPoint.OnOverhangsResolved += OnOverhangsResolved;
+
+            if ((p1NeedsCut || p2NeedsCut) && artemisToolPrefab != null)
             {
-                Vector3 spawnPos = GetDNACenter();
-                var go = Instantiate(artemisToolPrefab, spawnPos, Quaternion.identity);
+                var go = Instantiate(artemisToolPrefab, GetArtemisSpawnPos(), Quaternion.identity);
                 artemisObject = go.GetComponent<NetworkObject>();
-                artemisObject.Spawn(); // server-owned until a player grabs it
+                artemisObject.Spawn();
             }
 
-            if (!p1NeedsTrim) manager.ServerMarkPlayerComplete(1);
-            if (!p2NeedsTrim) manager.ServerMarkPlayerComplete(2);
+            // Auto-complete players who don't need a cut in this scenario.
+            if (!p1NeedsCut) manager.ServerMarkPlayerComplete(1);
+            if (!p2NeedsCut) manager.ServerMarkPlayerComplete(2);
         }
 
         if (NHEJAudio.Instance != null)
             NHEJAudio.Instance.PlayPhaseAdvance();
     }
 
+    void OnOverhangsResolved(bool hasOverhangs)
+    {
+        if (manager.BreakPoint != null)
+            manager.BreakPoint.OnOverhangsResolved -= OnOverhangsResolved;
+
+        if (!hasOverhangs)
+        {
+            Debug.Log("[NHEJ Phase3] No overhangs detected — skipping Artemis, advancing phase.");
+            manager.AdvancePhase();
+        }
+    }
+
     public override void UpdatePhase() { }
 
     public override void CompletePhase()
     {
+        if (manager.BreakPoint != null)
+            manager.BreakPoint.OnOverhangsResolved -= OnOverhangsResolved;
+
         if (manager.IsServer && artemisObject != null && artemisObject.IsSpawned)
             artemisObject.Despawn();
     }
 
-    public bool ValidateTrim(int pointIndex, int playerRole)
-    {
-        var points = playerRole == 1 ? player1TrimPoints : player2TrimPoints;
-        if (points == null) return false;
+    // ── Called by NHEJManager.ReportCutServerRpc (server-side) ───────────────
 
-        foreach (var tp in points)
-        {
-            if (tp.PointIndex == pointIndex && !tp.IsTrimmed)
-                return true;
-        }
-        return false;
-    }
-
-    public void ServerMarkTrimmed(int pointIndex, int role)
+    /// <summary>
+    /// Server-only. Called after a validated cut for the given player role.
+    /// Marks that player complete; phase advances when all required cuts are done.
+    /// </summary>
+    public void OnCutMade(int playerRole)
     {
-        if (role == 1 && player1TrimPoints != null && player1TrimPoints.Length > 0)
+        if (!manager.IsServer) return;
+
+        if (playerRole == 1 && !player1Cut)
         {
-            player1Trimmed++;
-            if (player1Trimmed >= player1TrimPoints.Length)
-                manager.ServerMarkPlayerComplete(1);
+            player1Cut = true;
+            manager.ServerMarkPlayerComplete(1);
+            Debug.Log("[NHEJ Phase3] Player 1 cut confirmed.");
         }
-        else if (role == 2 && player2TrimPoints != null && player2TrimPoints.Length > 0)
+        else if (playerRole == 2 && !player2Cut)
         {
-            player2Trimmed++;
-            if (player2Trimmed >= player2TrimPoints.Length)
-                manager.ServerMarkPlayerComplete(2);
+            player2Cut = true;
+            manager.ServerMarkPlayerComplete(2);
+            Debug.Log("[NHEJ Phase3] Player 2 cut confirmed.");
         }
     }
 
-    public void OnTrimConfirmed(int pointIndex, ulong clientId)
-    {
-        // Find and perform the trim on the correct point
-        TrimPoint[] allPoints = CombineArrays(player1TrimPoints, player2TrimPoints);
-        foreach (var tp in allPoints)
-        {
-            if (tp != null && tp.PointIndex == pointIndex)
-            {
-                tp.PerformTrim();
-                break;
-            }
-        }
+    // ── Helpers ───────────────────────────────────────────────────────────────
 
-        if (NHEJAudio.Instance != null)
-            NHEJAudio.Instance.PlayTrimSuccess();
+    Vector3 GetArtemisSpawnPos()
+    {
+        // Spawn Artemis near the DNA centre with a small offset so it's reachable in VR.
+        Vector3 centre = manager.LeftDNAEnd != null && manager.RightDNAEnd != null
+            ? (manager.LeftDNAEnd.position + manager.RightDNAEnd.position) * 0.5f
+            : (manager.LeftDNAEnd?.position ?? Vector3.zero);
+        return centre + Vector3.up * 0.3f;
     }
 
-    Vector3 GetDNACenter()
-    {
-        if (manager.LeftDNAEnd != null && manager.RightDNAEnd != null)
-            return (manager.LeftDNAEnd.position + manager.RightDNAEnd.position) * 0.5f;
-        if (manager.LeftDNAEnd != null) return manager.LeftDNAEnd.position;
-        if (manager.RightDNAEnd != null) return manager.RightDNAEnd.position;
-        return Vector3.zero;
-    }
+    /* DISABLED — TrimPoint mechanic preserved for reversion:
 
-    void SetTrimPointsActive(TrimPoint[] points, bool active)
-    {
-        if (points == null) return;
-        foreach (var tp in points)
-        {
-            if (tp != null) tp.gameObject.SetActive(active);
-        }
-    }
+    [Header("Trim Points (old snap-based mechanic — disabled)")]
+    [SerializeField] TrimPoint[] player1TrimPoints;
+    [SerializeField] TrimPoint[] player2TrimPoints;
 
-    static T[] CombineArrays<T>(T[] a, T[] b)
-    {
-        if (a == null && b == null) return new T[0];
-        if (a == null) return b;
-        if (b == null) return a;
-        var result = new T[a.Length + b.Length];
-        a.CopyTo(result, 0);
-        b.CopyTo(result, a.Length);
-        return result;
-    }
+    public bool ValidateTrim(int pointIndex, int playerRole) { ... }
+    public void ServerMarkTrimmed(int pointIndex, int role) { ... }
+    public void OnTrimConfirmed(int pointIndex, ulong clientId) { ... }
+    */
 }

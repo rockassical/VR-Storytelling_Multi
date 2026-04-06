@@ -32,6 +32,12 @@ public class Phase2_DNAPKcs : NHEJPhaseHandler
     {
         if (NHEJAudio.Instance != null) NHEJAudio.Instance.PlayPhaseAdvance();
 
+        if (manager.ShowPlacementIndicators)
+        {
+            leftDockTarget?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(true);
+            rightDockTarget?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(true);
+        }
+
         if (!manager.IsServer || dnaPKcsPickupPrefab == null) return;
 
         Vector3 center = GetDNACenter();
@@ -55,6 +61,9 @@ public class Phase2_DNAPKcs : NHEJPhaseHandler
 
     public override void CompletePhase()
     {
+        leftDockTarget?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(false);
+        rightDockTarget?.GetComponent<ProteinPlacementPoint>()?.SetIndicatorVisible(false);
+
         // PKcs proteins stay in the scene after placement.
         // Phase 5 will animate their departure and despawn them.
         leftPKcsObject  = null;

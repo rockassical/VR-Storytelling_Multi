@@ -13,6 +13,7 @@ public class NHEJManager : NetworkBehaviour
 
     [Header("Options")]
     [SerializeField] bool includeGapFill = true;
+    [SerializeField] bool showPlacementIndicators = true;
     [SerializeField] DSBScenario dsbScenario = DSBScenario.LeftOverhangOnly;
 
     public DSBScenario Scenario => dsbScenario;
@@ -31,8 +32,12 @@ public class NHEJManager : NetworkBehaviour
     [SerializeField] Transform leftDNAEnd;
     [SerializeField] Transform rightDNAEnd;
 
+    [Header("DNA Break Point (assign the NHEJBreakPoint on the DNA_testcuts root)")]
+    [SerializeField] NHEJBreakPoint breakPoint;
+
     public Transform LeftDNAEnd => leftDNAEnd;
     public Transform RightDNAEnd => rightDNAEnd;
+    public NHEJBreakPoint BreakPoint => breakPoint;
 
     readonly NetworkVariable<NHEJPhase> currentPhase = new(
         NHEJPhase.WaitingForPlayers,
@@ -70,11 +75,25 @@ public class NHEJManager : NetworkBehaviour
     public bool Player1PhaseComplete => player1PhaseComplete.Value;
     public bool Player2PhaseComplete => player2PhaseComplete.Value;
     public bool IncludeGapFill => includeGapFill;
+    public bool ShowPlacementIndicators => showPlacementIndicators;
     public bool DebugBypass => debugBypass;
+
+    // Trimming score reported after Phase 3 cut (1 = cut at junction, 0 = cut at tip)
+    float trimmingScore = 1f;
+    public float TrimmingScore => trimmingScore;
+
+    // Gap fill score reported by Phase4_GapFill (placement accuracy 0–100)
+    float gapFillScore = 100f;
+    public float GapFillScore => gapFillScore;
+
+    public void ReportGapFillScore(float score)
+    {
+        gapFillScore = score;
+    }
 
     int assignedCount;
     readonly System.Collections.Generic.List<NetworkObject> spawnedEnemies = new();
-    int enemyCount = 1; // increments each time a player-interactive phase completes
+    int enemyCount = 3;
     Coroutine pendingAdvanceCoroutine;
 
     void Awake()
@@ -85,6 +104,8 @@ public class NHEJManager : NetworkBehaviour
             return;
         }
         Instance = this;
+        foreach (var point in FindObjectsOfType<ProteinPlacementPoint>())
+            point.SetIndicatorVisible(false);
     }
 
     public override void OnNetworkSpawn()
@@ -96,7 +117,7 @@ public class NHEJManager : NetworkBehaviour
             if (phaseHandlers[i] != null)
                 phaseHandlers[i].manager = this;
         }
-
+        
         currentPhase.OnValueChanged += OnPhaseChanged;
 
         if (IsServer)
@@ -202,9 +223,9 @@ public class NHEJManager : NetworkBehaviour
             StartCoroutine(DelayedAdvance(1f));
         }
 
-        // Spawn enemies for non-automatic (player-interactive) phases.
-        // One extra enemy is added each time a player phase completes.
-        if (IsServer && handler != null && !handler.IsAutomatic && enemyPrefab != null)
+        // Spawn enemies during Phase4 (gap fill) only.
+        // Enemy behaviour during gap fill is TBD — currently orbits the DNA site.
+        if (IsServer && phase == NHEJPhase.Phase4_GapFill && enemyPrefab != null)
         {
             // enemyCount++;
             Vector3 basePos = leftDNAEnd != null
@@ -293,16 +314,14 @@ public class NHEJManager : NetworkBehaviour
             if (enemy != null && enemy.IsSpawned) enemy.Despawn();
         spawnedEnemies.Clear();
 
+        // Simplified flow per client request (2025-03-17):
+        //   Phase0 → Phase3 (trim) → Phase4 (gap fill) → Phase8 (assessment)
+        // Phases 1, 2, 5, 6, 7 are intentionally bypassed but their code is preserved for easy reversion.
         NHEJPhase next = currentPhase.Value switch
         {
-            NHEJPhase.Phase0_Trigger => NHEJPhase.Phase1_KuBinding,
-            NHEJPhase.Phase1_KuBinding => NHEJPhase.Phase2_DNAPKcs,
-            NHEJPhase.Phase2_DNAPKcs => NHEJPhase.Phase3_Trimming,
-            NHEJPhase.Phase3_Trimming => includeGapFill ? NHEJPhase.Phase4_GapFill : NHEJPhase.Phase5_Alignment,
-            NHEJPhase.Phase4_GapFill => NHEJPhase.Phase5_Alignment,
-            NHEJPhase.Phase5_Alignment => NHEJPhase.Phase6_Ligation,
-            NHEJPhase.Phase6_Ligation => NHEJPhase.Phase7_Cleanup,
-            NHEJPhase.Phase7_Cleanup => NHEJPhase.Phase8_Assessment,
+            NHEJPhase.Phase0_Trigger    => NHEJPhase.Phase3_Trimming,    // skip KuBinding + DNAPKcs
+            NHEJPhase.Phase3_Trimming   => NHEJPhase.Phase4_GapFill,
+            NHEJPhase.Phase4_GapFill    => NHEJPhase.Phase8_Assessment,  // skip Alignment + Ligation + Cleanup
             NHEJPhase.Phase8_Assessment => NHEJPhase.Complete,
             _ => NHEJPhase.Complete
         };
@@ -411,26 +430,78 @@ public class NHEJManager : NetworkBehaviour
     /// <summary>Returns the handler for the currently active phase (null if none).</summary>
     public NHEJPhaseHandler GetCurrentPhaseHandler() => GetCurrentHandler();
 
+    #region Cut RPCs (Phase 3 blade mechanic)
+
+    /// <summary>
+    /// Called server-only by Phase3_Trimming.StartPhase() to generate the break on all clients.
+    /// Broadcasts the same seed so every client produces an identical break deterministically.
+    /// </summary>
+    public void TriggerBreakGeneration(int seed)
+    {
+        if (!IsServer) return;
+        GenerateBreakClientRpc(seed);
+    }
+
+    [ClientRpc]
+    void GenerateBreakClientRpc(int seed)
+    {
+        breakPoint?.GenerateBreak(seed);
+    }
+
+    /// <summary>
+    /// Fired by ArtemisBlade (owner client) when the blade enters an OverhangZone.
+    /// Server validates, applies the cut on all clients, and notifies Phase3_Trimming.
+    /// </summary>
+    [ServerRpc(RequireOwnership = false)]
+    public void ReportCutServerRpc(Vector3 bladeTipWorldPos, ulong clientId, int playerRole,
+        ServerRpcParams rpcParams = default)
+    {
+        if (currentPhase.Value != NHEJPhase.Phase3_Trimming) return;
+
+        // In debug bypass mode, accept any role.
+        int role = debugBypass ? playerRole : GetPlayerRole(clientId);
+        if (role == 0) return;
+
+        float score = breakPoint != null
+            ? breakPoint.ComputeTrimScore(role, bladeTipWorldPos)
+            : 1f;
+
+        // Store trimming score (average if both players cut in BothOverhangs scenario).
+        trimmingScore = (trimmingScore + score) * 0.5f;
+
+        // Apply cut visuals on all clients.
+        CutConfirmedClientRpc(bladeTipWorldPos, role);
+
+        // Notify Phase3 handler to mark this player complete.
+        var phase3 = phaseHandlers[3] as Phase3_Trimming;
+        phase3?.OnCutMade(role);
+
+        Debug.Log($"[NHEJ] Cut confirmed — role={role} score={score:P0}");
+    }
+
+    [ClientRpc]
+    void CutConfirmedClientRpc(Vector3 bladeTipWorldPos, int playerRole)
+    {
+        breakPoint?.CutOverhang(playerRole, bladeTipWorldPos);
+
+        if (NHEJAudio.Instance != null)
+            NHEJAudio.Instance.PlayTrimSuccess();
+    }
+
+    #endregion
+
     #region Trim / Ligation RPCs
+
+    /* DISABLED — snap-to-TrimPoint mechanic replaced by ArtemisBlade collision (ReportCutServerRpc).
+       Preserved here for easy reversion.
 
     [ServerRpc(RequireOwnership = false)]
     public void ReportTrimServerRpc(int pointIndex, ulong clientId, int pointRole = 0)
     {
         if (currentPhase.Value != NHEJPhase.Phase3_Trimming) return;
-
-        // In debug single-player mode the same clientId holds both roles,
-        // so use the point's own assignedPlayerRole instead.
         int role;
-        if (debugBypass && pointRole != 0)
-        {
-            role = pointRole;
-        }
-        else
-        {
-            role = GetPlayerRole(clientId);
-            if (role == 0) return;
-        }
-
+        if (debugBypass && pointRole != 0) { role = pointRole; }
+        else { role = GetPlayerRole(clientId); if (role == 0) return; }
         var handler = phaseHandlers[3] as Phase3_Trimming;
         if (handler != null && handler.ValidateTrim(pointIndex, role))
         {
@@ -443,11 +514,9 @@ public class NHEJManager : NetworkBehaviour
     void ReportTrimClientRpc(int pointIndex, ulong clientId)
     {
         var handler = phaseHandlers[3] as Phase3_Trimming;
-        if (handler != null)
-        {
-            handler.OnTrimConfirmed(pointIndex, clientId);
-        }
+        handler?.OnTrimConfirmed(pointIndex, clientId);
     }
+    */
 
     [ServerRpc(RequireOwnership = false)]
     public void ReportLigationServerRpc(int pointIndex, ulong clientId, int pointRole = 0)
