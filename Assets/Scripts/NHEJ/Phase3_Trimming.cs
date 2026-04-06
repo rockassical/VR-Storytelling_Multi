@@ -39,6 +39,11 @@ public class Phase3_Trimming : NHEJPhaseHandler
             int seed = UnityEngine.Random.Range(0, int.MaxValue);
             manager.TriggerBreakGeneration(seed);
 
+            // Listen for overhang result. If the explosion left no overhangs (no red walls),
+            // skip Artemis entirely and advance straight to the next phase.
+            if (manager.BreakPoint != null)
+                manager.BreakPoint.OnOverhangsResolved += OnOverhangsResolved;
+
             if ((p1NeedsCut || p2NeedsCut) && artemisToolPrefab != null)
             {
                 var go = Instantiate(artemisToolPrefab, GetArtemisSpawnPos(), Quaternion.identity);
@@ -55,10 +60,25 @@ public class Phase3_Trimming : NHEJPhaseHandler
             NHEJAudio.Instance.PlayPhaseAdvance();
     }
 
+    void OnOverhangsResolved(bool hasOverhangs)
+    {
+        if (manager.BreakPoint != null)
+            manager.BreakPoint.OnOverhangsResolved -= OnOverhangsResolved;
+
+        if (!hasOverhangs)
+        {
+            Debug.Log("[NHEJ Phase3] No overhangs detected — skipping Artemis, advancing phase.");
+            manager.AdvancePhase();
+        }
+    }
+
     public override void UpdatePhase() { }
 
     public override void CompletePhase()
     {
+        if (manager.BreakPoint != null)
+            manager.BreakPoint.OnOverhangsResolved -= OnOverhangsResolved;
+
         if (manager.IsServer && artemisObject != null && artemisObject.IsSpawned)
             artemisObject.Despawn();
     }

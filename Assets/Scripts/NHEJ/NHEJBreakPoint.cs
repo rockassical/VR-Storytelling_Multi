@@ -1,8 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Attach to the DNA_testcuts root GameObject in the scene.
+// Attach to the DNA_ChunkyCuts root GameObject in the scene.
+//
+// DNA_ChunkyCuts is a flat hierarchy: the root has many direct children arranged in
+// groups of 3 (one DNAWall-tagged segment + two nucleotides). Set segmentHierarchyDepth = 1.
 //
 // At phase start, GenerateBreak(seed) is called on ALL clients with the same seed.
 // It:
@@ -10,6 +14,8 @@ using UnityEngine;
 //   2. Picks a random break center (not near edges).
 //   3. Categorises segments: clean | left-overhang | explosion | right-overhang | clean
 //   4. Launches explosion segments with physics (VFX only — each client runs independently).
+//      Because nucleotides are siblings of walls (same depth), everything in the axis range
+//      explodes together — the full group of 3 flies at once.
 //   5. Applies an overhang glow material to the overhang segments ("cut me").
 //   6. Spawns seam indicators at the exact cut lines (where Artemis should slice).
 //   7. Creates BoxCollider OverhangZone triggers for ArtemisBlade detection.
@@ -33,8 +39,8 @@ public class NHEJBreakPoint : MonoBehaviour
     [SerializeField] Vector3 helixAxisLocal = Vector3.right;
     [Tooltip("Tick if segments sort in reverse order (wrong end first). Negates the sort direction.")]
     [SerializeField] bool reverseSort = false;
-    [Tooltip("How many levels deep to collect segments. 1 = direct children, 2 = grandchildren (use 2 if DNA_testcuts has group objects as direct children). Ignored when wallGroups is assigned.")]
-    [SerializeField] int segmentHierarchyDepth = 2;
+    [Tooltip("How many levels deep to collect segments. 1 = direct children (use for DNA_ChunkyCuts flat hierarchy), 2 = grandchildren (use if the root has group objects as direct children).")]
+    [SerializeField] int segmentHierarchyDepth = 1;
 
     [Tooltip("Only GameObjects with this tag are treated as wall segments. Nucleotides and other types are ignored.")]
     [SerializeField] string wallTag = "DNAWall";
@@ -106,7 +112,14 @@ public class NHEJBreakPoint : MonoBehaviour
     readonly List<GameObject> seamIndicators    = new();
     readonly List<GameObject> gapFillIndicators = new();
 
-    // ── Public properties ─────────────────────────────────────────────────────
+    // ── Public properties / events ────────────────────────────────────────────
+
+    /// <summary>
+    /// Fires on all clients after the explosion destroy-delay has elapsed and all DNAPair
+    /// checks have run. bool = true if at least one wall is an overhang (glowing red).
+    /// Phase3_Trimming uses this to skip Artemis if the explosion left no overhangs.
+    /// </summary>
+    public event Action<bool> OnOverhangsResolved;
 
     public float AverageTrimScore =>
         ((leftCutScore  >= 0 ? leftCutScore  : 1f) +
@@ -422,9 +435,9 @@ public class NHEJBreakPoint : MonoBehaviour
 
             // Launch outward from DNA centre + random spread
             Vector3 outward   = (seg.position - transform.position).normalized;
-            Vector3 launchDir = (outward + Vector3.up * explosionUpBias + Random.insideUnitSphere * 0.3f).normalized;
+            Vector3 launchDir = (outward + Vector3.up * explosionUpBias + UnityEngine.Random.insideUnitSphere * 0.3f).normalized;
             rb.AddForce(launchDir * explosionForce, ForceMode.Impulse);
-            rb.AddTorque(Random.insideUnitSphere * 2f, ForceMode.Impulse);
+            rb.AddTorque(UnityEngine.Random.insideUnitSphere * 2f, ForceMode.Impulse);
 
             Destroy(seg.gameObject, explosionDestroyDelay);
 
@@ -432,9 +445,8 @@ public class NHEJBreakPoint : MonoBehaviour
                 yield return new WaitForSeconds(explosionStaggerDelay);
         }
 
-        // Activate floating cleanup on all segments (walls + nucleotides) near the zone.
-        // For walls: add the component at runtime since they're all tagged DNAWall.
-        // Any segment with no nearby DNAWall neighbour after the explosion self-ejects.
+        // ── Nucleotide floating cleanup ───────────────────────────────────────
+        // Non-wall segments near the zone edge that lost their wall neighbours self-eject.
         float cleanupPad = segmentSpacing * floatingCleanupPadMultiplier;
         float cleanupMin = explosionAxisMin - cleanupPad;
         float cleanupMax = explosionAxisMax + cleanupPad;
@@ -443,10 +455,52 @@ public class NHEJBreakPoint : MonoBehaviour
         {
             if (seg == null) continue;
             if (!InAxisRange(seg, cleanupMin, cleanupMax)) continue;
+
+            // Walls are managed by DNAPair — skip them here.
+            if (!string.IsNullOrEmpty(wallTag) && seg.CompareTag(wallTag)) continue;
+
             var cleanup = seg.GetComponent<DNAFloatingCleanup>();
             if (cleanup == null) cleanup = seg.gameObject.AddComponent<DNAFloatingCleanup>();
             cleanup.Activate();
         }
+
+        // ── DNAPair overhang check ────────────────────────────────────────────
+        // Wait until the exploded pieces are fully destroyed, then ask every surviving
+        // wall to check whether its partner is still alive. Walls whose partner was in
+        // the explosion zone will glow red (exposed overhang).
+        float pairCheckDelay = explosionDestroyDelay + 0.2f;
+
+        var survivingPairs = new List<DNAPair>();
+        foreach (var seg in allSegments)
+        {
+            if (seg == null) continue;
+            if (InAxisRange(seg, explosionAxisMin, explosionAxisMax)) continue; // was exploded
+            if (string.IsNullOrEmpty(wallTag) || !seg.CompareTag(wallTag)) continue;
+
+            var pair = seg.GetComponent<DNAPair>();
+            if (pair != null)
+            {
+                survivingPairs.Add(pair);
+                pair.CheckAfterDelay(pairCheckDelay);
+            }
+        }
+
+        // Fire OnOverhangsResolved one frame after the pair checks have had time to run.
+        StartCoroutine(NotifyOverhangResult(survivingPairs, pairCheckDelay + 0.1f));
+    }
+
+    IEnumerator NotifyOverhangResult(List<DNAPair> pairs, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        bool any = false;
+        foreach (var p in pairs)
+        {
+            if (p != null && p.IsOverhang) { any = true; break; }
+        }
+
+        OnOverhangsResolved?.Invoke(any);
+        Debug.Log($"[NHEJBreakPoint] OnOverhangsResolved — hasOverhangs={any}");
     }
 
 #if UNITY_EDITOR
