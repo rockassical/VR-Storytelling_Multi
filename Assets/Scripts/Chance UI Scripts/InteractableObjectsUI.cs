@@ -1,61 +1,81 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class InteractableObjectsUI : MonoBehaviour
 {
-    public XRRayInteractor _leftInteractor, _rightInteractor;
+    public TextMeshProUGUI rightControllerUIText, leftControllerUIText;
+    public XRInteractionGroup rightTargetGroup, leftTargetGroup;
 
-    private void OnEnable()
+    void Update()
     {
-        // In XRI 3.x, we subscribe to the interactor's hoverEvents
-        if (_leftInteractor != null)
+        string rightInteractableObjName = GetRightHoveredObjectName();
+        if (!string.IsNullOrEmpty(rightInteractableObjName))
         {
-            _leftInteractor.hoverEntered.AddListener(OnLeftHoverEnter);
-            _leftInteractor.hoverExited.AddListener(OnLeftHoverExit);
+            rightControllerUIText.text = rightInteractableObjName;
         }
-
-        if (_rightInteractor != null)
+        string leftInteractableObjName = GetLeftHoveredObjectName();
+        if (!string.IsNullOrEmpty(leftInteractableObjName))
         {
-            _rightInteractor.hoverEntered.AddListener(OnRightHoverEnter);
-            _rightInteractor.hoverExited.AddListener(OnRightHoverExit);
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (_leftInteractor != null)
-        {
-            _leftInteractor.hoverEntered.RemoveListener(OnLeftHoverEnter);
-            _leftInteractor.hoverExited.RemoveListener(OnLeftHoverExit);
-        }
-
-        if (_rightInteractor != null)
-        {
-            _rightInteractor.hoverEntered.RemoveListener(OnRightHoverEnter);
-            _rightInteractor.hoverExited.RemoveListener(OnRightHoverExit);
+            leftControllerUIText.text = leftInteractableObjName;
         }
     }
 
-    // Event handlers for the Left Hand
-    private void OnLeftHoverEnter(HoverEnterEventArgs args)
+    public string GetRightHoveredObjectName()
     {
-        Debug.Log($"<color=cyan>Left Hand</color> hovering over: {args.interactableObject.transform.name}");
+        if (rightTargetGroup == null) return "No Group";
+
+        // 1. Get the interactor the Group has currently "crowned" as the winner
+        var interactor = rightTargetGroup.activeInteractor;
+        if (interactor == null) return "Empty";
+
+        // 2. Check if the winner is currently HOLDING something (Selection)
+        if (interactor is IXRSelectInteractor selectInteractor)
+        {
+            if (selectInteractor.interactablesSelected.Count > 0)
+            {
+                // Returns the name of the grabbed object
+                return selectInteractor.interactablesSelected[0].transform.name + " (Grabbed)";
+            }
+        }
+
+        // 3. If not holding anything, check if they are LOOKING at something (Hover)
+        if (interactor is IXRHoverInteractor hoverInteractor)
+        {
+            if (hoverInteractor.interactablesHovered.Count > 0)
+            {
+                // Returns the name of the hovered object
+                return hoverInteractor.interactablesHovered[0].transform.name + " (Hovering)";
+            }
+        }
+
+        return "Empty";
     }
 
-    private void OnLeftHoverExit(HoverExitEventArgs args)
+    public string GetLeftHoveredObjectName()
     {
-        Debug.Log("<color=cyan>Left Hand</color> stopped hovering.");
-    }
+        if (leftTargetGroup == null) return "No Group";
 
-    // Event handlers for the Right Hand
-    private void OnRightHoverEnter(HoverEnterEventArgs args)
-    {
-        Debug.Log($"<color=yellow>Right Hand</color> hovering over: {args.interactableObject.transform.name}");
-    }
+        var interactor = leftTargetGroup.activeInteractor;
+        if (interactor == null) return "Empty";
 
-    private void OnRightHoverExit(HoverExitEventArgs args)
-    {
-        Debug.Log("<color=yellow>Right Hand</color> stopped hovering.");
+        if (interactor is IXRSelectInteractor selectInteractor)
+        {
+            if (selectInteractor.interactablesSelected.Count > 0)
+            {
+                return selectInteractor.interactablesSelected[0].transform.name + " (Grabbed)";
+            }
+        }
+
+        if (interactor is IXRHoverInteractor hoverInteractor)
+        {
+            if (hoverInteractor.interactablesHovered.Count > 0)
+            {
+                return hoverInteractor.interactablesHovered[0].transform.name + " (Hovering)";
+            }
+        }
+
+        return "Empty";
     }
 }
