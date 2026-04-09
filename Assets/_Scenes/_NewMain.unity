@@ -4372,7 +4372,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b92374eebec2b724da0573615175aa6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Sockets: []
+  Sockets:
+  - {fileID: 1700909686}
+  - {fileID: 215588883}
+  - {fileID: 1293072577}
+  - {fileID: 762350333}
+  - {fileID: 1465047696}
+  - {fileID: 317863573}
+  - {fileID: 2027433550}
+  - {fileID: 1093815865}
+  - {fileID: 14552224}
+  - {fileID: 2110555666}
+  - {fileID: 1423410031}
+  - {fileID: 503722011}
+  - {fileID: 1019934489}
+  - {fileID: 191889851}
+  - {fileID: 1190113407}
+  - {fileID: 516604215}
 --- !u!4 &236850668
 Transform:
   m_ObjectHideFlags: 0
@@ -5647,7 +5663,7 @@ GameObject:
   - component: {fileID: 317863580}
   - component: {fileID: 317863579}
   - component: {fileID: 317863577}
-  - component: {fileID: 317863578}
+  - component: {fileID: 317863581}
   m_Layer: 0
   m_Name: Socket6
   m_TagString: Untagged
@@ -5693,28 +5709,6 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!64 &317863578
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317863573}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 5057147511148886397, guid: 63413c0b322c6fe418948e0fdabb882a, type: 3}
 --- !u!114 &317863579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5743,7 +5737,7 @@ MonoBehaviour:
   m_InteractionLayers:
     m_Bits: 4294967295
   m_Handedness: 0
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 2116172664}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
   m_StartingSelectedInteractable: {fileID: 0}
@@ -5774,6 +5768,27 @@ MonoBehaviour:
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   SocketNumber: 6
+--- !u!65 &317863581
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317863573}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.01, y: 0.01, z: 0.01}
+  m_Center: {x: 0, y: 0.06, z: -0.076}
 --- !u!1 &318619596
 GameObject:
   m_ObjectHideFlags: 0
@@ -19660,7 +19675,7 @@ GameObject:
   - component: {fileID: 1019934496}
   - component: {fileID: 1019934495}
   - component: {fileID: 1019934493}
-  - component: {fileID: 1019934494}
+  - component: {fileID: 1019934497}
   m_Layer: 0
   m_Name: Socket12
   m_TagString: Untagged
@@ -19706,28 +19721,6 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!64 &1019934494
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1019934489}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -3167346789644439135, guid: 63413c0b322c6fe418948e0fdabb882a, type: 3}
 --- !u!114 &1019934495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19756,7 +19749,7 @@ MonoBehaviour:
   m_InteractionLayers:
     m_Bits: 4294967295
   m_Handedness: 0
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 519746409}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
   m_StartingSelectedInteractable: {fileID: 0}
@@ -19787,6 +19780,27 @@ MonoBehaviour:
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   SocketNumber: 12
+--- !u!65 &1019934497
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1019934489}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.01, y: 0.01, z: 0.01}
+  m_Center: {x: 0.21, y: 0.07, z: 0.06}
 --- !u!1 &1023653566
 GameObject:
   m_ObjectHideFlags: 0
@@ -22918,7 +22932,7 @@ GameObject:
   - component: {fileID: 1190113414}
   - component: {fileID: 1190113413}
   - component: {fileID: 1190113411}
-  - component: {fileID: 1190113412}
+  - component: {fileID: 1190113415}
   m_Layer: 0
   m_Name: Socket14
   m_TagString: Untagged
@@ -22964,28 +22978,6 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!64 &1190113412
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1190113407}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -1059447085429921362, guid: 63413c0b322c6fe418948e0fdabb882a, type: 3}
 --- !u!114 &1190113413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23014,7 +23006,7 @@ MonoBehaviour:
   m_InteractionLayers:
     m_Bits: 4294967295
   m_Handedness: 0
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 2065914231}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
   m_StartingSelectedInteractable: {fileID: 0}
@@ -23045,6 +23037,27 @@ MonoBehaviour:
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   SocketNumber: 14
+--- !u!65 &1190113415
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190113407}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.01, y: 0.01, z: 0.01}
+  m_Center: {x: 0.22, y: 0.01, z: 0.065}
 --- !u!1 &1191107713
 GameObject:
   m_ObjectHideFlags: 0
@@ -39611,7 +39624,7 @@ GameObject:
   - component: {fileID: 2027433557}
   - component: {fileID: 2027433556}
   - component: {fileID: 2027433554}
-  - component: {fileID: 2027433555}
+  - component: {fileID: 2027433558}
   m_Layer: 0
   m_Name: Socket7
   m_TagString: Untagged
@@ -39657,28 +39670,6 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!64 &2027433555
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2027433550}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4311186692278520281, guid: 63413c0b322c6fe418948e0fdabb882a, type: 3}
 --- !u!114 &2027433556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39707,7 +39698,7 @@ MonoBehaviour:
   m_InteractionLayers:
     m_Bits: 4294967295
   m_Handedness: 0
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 734588553}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
   m_StartingSelectedInteractable: {fileID: 0}
@@ -39738,6 +39729,27 @@ MonoBehaviour:
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   SocketNumber: 7
+--- !u!65 &2027433558
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027433550}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.01, y: 0.01, z: 0.01}
+  m_Center: {x: 0.03, y: 0.1, z: -0.06}
 --- !u!1 &2035724531
 GameObject:
   m_ObjectHideFlags: 0
@@ -40949,7 +40961,7 @@ GameObject:
   - component: {fileID: 2110555673}
   - component: {fileID: 2110555672}
   - component: {fileID: 2110555670}
-  - component: {fileID: 2110555671}
+  - component: {fileID: 2110555674}
   m_Layer: 0
   m_Name: Socket10
   m_TagString: Untagged
@@ -40995,28 +41007,6 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!64 &2110555671
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2110555666}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -1896568590928548883, guid: 63413c0b322c6fe418948e0fdabb882a, type: 3}
 --- !u!114 &2110555672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41045,7 +41035,7 @@ MonoBehaviour:
   m_InteractionLayers:
     m_Bits: 4294967295
   m_Handedness: 0
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 1935496977}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
   m_StartingSelectedInteractable: {fileID: 0}
@@ -41076,6 +41066,27 @@ MonoBehaviour:
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
   SocketNumber: 10
+--- !u!65 &2110555674
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110555666}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.01, y: 0.01, z: 0.01}
+  m_Center: {x: -0.2, y: -0.12, z: 0.055}
 --- !u!1 &2111855249
 GameObject:
   m_ObjectHideFlags: 0
@@ -51257,9 +51268,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &3037490424964113549
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -52990,9 +53001,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &3541474564193828379
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -59118,7 +59129,7 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
-  m_AttachTransform: {fileID: 5695091704358782213}
+  m_AttachTransform: {fileID: 5929207121593781343}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
@@ -59192,9 +59203,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &5695091704358782217
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -59698,7 +59709,7 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
-  m_AttachTransform: {fileID: 5845218091511246124}
+  m_AttachTransform: {fileID: 5931048595449824762}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
@@ -59772,9 +59783,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &5845218091511246128
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -60749,7 +60760,7 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
-  m_AttachTransform: {fileID: 6175260706398854832}
+  m_AttachTransform: {fileID: 69238037175522828}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
@@ -60823,9 +60834,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &6175260706398854836
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -62191,7 +62202,7 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
-  m_AttachTransform: {fileID: 6612933349156316274}
+  m_AttachTransform: {fileID: 2187230067258919899}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
@@ -62265,9 +62276,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &6612933349156316278
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -63921,9 +63932,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &7058949451839265562
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -65049,9 +65060,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &7318688349525827800
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -65345,9 +65356,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &7349829068747702091
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -66653,9 +66664,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &7653761009350636591
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -67542,7 +67553,7 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
-  m_AttachTransform: {fileID: 2244390744699216063}
+  m_AttachTransform: {fileID: 5273620421755188061}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
@@ -67616,9 +67627,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &7831680000018908154
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -68360,9 +68371,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &8066959992309613030
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -68683,9 +68694,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &8114411175197314413
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -70779,9 +70790,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &8801665356967445848
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -71049,9 +71060,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &8842445028311704805
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -72196,9 +72207,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!65 &9108836556099666716
 BoxCollider:
   m_ObjectHideFlags: 0

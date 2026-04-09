@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class DNARepairPlacement : MonoBehaviour
 {
@@ -22,30 +26,44 @@ public class DNARepairPlacement : MonoBehaviour
     {
         isRepaired = false;
         IsSocketFilled = new bool[Sockets.Length];
+
+        for(int i = 0; i < Sockets.Length; i++){
+            int index = i;
+            Sockets[i].GetComponent<XRSocketInteractor>().selectEntered.AddListener((SelectEnterEventArgs args) => FillSocket(index, args));
+        }
     }
 
-    // Update is called once per frame
-   /* void Update()
-    {
-        isRepaired = true;
-        for(int i = 0; i < Sockets.Length; i++){
-            if(!IsSocketFilled[i]){
-                isRepaired = false;
-            }
-        }
+   // Process the socket whenever it is filled --> stop from grabbing piece and hide socket
+   public void FillSocket(int index, SelectEnterEventArgs args){
+        IsSocketFilled[index] = true;
+        
+        var Socket = Sockets[index];
+        var Piece = args.interactableObject.transform.gameObject;
 
-        if(isRepaired){
-            DamagedStrand.SetActive(false);
-            RepairedStrand.SetActive(true);
-        }
-    }*/
+        StartCoroutine(WaitAndFillSocket(Socket, Piece));
+   }
 
-   public void FillSocket(GameObject Socket){
-        for(int i = 0; i < Sockets.Length; i++){
-            if(Sockets[i].Equals(Socket)){
-                IsSocketFilled[i] = true;
-                Sockets[i].SetActive(false);
-            }
-        }
+   // Wait for the piece to click into place
+   IEnumerator WaitAndFillSocket(GameObject Socket, GameObject Piece){
+       yield return new WaitForSeconds(0.5f);
+
+       Socket.SetActive(false);
+       Piece.GetComponent<XRGrabInteractable>().enabled = false;
+
+       CheckIfSocketsAreFilled();
+   }
+
+   void CheckIfSocketsAreFilled(){
+       bool AllFilled = true;
+
+       for(int i = 0; i < IsSocketFilled.Length; i++){
+           if(!IsSocketFilled[i]){
+               AllFilled = false;
+           }
+       }
+
+       if(AllFilled){
+           // ACTIVATE TIMELINE --> MOVE TO NEXT PART
+       }
    }
 }
