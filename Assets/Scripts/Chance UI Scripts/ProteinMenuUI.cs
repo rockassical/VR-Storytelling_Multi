@@ -1,25 +1,39 @@
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ProteinMenuUI : MonoBehaviour
 {
-    Canvas canvas;
-    Camera camera;
-
     List<GameObject> DNA_Pieces = new List<GameObject>();
-    void Start()
-    {
-        canvas = GetComponent<Canvas>();
-        camera = Camera.main;
-    }
-    void OpenMenu()
-    {
 
+    public Canvas canvas;
+    bool canvasActive = false;
+
+    public InputActionProperty buttonAction;
+
+    private void OnEnable()
+    {
+        buttonAction.action.Enable();
+    }
+
+    private void OnDisable()
+    {
+        buttonAction.action.Disable();
     }
     void FixedUpdate()
     {
-        
+        if (buttonAction.action.WasPressedThisFrame())
+        {
+            Menu();
+        }
+    }
+
+    void Menu()
+    {
+        canvasActive = !canvasActive;
+        canvas.enabled = canvasActive;
     }
 
     public void Buttons(int b) 
