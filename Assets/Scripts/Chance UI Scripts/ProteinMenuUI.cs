@@ -23,10 +23,11 @@ public class ProteinMenuUI : MonoBehaviour
     {
         buttonAction.action.Disable();
     }
-    void FixedUpdate()
+    void Update()
     {
         if (buttonAction.action.WasPressedThisFrame())
         {
+            Debug.Log("Hit B");
             Menu();
         }
     }
