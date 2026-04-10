@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 
 public class ProteinMenuUI : MonoBehaviour
 {
-    List<GameObject> DNA_Pieces = new List<GameObject>();
+    public Transform GO_spawnPos;
+    [SerializeField] List<GameObject> DNA_Pieces = new List<GameObject>();
 
     public Canvas canvas;
     bool canvasActive = false;
@@ -39,5 +40,15 @@ public class ProteinMenuUI : MonoBehaviour
     public void Buttons(int b) 
     {
         Debug.Log(("Button Pressed"));
+
+        if(DNA_Pieces.Count > 0)
+            switch(b)
+            {
+                case 1:
+                    Instantiate(DNA_Pieces[0], GO_spawnPos);
+                    break;
+            }
+
+
     }
 }
