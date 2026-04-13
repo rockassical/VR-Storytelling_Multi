@@ -34,16 +34,20 @@ public class LigaseSprayCan : NetworkBaseInteractable
     // is private and Unity would call ours instead, breaking SetupListeners.
     // Enable the action in OnNetworkSpawn instead.
 
-    public override void OnNetworkSpawn()
+    void Start()
     {
-        base.OnNetworkSpawn();
-
         homePosition = transform.position;
         homeRotation = transform.rotation;
 
         var rb = GetComponent<Rigidbody>();
         if (rb != null) { rb.isKinematic = true; rb.useGravity = false; }
 
+        sprayAction.action.Enable();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
         sprayAction.action.Enable();
     }
 
