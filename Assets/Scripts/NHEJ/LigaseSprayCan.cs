@@ -70,16 +70,8 @@ public class LigaseSprayCan : NetworkBaseInteractable
         cooldownTimer -= Time.deltaTime;
 
         // VR trigger
-        bool isSelected = grab != null && grab.isSelected;
-        if (isSelected)
-        {
-            if (sprayAction.action.WasPressedThisFrame())   StartSpraying();
-            if (sprayAction.action.WasReleasedThisFrame())  StopSpraying();
-        }
-        else if (!debugMode && isSpraying)
-        {
-            StopSpraying();
-        }
+        if (sprayAction.action.WasPressedThisFrame())  StartSpraying();
+        if (sprayAction.action.WasReleasedThisFrame()) StopSpraying();
 
         // Debug keyboard
         if (debugMode && Keyboard.current != null)
@@ -103,7 +95,7 @@ public class LigaseSprayCan : NetworkBaseInteractable
                 sealPoint.Seal();
         }
 
-        if (!IsOwner || isSelected) return;
+        if (!IsOwner || m_BaseInteractable.isSelected) return;
 
         transform.position = Vector3.MoveTowards(
             transform.position, homePosition, returnMoveSpeed * Time.deltaTime);
