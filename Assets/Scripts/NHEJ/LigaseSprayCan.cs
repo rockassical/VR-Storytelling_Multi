@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using XRMultiplayer;
@@ -17,8 +18,6 @@ public class LigaseSprayCan : NetworkBaseInteractable
 {
     [Header("Spray Settings")]
     [SerializeField] float sprayRange = 0.5f;
-    [Tooltip("Transform at the tip of the can — spray VFX spawns here. Falls back to centre if null.")]
-    [SerializeField] Transform tipTransform;
     [SerializeField] GameObject sprayVFXPrefab;
     [SerializeField] float sprayCooldown = 0.5f;
 
@@ -26,10 +25,17 @@ public class LigaseSprayCan : NetworkBaseInteractable
     [SerializeField] float returnMoveSpeed   = 1.5f;
     [SerializeField] float returnRotateSpeed = 120f;   // degrees per second
 
+    [Header("Debug")]
+    [SerializeField] bool debugMode = false;
+    [Tooltip("Press this key to trigger a spray at the can's current position (debug only).")]
+    [SerializeField] Key debugSprayKey = Key.Space;
+
     Vector3    homePosition;
     Quaternion homeRotation;
     bool isHeld;
+    bool isSpraying;
     float cooldownTimer;
+    GameObject activeVFX;
 
     // ── Lifecycle ─────────────────────────────────────────────────────────────
 
@@ -72,6 +78,32 @@ public class LigaseSprayCan : NetworkBaseInteractable
     void Update()
     {
         cooldownTimer -= Time.deltaTime;
+
+        // Debug key hold
+        if (debugMode && Keyboard.current != null)
+        {
+            if (Keyboard.current[debugSprayKey].wasPressedThisFrame)  StartSpraying();
+            if (Keyboard.current[debugSprayKey].wasReleasedThisFrame) StopSpraying();
+        }
+
+        // Seal logic runs on cooldown while spraying
+        if (isSpraying)
+        {
+            if (cooldownTimer <= 0f)
+            {
+                cooldownTimer = sprayCooldown;
+                Vector3 origin = transform.position + Vector3.up * 0.2f;
+
+                DNAWallSegment nearest = FindNearestUnsealedSegment(origin);
+                if (nearest != null)
+                    RequestSealServerRpc(nearest.NetworkObjectId, origin);
+
+                DNASealPoint sealPoint = FindNearestPendingSealPoint(origin);
+                if (sealPoint != null)
+                    sealPoint.Seal();
+            }
+        }
+
         if (!IsOwner || isHeld) return;
 
         transform.position = Vector3.MoveTowards(
@@ -80,27 +112,51 @@ public class LigaseSprayCan : NetworkBaseInteractable
             transform.rotation, homeRotation, returnRotateSpeed * Time.deltaTime);
     }
 
+    void StartSpraying()
+    {
+        if (isSpraying) return;
+        isSpraying = true;
+
+        if (sprayVFXPrefab != null)
+        {
+            Vector3 spawnPos = transform.position + Vector3.up * 0.2f;
+            activeVFX = Instantiate(sprayVFXPrefab, spawnPos, transform.rotation, transform);
+        }
+
+        if (NHEJAudio.Instance != null)
+            NHEJAudio.Instance.PlayLigationSuccess();
+    }
+
+    void StopSpraying()
+    {
+        if (!isSpraying) return;
+        isSpraying = false;
+
+        if (activeVFX != null)
+        {
+            Destroy(activeVFX);
+            activeVFX = null;
+        }
+    }
+
+    void OnGUI()
+    {
+        if (!debugMode) return;
+
+        GUILayout.BeginArea(new Rect(10, 200, 180, 60));
+        GUILayout.Label($"Hold [{debugSprayKey}] to spray");
+        GUILayout.Label($"Spraying: {isSpraying} | Range: {sprayRange}m");
+        GUILayout.EndArea();
+    }
+
     // ── Trigger / Activated ───────────────────────────────────────────────────
 
-    // Unlike NHEJTool (which keeps Activated as a no-op for placement-based tools),
-    // the spray can is explicitly trigger-activated — that IS the mechanic.
     public override void Activated(bool activate)
     {
         base.Activated(activate);
-
-        if (!activate || !isHeld || cooldownTimer > 0f) return;
-        cooldownTimer = sprayCooldown;
-
-        Vector3 origin = tipTransform != null ? tipTransform.position : transform.position;
-
-        DNAWallSegment nearest = FindNearestUnsealedSegment(origin);
-        if (nearest == null) return;
-
-        // Local VFX / audio
-        SpawnSprayVFX(origin);
-
-        // Server validates and seals
-        RequestSealServerRpc(nearest.NetworkObjectId, origin);
+        if (!isHeld) return;
+        if (activate) StartSpraying();
+        else          StopSpraying();
     }
 
     // ── ServerRpc ─────────────────────────────────────────────────────────────
@@ -145,14 +201,19 @@ public class LigaseSprayCan : NetworkBaseInteractable
         return nearest;
     }
 
-    void SpawnSprayVFX(Vector3 pos)
+    DNASealPoint FindNearestPendingSealPoint(Vector3 origin)
     {
-        if (sprayVFXPrefab != null)
+        var all = FindObjectsOfType<DNASealPoint>();
+        DNASealPoint nearest = null;
+        float nearestDist = sprayRange;
+
+        foreach (var sp in all)
         {
-            var vfx = Instantiate(sprayVFXPrefab, pos, transform.rotation);
-            Destroy(vfx, 2f);
+            if (!sp.HasPending) continue;
+            float d = Vector3.Distance(origin, sp.transform.position);
+            if (d < nearestDist) { nearestDist = d; nearest = sp; }
         }
-        if (NHEJAudio.Instance != null)
-            NHEJAudio.Instance.PlayLigationSuccess();
+        return nearest;
     }
+
 }
