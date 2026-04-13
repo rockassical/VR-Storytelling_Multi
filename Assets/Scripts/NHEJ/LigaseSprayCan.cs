@@ -35,10 +35,10 @@ public class LigaseSprayCan : NetworkBaseInteractable
 
     Vector3    homePosition;
     Quaternion homeRotation;
-    bool isHeld;
     bool isSpraying;
     float cooldownTimer;
     GameObject activeVFX;
+    XRGrabInteractable grab;
 
     // ── Lifecycle ─────────────────────────────────────────────────────────────
 
@@ -49,48 +49,34 @@ public class LigaseSprayCan : NetworkBaseInteractable
         homePosition = transform.position;
         homeRotation = transform.rotation;
 
+        grab = GetComponent<XRGrabInteractable>();
+
         var rb = GetComponent<Rigidbody>();
         if (rb != null) { rb.isKinematic = true; rb.useGravity = false; }
-
-        var grab = GetComponent<XRGrabInteractable>();
-        if (grab != null)
-        {
-            grab.selectEntered.AddListener(OnGrabbed);
-            grab.selectExited.AddListener(OnReleased);
-        }
-
-        sprayAction.action.performed += _ => StartSpraying();
-        sprayAction.action.canceled  += _ => StopSpraying();
-        sprayAction.action.Enable();
     }
 
-    public override void OnNetworkDespawn()
-    {
-        base.OnNetworkDespawn();
-        var grab = GetComponent<XRGrabInteractable>();
-        if (grab != null)
-        {
-            grab.selectEntered.RemoveListener(OnGrabbed);
-            grab.selectExited.RemoveListener(OnReleased);
-        }
+    void OnEnable()  => sprayAction.action.Enable();
+    void OnDisable() => sprayAction.action.Disable();
 
-        sprayAction.action.performed -= _ => StartSpraying();
-        sprayAction.action.canceled  -= _ => StopSpraying();
-        sprayAction.action.Disable();
-    }
-
-    // ── Grab events ───────────────────────────────────────────────────────────
-
-    void OnGrabbed(SelectEnterEventArgs _) => isHeld = true;
-    void OnReleased(SelectExitEventArgs _) => isHeld = false;
-
-    // ── Update: drift back to home ────────────────────────────────────────────
+    // ── Update ────────────────────────────────────────────────────────────────
 
     void Update()
     {
         cooldownTimer -= Time.deltaTime;
 
-        // Debug key hold
+        // VR trigger
+        bool isSelected = grab != null && grab.isSelected;
+        if (isSelected)
+        {
+            if (sprayAction.action.WasPressedThisFrame())   StartSpraying();
+            if (sprayAction.action.WasReleasedThisFrame())  StopSpraying();
+        }
+        else if (!debugMode && isSpraying)
+        {
+            StopSpraying();
+        }
+
+        // Debug keyboard
         if (debugMode && Keyboard.current != null)
         {
             if (Keyboard.current[debugSprayKey].wasPressedThisFrame)  StartSpraying();
@@ -98,24 +84,21 @@ public class LigaseSprayCan : NetworkBaseInteractable
         }
 
         // Seal logic runs on cooldown while spraying
-        if (isSpraying)
+        if (isSpraying && cooldownTimer <= 0f)
         {
-            if (cooldownTimer <= 0f)
-            {
-                cooldownTimer = sprayCooldown;
-                Vector3 origin = transform.position + Vector3.up * 0.2f;
+            cooldownTimer = sprayCooldown;
+            Vector3 origin = transform.position + Vector3.up * 0.2f;
 
-                DNAWallSegment nearest = FindNearestUnsealedSegment(origin);
-                if (nearest != null)
-                    RequestSealServerRpc(nearest.NetworkObjectId, origin);
+            DNAWallSegment nearest = FindNearestUnsealedSegment(origin);
+            if (nearest != null)
+                RequestSealServerRpc(nearest.NetworkObjectId, origin);
 
-                DNASealPoint sealPoint = FindNearestPendingSealPoint(origin);
-                if (sealPoint != null)
-                    sealPoint.Seal();
-            }
+            DNASealPoint sealPoint = FindNearestPendingSealPoint(origin);
+            if (sealPoint != null)
+                sealPoint.Seal();
         }
 
-        if (!IsOwner || isHeld) return;
+        if (!IsOwner || isSelected) return;
 
         transform.position = Vector3.MoveTowards(
             transform.position, homePosition, returnMoveSpeed * Time.deltaTime);
