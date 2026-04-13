@@ -1,9 +1,11 @@
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using XRMultiplayer;
 
 [RequireComponent(typeof(XRGrabInteractable))]
-public class LigaseSprayCan : MonoBehaviour
+public class LigaseSprayCan : NetworkBaseInteractable
 {
     [Header("Spray Settings")]
     [SerializeField] float sprayRange = 0.5f;
@@ -26,26 +28,30 @@ public class LigaseSprayCan : MonoBehaviour
     bool isSpraying;
     float cooldownTimer;
     GameObject activeVFX;
-    XRGrabInteractable grab;
 
     // ── Lifecycle ─────────────────────────────────────────────────────────────
+    // NOTE: Do NOT define OnEnable/OnDisable here — NetworkBaseInteractable.OnEnable
+    // is private and Unity would call ours instead, breaking SetupListeners.
+    // Enable the action in OnNetworkSpawn instead.
 
-    void Awake()
+    public override void OnNetworkSpawn()
     {
-        grab = GetComponent<XRGrabInteractable>();
-    }
+        base.OnNetworkSpawn();
 
-    void Start()
-    {
         homePosition = transform.position;
         homeRotation = transform.rotation;
 
         var rb = GetComponent<Rigidbody>();
         if (rb != null) { rb.isKinematic = true; rb.useGravity = false; }
+
+        sprayAction.action.Enable();
     }
 
-    void OnEnable()  => sprayAction.action.Enable();
-    void OnDisable() => sprayAction.action.Disable();
+    public override void OnNetworkDespawn()
+    {
+        base.OnNetworkDespawn();
+        sprayAction.action.Disable();
+    }
 
     // ── Update ────────────────────────────────────────────────────────────────
 
@@ -76,7 +82,7 @@ public class LigaseSprayCan : MonoBehaviour
         }
 
         // Return to home when not held
-        if (grab.isSelected) return;
+        if (!IsOwner || m_BaseInteractable.isSelected) return;
 
         transform.position = Vector3.MoveTowards(
             transform.position, homePosition, returnMoveSpeed * Time.deltaTime);
