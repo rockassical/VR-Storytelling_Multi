@@ -25,6 +25,9 @@ public class LigaseSprayCan : NetworkBaseInteractable
     [SerializeField] float returnMoveSpeed   = 1.5f;
     [SerializeField] float returnRotateSpeed = 120f;   // degrees per second
 
+    [Header("Input")]
+    [SerializeField] InputActionProperty sprayAction;
+
     [Header("Debug")]
     [SerializeField] bool debugMode = false;
     [Tooltip("Press this key to trigger a spray at the can's current position (debug only).")]
@@ -55,6 +58,10 @@ public class LigaseSprayCan : NetworkBaseInteractable
             grab.selectEntered.AddListener(OnGrabbed);
             grab.selectExited.AddListener(OnReleased);
         }
+
+        sprayAction.action.performed += _ => StartSpraying();
+        sprayAction.action.canceled  += _ => StopSpraying();
+        sprayAction.action.Enable();
     }
 
     public override void OnNetworkDespawn()
@@ -66,6 +73,10 @@ public class LigaseSprayCan : NetworkBaseInteractable
             grab.selectEntered.RemoveListener(OnGrabbed);
             grab.selectExited.RemoveListener(OnReleased);
         }
+
+        sprayAction.action.performed -= _ => StartSpraying();
+        sprayAction.action.canceled  -= _ => StopSpraying();
+        sprayAction.action.Disable();
     }
 
     // ── Grab events ───────────────────────────────────────────────────────────
@@ -147,16 +158,6 @@ public class LigaseSprayCan : NetworkBaseInteractable
         GUILayout.Label($"Hold [{debugSprayKey}] to spray");
         GUILayout.Label($"Spraying: {isSpraying} | Range: {sprayRange}m");
         GUILayout.EndArea();
-    }
-
-    // ── Trigger / Activated ───────────────────────────────────────────────────
-
-    public override void Activated(bool activate)
-    {
-        base.Activated(activate);
-        if (!isHeld) return;
-        if (activate) StartSpraying();
-        else          StopSpraying();
     }
 
     // ── ServerRpc ─────────────────────────────────────────────────────────────

@@ -354,5 +354,25 @@ MonoBehaviour:
   sprayCooldown: 0.5
   returnMoveSpeed: 1.5
   returnRotateSpeed: 120
+  sprayAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: Spray
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 7883085c-ffe6-4a78-8570-550bb3a454ce
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: 9ad223a9-13f6-4295-93c4-942a7b7b5e1c
+        m_Path: <XRController>{RightHand}/{Trigger}
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Spray
+        m_Flags: 0
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   debugMode: 1
   debugSprayKey: 32
