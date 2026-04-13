@@ -53,10 +53,15 @@ public class LigaseSprayCan : NetworkBaseInteractable
 
         var rb = GetComponent<Rigidbody>();
         if (rb != null) { rb.isKinematic = true; rb.useGravity = false; }
+
+        sprayAction.action.Enable();
     }
 
-    void OnEnable()  => sprayAction.action.Enable();
-    void OnDisable() => sprayAction.action.Disable();
+    public override void OnNetworkDespawn()
+    {
+        base.OnNetworkDespawn();
+        sprayAction.action.Disable();
+    }
 
     // ── Update ────────────────────────────────────────────────────────────────
 
