@@ -13,9 +13,13 @@ public class GunInputXR : MonoBehaviour
     [Header("Socket Interaction Objects")]
     public GameObject[] Sockets;
 
+    public int ScannedPieces;
+
     void Awake()
     {
         grab = GetComponent<XRGrabInteractable>();
+
+        ScannedPieces = 0;
     }
 
     void OnEnable()
@@ -55,10 +59,24 @@ public class GunInputXR : MonoBehaviour
     public void OnTriggerEnter(Collider col){
         if(col.gameObject.tag.Equals("Scannable")){
 
-            Debug.Log("TEMPLATE SCANNED");
+            var template = col.gameObject.GetComponent<TemplatePiece>();
 
-            foreach(GameObject Socket in Sockets){
-                Socket.SetActive(true);
+            // Make sure piece isn't rescanned
+            if(!template.scanned){
+
+                Debug.Log("TEMPLATE PIECE SCANNED");
+
+                ScannedPieces++;
+                template.ScanPiece();
+
+                // if all pieces have been scanned, activate holograms
+                if(ScannedPieces == Sockets.Length){
+
+                    foreach(GameObject Socket in Sockets){
+                        Socket.SetActive(true);
+                    }
+
+                }
             }
         }
     }
