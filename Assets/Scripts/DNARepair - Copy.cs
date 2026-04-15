@@ -8,6 +8,8 @@ public class DNARepair : MonoBehaviour
     //On hits, spawn proteins at one random location, and they move toward break site
     //go from there (either they instantly repair a bit or do something particular)
 
+
+
     public Transform[] spawnPoints;   //list of points to spawn proteins from
     public List<GameObject> spawnedProteins;
     public GameObject protein;

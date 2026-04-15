@@ -7,19 +7,14 @@ public class WorldShake : MonoBehaviour
     public GameObject environment;
     public float magnitude;
 
-    [SerializeField] private float timer;
+    [SerializeField] private float time;
 
-    void Start(){
-        timer = 10f;
-    }
+    public bool activate;
     
     void Update(){
-        if(timer <= 0){
+        if(activate){
             Debug.Log("Shaking");
-            StartCoroutine(ShakeEnvironment(environment.transform, 3f));
-            timer = 10f;
-        }else{
-            timer -= Time.deltaTime;
+            StartCoroutine(ShakeEnvironment(environment.transform, time));
         }
     }
 

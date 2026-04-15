@@ -2,9 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//controls proteins spawned by the DNARepair script and moves them
-//toward damage site on DNA strand (empty object)
-
 public class ProteinMovement : MonoBehaviour
 {
     private GameObject target;
