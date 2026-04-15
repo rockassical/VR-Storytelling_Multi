@@ -63,6 +63,7 @@ public class DNARepairPlacement : MonoBehaviour
        }
 
        if(AllFilled){
+           Debug.Log("ALL SOCKETS ARE FILLED! TIME FOR NHEJ!");
            // ACTIVATE TIMELINE --> MOVE TO NEXT PART
        }
    }

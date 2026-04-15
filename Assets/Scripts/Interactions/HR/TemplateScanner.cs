@@ -70,7 +70,7 @@ public class GunInputXR : MonoBehaviour
                 template.ScanPiece();
 
                 // if all pieces have been scanned, activate holograms
-                if(ScannedPieces == Sockets.Length){
+                if(ScannedPieces >= Sockets.Length){
 
                     foreach(GameObject Socket in Sockets){
                         Socket.SetActive(true);
