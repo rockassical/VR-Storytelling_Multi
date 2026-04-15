@@ -11,7 +11,7 @@ TagManager:
   - Destroyer
   - Hole
   - Protein
-  - Scannable
+  - DNAWall
   layers:
   - Default
   - TransparentFX
