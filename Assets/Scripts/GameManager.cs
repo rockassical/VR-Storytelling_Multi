@@ -16,11 +16,15 @@ public class GameManager : NetworkBehaviour
     public Button StartGameButton;
 
     [Header("Timeline")]
-    public PlayableDirector Timeline;
+    public PlayableDirector Timeline_HR;
+    public PlayableDirector Timeline_NHEJ;
 
     [Header("Ships to Board")]
     public GameObject P53Ship;
     public GameObject ATMShip;
+
+
+    private int phaseCounter = 0;
 
     void Start(){
         StartGameButton.onClick.AddListener(() => StartGame());
@@ -75,7 +79,17 @@ public class GameManager : NetworkBehaviour
         xrOrigin.localPosition = Vector3.zero;
         xrOrigin.localRotation = Quaternion.identity;
 
-        Timeline.Play();
+        if(phaseCounter == 0 )
+            Timeline_HR.Play();
+        else if(phaseCounter == 1 )
+            Timeline_NHEJ.Play();
+
+        phaseCounter++;
+    }
+
+    public void nextPhase()
+    {
+        BoardShipLocal(P53Ship.transform);
     }
 
     /*void StartGame()
