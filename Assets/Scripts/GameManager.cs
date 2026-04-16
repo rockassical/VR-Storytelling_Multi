@@ -17,7 +17,7 @@ public class GameManager : NetworkBehaviour
 
     [Header("Timeline")]
     public PlayableDirector Timeline_HR;
-    public PlayableDirector Timeline_NHEJ;
+    public PlayableDirector Timeline_NHEJ, Timeline_Apoptosis, Timeline_Conclusion;
 
     [Header("Ships to Board")]
     public GameObject P53Ship;
@@ -83,6 +83,8 @@ public class GameManager : NetworkBehaviour
             Timeline_HR.Play();
         else if(phaseCounter == 1 )
             Timeline_NHEJ.Play();
+        else if(phaseCounter == 2 )
+            Timeline_Apoptosis.Play();
 
         phaseCounter++;
     }
