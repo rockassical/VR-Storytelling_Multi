@@ -41465,6 +41465,79 @@ Transform:
   - {fileID: 433326734}
   m_Father: {fileID: 2043652717}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1694094547
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3418132192591830793, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 69.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418132192591830793, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 11.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418132192591830793, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -27.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418132192591830793, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.71325046
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418132192591830793, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418132192591830793, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.70090926
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418132192591830793, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418132192591830793, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418132192591830793, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 89
+      objectReference: {fileID: 0}
+    - target: {fileID: 3418132192591830793, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405432925573532130, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: m_Name
+      value: NHEJ Break Site
+      objectReference: {fileID: 0}
+    - target: {fileID: 8074056987345204654, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 816517017
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ae0d93619d1787546907c88f6a71ba16, type: 3}
 --- !u!1 &1694581576
 GameObject:
   m_ObjectHideFlags: 0
@@ -54622,44 +54695,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &250153913232279477
 GameObject:
   m_ObjectHideFlags: 0
@@ -55306,44 +55345,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &308319769428598069
 Transform:
   m_ObjectHideFlags: 0
@@ -55875,44 +55880,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &344556774086537122
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -56477,44 +56448,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &378888748192619750
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -56778,44 +56715,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &442512021384442059
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -56893,44 +56796,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &444682650877860982
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -59001,44 +58870,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &600453695798106800
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -60102,44 +59937,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &765387695605879538
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -61541,44 +61342,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &949699101931673595
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -62853,44 +62620,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &1081350432136973608
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -63029,44 +62762,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &1100237023112082611
 Transform:
   m_ObjectHideFlags: 0
@@ -64902,44 +64601,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &1260376715476841136
 Transform:
   m_ObjectHideFlags: 0
@@ -66080,44 +65745,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &1374222272974160468
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -66294,44 +65925,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!114 &1388592751832691357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66466,44 +66063,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &1395735825018002125
 Transform:
   m_ObjectHideFlags: 0
@@ -66996,44 +66559,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &1452910113243217352
 Transform:
   m_ObjectHideFlags: 0
@@ -67163,44 +66692,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &1465118732608604946
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -67648,44 +67143,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!114 &1513447615090102237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68934,44 +68395,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &1673552978735509585
 GameObject:
   m_ObjectHideFlags: 0
@@ -74384,44 +73811,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &2302484581175225470
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -75035,44 +74428,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &2381691980338707211
 Transform:
   m_ObjectHideFlags: 0
@@ -75241,44 +74600,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &2399218289037915732
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -76094,44 +75419,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!114 &2492135886219076165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76144,44 +75435,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &2492443652257701606
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -77704,44 +76961,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &2631511358946091506
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -78260,44 +77483,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &2688242665329078006
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -78867,44 +78056,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &2749124158406652327
 GameObject:
   m_ObjectHideFlags: 0
@@ -81273,44 +80428,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &3021567724255603811
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -83334,44 +82455,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &3247083206710299181
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -83615,44 +82702,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &3271649809058532980
 GameObject:
   m_ObjectHideFlags: 0
@@ -83842,44 +82895,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &3285301280454112380
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -84066,44 +83085,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &3303808270932869758
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -84772,44 +83757,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &3375476969591894168
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -85127,44 +84078,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!64 &3407597250021915320
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -85506,44 +84423,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &3450978717358891082
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -85903,44 +84786,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &3485311053984346827
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -86186,44 +85035,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &3513956094158560023
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -86632,44 +85447,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &3544253276482596124
 Transform:
   m_ObjectHideFlags: 0
@@ -89098,44 +87879,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &3822855425422407110
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -90731,44 +89478,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &4034265741732622343
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -91588,44 +90301,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &4106561824457967508
 GameObject:
   m_ObjectHideFlags: 0
@@ -93446,44 +92125,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!114 &4294372160980404869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94003,44 +92648,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &4375718291691211951
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -94061,44 +92672,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &4381466363660407443
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -96718,44 +95295,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &4690553315744128706
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -97666,44 +96209,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!114 &4798361513549761177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97716,44 +96225,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &4798798542494472901
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -97971,44 +96446,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &4813715246436927292
 Transform:
   m_ObjectHideFlags: 0
@@ -99328,44 +97769,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &4983752439876502382
 Transform:
   m_ObjectHideFlags: 0
@@ -99563,44 +97970,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!114 &5003133262438054942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101108,44 +99481,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &5162319440051906835
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -101499,44 +99838,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &5200454049041400317
 Transform:
   m_ObjectHideFlags: 0
@@ -101867,44 +100172,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!114 &5252964000059582475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102799,44 +101070,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &5366879100641354003
 GameObject:
   m_ObjectHideFlags: 0
@@ -103009,44 +101246,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &5384346031298592971
 GameObject:
   m_ObjectHideFlags: 0
@@ -105551,44 +103754,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &5625024548715296070
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -105935,44 +104104,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &5665958880880226059
 Transform:
   m_ObjectHideFlags: 0
@@ -106008,44 +104143,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &5676688734209257853
 GameObject:
   m_ObjectHideFlags: 0
@@ -107110,44 +105211,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &5775994429067104624
 GameObject:
   m_ObjectHideFlags: 0
@@ -109125,44 +107192,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &6011612793967538393
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -110204,44 +108237,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &6127291464987948831
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -110453,44 +108452,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &6146515593364346310
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -110816,44 +108781,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &6175069581204994131
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -111328,44 +109259,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &6211412165903865658
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -112203,44 +110100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &6292242974966400799
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -114485,44 +112348,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &6572926833007090028
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -116083,44 +113912,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &6716896721221730915
 GameObject:
   m_ObjectHideFlags: 0
@@ -116589,44 +114384,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!64 &6757626181481793627
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -116684,44 +114445,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &6768238818997110118
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -118552,44 +116279,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &6951397149360918751
 GameObject:
   m_ObjectHideFlags: 0
@@ -119149,44 +116842,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &7012955956615348509
 GameObject:
   m_ObjectHideFlags: 0
@@ -119912,44 +117571,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &7067889104361199943
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -120613,44 +118238,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &7140499088406796702
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -121365,44 +118956,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &7199598858530917574
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -121849,44 +119406,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &7247939655819158572
 GameObject:
   m_ObjectHideFlags: 0
@@ -122850,44 +120373,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &7336869752366857595
 Transform:
   m_ObjectHideFlags: 0
@@ -124110,44 +121599,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &7451223310739343936
 Transform:
   m_ObjectHideFlags: 0
@@ -127477,44 +124932,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &7742715687077484948
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -128019,44 +125440,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &7787028057813467579
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -128910,44 +126297,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &7850073913378829849
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -130724,44 +128077,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &8061864554462759862
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -131566,44 +128885,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &8134593886263721445
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -131752,44 +129037,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &8168611590860862527
 Transform:
   m_ObjectHideFlags: 0
@@ -132365,44 +129616,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &8231778927057293633
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -132936,44 +130153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &8298600805175330004
 GameObject:
   m_ObjectHideFlags: 0
@@ -133255,44 +130438,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &8343678565670790256
 GameObject:
   m_ObjectHideFlags: 0
@@ -134917,44 +132066,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &8543122031506420132
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -135072,44 +132187,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &8578075763866146524
 Transform:
   m_ObjectHideFlags: 0
@@ -135228,44 +132309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &8596075212876919526
 Transform:
   m_ObjectHideFlags: 0
@@ -135429,44 +132476,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &8609568199083935432
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -135674,44 +132687,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!33 &8622331091683627197
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -137377,44 +134356,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!1 &8764935582725356259
 GameObject:
   m_ObjectHideFlags: 0
@@ -139137,44 +136082,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!4 &8909979158425971113
 Transform:
   m_ObjectHideFlags: 0
@@ -139919,44 +136830,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!23 &8985825470918349521
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -140560,44 +137437,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
+  bladeTip: {fileID: 0}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!114 &9064588161848812728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142692,3 +139535,4 @@ SceneRoots:
   - {fileID: 163630373}
   - {fileID: 1434920968}
   - {fileID: 583264444485498974}
+  - {fileID: 1694094547}
