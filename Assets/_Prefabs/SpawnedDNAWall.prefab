@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 3076773254914078826}
   - component: {fileID: 7097081656814207392}
   - component: {fileID: 392586666762098578}
-  - component: {fileID: 4767382307358534167}
   - component: {fileID: -2076045598054356849}
+  - component: {fileID: 6377500704152766292}
+  - component: {fileID: 8623439232681400191}
   m_Layer: 0
   m_Name: SpawnedDNAWall
   m_TagString: DNAWall
@@ -128,27 +129,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snapRadius: 1.4
   pendingMaterial: {fileID: 2100000, guid: c4e8423afbbccd148a3fc7662fd3ffc2, type: 2}
---- !u!65 &4767382307358534167
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4231196339900345313}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.047340296, y: 0.020565992, z: 0.0163977}
-  m_Center: {x: 0.0022115393, y: -0.0016858263, z: -0.0008857728}
 --- !u!114 &-2076045598054356849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,3 +251,46 @@ MonoBehaviour:
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
   m_FarAttachMode: 0
+--- !u!64 &6377500704152766292
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4231196339900345313}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8241507653874074484, guid: 36c8143ee52f84b41b21e999daf0a28c, type: 3}
+--- !u!65 &8623439232681400191
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4231196339900345313}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.043041725, y: 0.015457326, z: 0.011728013}
+  m_Center: {x: 0.0021967425, y: 0.000868534, z: -0.00133368}

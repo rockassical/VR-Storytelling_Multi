@@ -337,6 +337,22 @@ public class NHEJManager : NetworkBehaviour
         AdvancePhase();
     }
 
+    public void BeginSequence()
+    {
+        BeginSequenceServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void BeginSequenceServerRpc()
+    {
+        if (currentPhase.Value != NHEJPhase.WaitingForPlayers) return;
+
+        ulong localId = NetworkManager.Singleton.LocalClientId;
+        player1Id.Value = localId;
+        player2Id.Value = localId;
+        currentPhase.Value = NHEJPhase.Phase0_Trigger;
+    }
+
 
     [ServerRpc(RequireOwnership = false)]
     public void ReportPlayerCompleteServerRpc(ulong clientId)

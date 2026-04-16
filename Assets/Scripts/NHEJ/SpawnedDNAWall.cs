@@ -10,6 +10,7 @@ using UnityEngine;
 // Uses a proximity check in Update() — no trigger collider required.
 // The existing wall just needs a DNASealPoint component added to it.
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable))]
 public class SpawnedDNAWall : MonoBehaviour
 {
     [Tooltip("How close this wall needs to be to a DNASealPoint before it registers as pending.")]
