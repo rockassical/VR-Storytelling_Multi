@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
@@ -58,6 +59,10 @@ public class NHEJTool : MonoBehaviour
 
     void CutSegment(GameObject seg)
     {
+        // Clear overhang state immediately so phase checks don't count this segment.
+        var pair = seg.GetComponent<DNAPair>();
+        if (pair != null) pair.enabled = false;
+
         // Detach from parent so physics doesn't drag siblings.
         seg.transform.SetParent(null);
 
@@ -78,6 +83,20 @@ public class NHEJTool : MonoBehaviour
 
         if (NHEJAudio.Instance != null)
             NHEJAudio.Instance.PlayLigationSuccess();
+
+        StartCoroutine(CheckAllOverhangsCut());
+    }
+
+    IEnumerator CheckAllOverhangsCut()
+    {
+        // Wait a frame so the DNAPair component on the cut segment is gone.
+        yield return null;
+
+        foreach (var pair in FindObjectsOfType<DNAPair>())
+            if (pair.enabled && pair.IsOverhang) yield break; // still overhangs remaining
+
+        // All overhangs cut — advance the phase.
+        NHEJManager.Instance?.AdvancePhase();
     }
 
     void OnGUI()
