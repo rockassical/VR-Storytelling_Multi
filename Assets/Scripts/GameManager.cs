@@ -88,6 +88,7 @@ public class GameManager : NetworkBehaviour
     public void playPhase(int phase)
     {
         BoardShipLocal(P53Ship.transform);
+        //BoardShipLocal(ATMShip.transform);
         if (phase == 1)
             Timeline_HR.Play();
         else if(phase == 2)

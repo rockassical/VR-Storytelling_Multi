@@ -9,6 +9,8 @@ public class ProteinMenuUI : MonoBehaviour
     public Transform GO_spawnPos;
     [SerializeField] List<GameObject> DNA_Pieces = new List<GameObject>();
 
+    public GameObject Scanner;
+
     public Canvas canvas;
     bool canvasActive = false;
 
@@ -40,15 +42,19 @@ public class ProteinMenuUI : MonoBehaviour
 
     public void Buttons(int b) 
     {
-        Debug.Log(("Button Pressed"));
+        //Debug.Log(("Button Pressed"));
 
-        if(DNA_Pieces.Count > 0)
-            switch(b)
-            {
-                case 1:
-                    Instantiate(DNA_Pieces[0], GO_spawnPos);
-                    break;
-            }
+  
+        switch(b)
+        {
+            //case 1:
+            //    Instantiate(DNA_Pieces[0], GO_spawnPos);
+            //    break;
+            case 2:
+                Scanner.transform.position = GO_spawnPos.position;
+                Menu();
+                break;
+        }
 
 
     }
