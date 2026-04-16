@@ -12,6 +12,9 @@ TagManager:
   - Hole
   - Protein
   - DNAWall
+  - Interactable
+  - Scannable
+  - HR DNA Piece
   layers:
   - Default
   - TransparentFX

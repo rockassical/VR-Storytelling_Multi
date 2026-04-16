@@ -46,6 +46,8 @@ public class DNARepairPlacement : MonoBehaviour
         var Socket = Sockets[index];
         var Piece = args.interactableObject.transform.gameObject;
 
+        Piece.tag = "Untagged";
+
         StartCoroutine(WaitAndFillSocket(Socket, Piece));
    }
 
