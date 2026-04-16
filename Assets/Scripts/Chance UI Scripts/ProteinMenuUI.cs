@@ -25,6 +25,11 @@ public class ProteinMenuUI : MonoBehaviour
     {
         buttonAction.action.Disable();
     }
+
+    private void Awake()
+    {
+        canvas.enabled = canvasActive;
+    }
     void Update()
     {
         if (buttonAction.action.WasPressedThisFrame())
