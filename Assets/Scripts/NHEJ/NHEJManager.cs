@@ -570,33 +570,4 @@ public class NHEJManager : NetworkBehaviour
     }
 
     #endregion
-
-    #region Debug UI
-    // I still don't have a VR Headset and Dr. Li has the flu this week
-    void OnGUI()
-    {
-        if (!debugBypass) return;
-
-        GUILayout.BeginArea(new Rect(10, 10, 220, 160));
-        GUILayout.Label("=== NHEJ DEBUG ===");
-
-        if (!NetworkManager.Singleton.IsListening)
-        {
-            if (GUILayout.Button("Start Host"))
-                NetworkManager.Singleton.StartHost();
-        }
-        else
-        {
-            GUILayout.Label($"Phase: {currentPhase.Value}");
-            GUILayout.Label($"Scenario: {dsbScenario}");
-            GUILayout.Label($"Listening as: {(NetworkManager.Singleton.IsHost ? "Host" : "Client")}");
-
-            if (IsServer && GUILayout.Button("Force Advance Phase"))
-                AdvancePhase();
-        }
-
-        GUILayout.EndArea();
-    }
-
-    #endregion
 }
