@@ -25,21 +25,21 @@ public class WorldShake : MonoBehaviour
 
     IEnumerator ShakeEnvironment(Transform target, float duration)
     {
-    Vector3 originalPos = target.localPosition;
-    float elapsed = 0f;
+        Vector3 originalPos = target.localPosition;
+        float elapsed = 0f;
 
-    while (elapsed < duration)
-    {
-        float x = Random.Range(-1f, 1f) * magnitude;
-        float y = Random.Range(-1f, 1f) * magnitude;
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
 
-        target.localPosition = originalPos + new Vector3(x, y, 0);
-        elapsed += Time.deltaTime;
+            target.localPosition = originalPos + new Vector3(x, y, 0);
+            elapsed += Time.deltaTime;
 
-        yield return null;
-    }
+            yield return null;
+        }
 
-    target.localPosition = originalPos;
+        target.localPosition = originalPos;
     }
 
 }
