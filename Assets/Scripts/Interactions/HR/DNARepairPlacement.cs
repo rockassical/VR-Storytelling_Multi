@@ -5,9 +5,15 @@ using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.Playables;
 
 public class DNARepairPlacement : MonoBehaviour
 {
+    [Header("NEXT TIMELINE")]
+    public PlayableDirector Timeline_NHEJ;
+
+    [Header("GAME MANAGER")]
+    public GameManager GM;
 
     /*
         - Declare the number of pieces that need to be placed for strand to be repaired
@@ -64,7 +70,11 @@ public class DNARepairPlacement : MonoBehaviour
 
        if(AllFilled){
            Debug.Log("ALL SOCKETS ARE FILLED! TIME FOR NHEJ!");
-           // ACTIVATE TIMELINE --> MOVE TO NEXT PART
+            // ACTIVATE TIMELINE --> MOVE TO NEXT PART
+            //Timeline_NHEJ.Play();
+
+            GM.playPhase(2); 
+            
        }
    }
 }

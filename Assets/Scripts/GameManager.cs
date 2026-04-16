@@ -24,7 +24,7 @@ public class GameManager : NetworkBehaviour
     public GameObject ATMShip;
 
 
-    private int phaseCounter = 0;
+    //private int phaseCounter = 0;
 
     void Start(){
         StartGameButton.onClick.AddListener(() => StartGame());
@@ -62,7 +62,10 @@ public class GameManager : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        BoardShipLocal(P53Ship.transform);
+        //BoardShipLocal(P53Ship.transform);
+        //Timeline_HR.Play();
+
+        playPhase(1);
     }
 
     void BoardShipLocal(Transform shipSeat)
@@ -79,19 +82,18 @@ public class GameManager : NetworkBehaviour
         xrOrigin.localPosition = Vector3.zero;
         xrOrigin.localRotation = Quaternion.identity;
 
-        if(phaseCounter == 0 )
-            Timeline_HR.Play();
-        else if(phaseCounter == 1 )
-            Timeline_NHEJ.Play();
-        else if(phaseCounter == 2 )
-            Timeline_Apoptosis.Play();
-
-        phaseCounter++;
+        //Timeline_HR.Play();
     }
 
-    public void nextPhase()
+    public void playPhase(int phase)
     {
         BoardShipLocal(P53Ship.transform);
+        if (phase == 1)
+            Timeline_HR.Play();
+        else if(phase == 2)
+            Timeline_NHEJ.Play();
+        else if(phase==3)
+            Timeline_Apoptosis.Play();
     }
 
     /*void StartGame()
