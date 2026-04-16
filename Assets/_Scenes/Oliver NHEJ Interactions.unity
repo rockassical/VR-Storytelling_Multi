@@ -16688,6 +16688,19 @@ MonoBehaviour:
   edgeExclusionFraction: 0.15
   explosionSegmentCount: 4
   overhangSegmentCount: 2
+  fixedExplosionNames:
+  - polySurface1139
+  - polySurface1139.001
+  - polySurface1149
+  - polySurface1149.001
+  - polySurface1149.002
+  - polySurface1250.001
+  - polySurface1250.004
+  - polySurface1250.005
+  - polySurface1274.001
+  - polySurface998
+  - polySurface998.001
+  - polySurface1274.004
   explosionForce: 100
   explosionUpBias: 0.8
   explosionDestroyDelay: 3

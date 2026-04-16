@@ -1,5 +1,72 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &627693201041240138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1988230493939871718}
+  - component: {fileID: 7251814023954419792}
+  - component: {fileID: 83616150257278637}
+  m_Layer: 0
+  m_Name: Bladetip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1988230493939871718
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627693201041240138}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1236230179508409770}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7251814023954419792
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627693201041240138}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.16812588, y: 0.20878856, z: 0.4596432}
+  m_Center: {x: 0.15641433, y: 0.0074699055, z: 0.2701799}
+--- !u!114 &83616150257278637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627693201041240138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ceee54e40d97304bb2ade2a09a49d55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minimumSwingSpeed: 0.3
 --- !u!1 &2965027674197725341
 GameObject:
   m_ObjectHideFlags: 0
@@ -16,7 +83,6 @@ GameObject:
   - component: {fileID: 3123622368848826557}
   - component: {fileID: 5768687651452644190}
   - component: {fileID: 2017735184343448498}
-  - component: {fileID: 944662519895083903}
   - component: {fileID: 5085278728950414795}
   m_Layer: 0
   m_Name: Artemis
@@ -39,6 +105,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3438628069458008091}
+  - {fileID: 1988230493939871718}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6931910457828615606
@@ -137,7 +204,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &3123622368848826557
 MonoBehaviour:
@@ -273,7 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3053330322
+  GlobalObjectIdHash: 1674783762
   InScenePlacedSourceGlobalObjectIdHash: 98023999
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -294,60 +361,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bced69e0f3124e4f8f652c717fc2176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AllowOverrideOwnership: 0
-  m_InteractionCheckTime: 2
-  m_IgnoreSocketSelectedCallback: 1
-  m_ResetObjectOnDisconnect: 1
-  m_RelinquishOwnershipAfterTime: 1
-  m_RelinquishOwnershipTime: 5
-  m_UseInteractingChangedEvent: 0
-  OnInteractingChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncHover: 0
-  m_UseHoverEvents: 0
-  HoverNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  HoverNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncSelect: 1
-  m_UseSelectEvents: 0
-  SelectNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  SelectNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_SyncActivate: 1
-  m_UseActivateEvents: 0
-  ActivateNetworkedEventServer:
-    m_PersistentCalls:
-      m_Calls: []
-  ActivateNetworkedEventAll:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FoldoutValues: 010101
-  toolType: 0
-  detectionRadius: 0.15
-  tipTransform: {fileID: 0}
---- !u!114 &944662519895083903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2965027674197725341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b01b3e9aedaffa04c8bb11023ea65e87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  orbitRadius: 0.35
-  orbitSpeed: 15
-  orbitHeight: 0.05
-  snapRadius: 0.12
+  bladeTip: {fileID: 1988230493939871718}
+  despawnDelay: 2
+  cutForce: 1.5
+  debugMode: 0
 --- !u!114 &5085278728950414795
 MonoBehaviour:
   m_ObjectHideFlags: 0

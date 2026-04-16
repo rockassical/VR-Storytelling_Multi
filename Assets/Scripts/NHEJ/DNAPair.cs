@@ -54,13 +54,22 @@ public class DNAPair : MonoBehaviour
     public DNAPair Partner => partner;
 
     /// <summary>
-    /// Called by NHEJBreakPoint after the explosion destroy-delay has elapsed.
-    /// Waits an additional 'delay' seconds, then checks whether the partner was destroyed.
-    /// Only glows if this wall had a partner and that partner is now gone.
+    /// Immediately checks whether this wall has no partner and glows red if so.
+    /// Called by NHEJBreakPoint on scene start when the gap is pre-existing.
+    /// </summary>
+    public void CheckNow()
+    {
+        if (partner == null)
+            SetGlow(true);
+    }
+
+    /// <summary>
+    /// Called by NHEJBreakPoint after an explosion destroy-delay has elapsed.
+    /// Only glows if this wall HAD a partner that was subsequently destroyed.
     /// </summary>
     public void CheckAfterDelay(float delay)
     {
-        if (partner == null) return;  // never had a partner — not an overhang candidate
+        if (partner == null) return;  // never had a partner — use CheckNow() instead
         Invoke(nameof(DoCheck), delay);
     }
 
