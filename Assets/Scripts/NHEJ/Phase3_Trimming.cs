@@ -1,21 +1,14 @@
-using Unity.Netcode;
 using UnityEngine;
 
-// Phase 3: NHEJBreakPoint picks a random cut site in the DNA helix, blows up the centre,
-// and leaves glowing overhangs. Players grab Artemis and swing it through the overhang zone
-// (ArtemisBlade child trigger + runtime-generated OverhangZone). The cut fires wherever the
-// blade enters. Overhang segments are hidden and seam indicators removed by NHEJBreakPoint.
-// Phase advances when all required overhangs are cut.
+// Phase 3: Overhangs are pre-existing in the scene (gap manually set up before play).
+// Artemis exists in the scene — not spawned at runtime.
+// Players swing Artemis through the overhang zone. Phase advances when all cuts are done.
 public class Phase3_Trimming : NHEJPhaseHandler
 {
-    [Header("Tool Prefab")]
-    [SerializeField] GameObject artemisToolPrefab;
-
     public override bool IsAutomatic => false;
 
     bool player1Cut;
     bool player2Cut;
-    NetworkObject artemisObject;
 
     // ── NHEJPhaseHandler ──────────────────────────────────────────────────────
 
@@ -27,33 +20,13 @@ public class Phase3_Trimming : NHEJPhaseHandler
 
     public override void StartPhase()
     {
-        DSBScenario scenario   = manager.Scenario;
-        bool p1NeedsCut = scenario == DSBScenario.LeftOverhangOnly  || scenario == DSBScenario.BothOverhangs;
-        bool p2NeedsCut = scenario == DSBScenario.RightOverhangOnly || scenario == DSBScenario.BothOverhangs;
-
-        Debug.Log($"[NHEJ] Phase3 scenario={scenario} p1Cut={p1NeedsCut} p2Cut={p2NeedsCut}");
-
         if (manager.IsServer)
         {
-            // Generate the random break on all clients (same seed = deterministic result everywhere).
             int seed = UnityEngine.Random.Range(0, int.MaxValue);
             manager.TriggerBreakGeneration(seed);
 
-            // Listen for overhang result. If the explosion left no overhangs (no red walls),
-            // skip Artemis entirely and advance straight to the next phase.
             if (manager.BreakPoint != null)
                 manager.BreakPoint.OnOverhangsResolved += OnOverhangsResolved;
-
-            if ((p1NeedsCut || p2NeedsCut) && artemisToolPrefab != null)
-            {
-                var go = Instantiate(artemisToolPrefab, GetArtemisSpawnPos(), Quaternion.identity);
-                artemisObject = go.GetComponent<NetworkObject>();
-                artemisObject.Spawn();
-            }
-
-            // Auto-complete players who don't need a cut in this scenario.
-            if (!p1NeedsCut) manager.ServerMarkPlayerComplete(1);
-            if (!p2NeedsCut) manager.ServerMarkPlayerComplete(2);
         }
 
         if (NHEJAudio.Instance != null)
@@ -67,7 +40,7 @@ public class Phase3_Trimming : NHEJPhaseHandler
 
         if (!hasOverhangs)
         {
-            Debug.Log("[NHEJ Phase3] No overhangs detected — skipping Artemis, advancing phase.");
+            Debug.Log("[NHEJ Phase3] No overhangs — advancing phase.");
             manager.AdvancePhase();
         }
     }
@@ -78,17 +51,10 @@ public class Phase3_Trimming : NHEJPhaseHandler
     {
         if (manager.BreakPoint != null)
             manager.BreakPoint.OnOverhangsResolved -= OnOverhangsResolved;
-
-        if (manager.IsServer && artemisObject != null && artemisObject.IsSpawned)
-            artemisObject.Despawn();
     }
 
     // ── Called by NHEJManager.ReportCutServerRpc (server-side) ───────────────
 
-    /// <summary>
-    /// Server-only. Called after a validated cut for the given player role.
-    /// Marks that player complete; phase advances when all required cuts are done.
-    /// </summary>
     public void OnCutMade(int playerRole)
     {
         if (!manager.IsServer) return;
@@ -106,26 +72,4 @@ public class Phase3_Trimming : NHEJPhaseHandler
             Debug.Log("[NHEJ Phase3] Player 2 cut confirmed.");
         }
     }
-
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
-    Vector3 GetArtemisSpawnPos()
-    {
-        // Spawn Artemis near the DNA centre with a small offset so it's reachable in VR.
-        Vector3 centre = manager.LeftDNAEnd != null && manager.RightDNAEnd != null
-            ? (manager.LeftDNAEnd.position + manager.RightDNAEnd.position) * 0.5f
-            : (manager.LeftDNAEnd?.position ?? Vector3.zero);
-        return centre + Vector3.up * 0.3f;
-    }
-
-    /* DISABLED — TrimPoint mechanic preserved for reversion:
-
-    [Header("Trim Points (old snap-based mechanic — disabled)")]
-    [SerializeField] TrimPoint[] player1TrimPoints;
-    [SerializeField] TrimPoint[] player2TrimPoints;
-
-    public bool ValidateTrim(int pointIndex, int playerRole) { ... }
-    public void ServerMarkTrimmed(int pointIndex, int role) { ... }
-    public void OnTrimConfirmed(int pointIndex, ulong clientId) { ... }
-    */
 }
