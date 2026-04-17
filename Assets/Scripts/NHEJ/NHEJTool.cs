@@ -44,15 +44,22 @@ public class NHEJTool : MonoBehaviour
     // Called by BladeTipForwarder when it detects a trigger enter.
     public void OnBladeContact(Collider other)
     {
-        // Walk up to find a DNAPair on this object or its parents.
+        // Priority 1: DNAPair overhang (pre-existing gap edges).
         DNAPair pair = other.GetComponentInParent<DNAPair>();
-        if (pair == null) return;
-        if (!pair.IsOverhang) return;
+        if (pair != null && pair.IsOverhang)
+        {
+            if (debugMode) Debug.Log($"[NHEJTool] Cutting overhang: {pair.gameObject.name}");
+            CutSegment(pair.gameObject);
+            return;
+        }
 
-        if (debugMode)
-            Debug.Log($"[NHEJTool] Cutting overhang: {pair.gameObject.name}");
-
-        CutSegment(pair.gameObject);
+        // Priority 2: Sealed SpawnedDNAWall that is a leaf (nothing sealed onto it yet).
+        SpawnedDNAWall wall = other.GetComponentInParent<SpawnedDNAWall>();
+        if (wall != null && wall.IsLeaf)
+        {
+            if (debugMode) Debug.Log($"[NHEJTool] Detaching sealed wall: {wall.gameObject.name}");
+            wall.Detach();
+        }
     }
 
     // ── Cut ───────────────────────────────────────────────────────────────────

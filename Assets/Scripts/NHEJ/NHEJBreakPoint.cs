@@ -140,6 +140,68 @@ public class NHEJBreakPoint : MonoBehaviour
         return positions;
     }
 
+    /// <summary>
+    /// Returns true when the gap is fully bridged on BOTH strands.
+    /// Sealed walls are grouped into columns by axis position.
+    /// Each column must have walls from both strands (≥2), and columns
+    /// must span continuously from the left seam to the right seam.
+    /// </summary>
+    public bool IsGapBridged()
+    {
+        if (leftSeamPos == Vector3.zero && rightSeamPos == Vector3.zero) return false;
+
+        var allSealed = new List<SpawnedDNAWall>();
+        foreach (var w in FindObjectsOfType<SpawnedDNAWall>())
+            if (w.CurrentState == SpawnedDNAWall.State.Sealed)
+                allSealed.Add(w);
+
+        if (allSealed.Count == 0) return false;
+
+        float leftProj  = Proj(leftSeamPos);
+        float rightProj = Proj(rightSeamPos);
+        float colTol    = segmentSpacing * 0.5f;  // walls this close share a column
+        float maxGap    = segmentSpacing * 2f;     // max allowed axis gap between columns
+
+        // Build columns — each is a list of axis projections at the same position.
+        var columns = new List<List<float>>();
+        var projections = new List<float>();
+        foreach (var w in allSealed)
+            projections.Add(Proj(w.transform.position));
+        projections.Sort();
+
+        foreach (float p in projections)
+        {
+            bool added = false;
+            foreach (var col in columns)
+            {
+                if (Mathf.Abs(col[0] - p) <= colTol)
+                {
+                    col.Add(p);
+                    added = true;
+                    break;
+                }
+            }
+            if (!added) columns.Add(new List<float> { p });
+        }
+
+        if (columns.Count == 0) return false;
+
+        // Must reach from left seam to right seam.
+        if (columns[0][0]                       > leftProj  + maxGap) return false;
+        if (columns[columns.Count - 1][0]       < rightProj - maxGap) return false;
+
+        for (int i = 0; i < columns.Count; i++)
+        {
+            // Each column needs walls on both strands.
+            if (columns[i].Count < 2) return false;
+
+            // No axis gap between consecutive columns.
+            if (i > 0 && columns[i][0] - columns[i - 1][0] > maxGap) return false;
+        }
+
+        return true;
+    }
+
     // ── Private helpers ───────────────────────────────────────────────────────
 
     void CollectAndSortSegments()

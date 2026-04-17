@@ -314,9 +314,6 @@ public class NHEJManager : NetworkBehaviour
             if (enemy != null && enemy.IsSpawned) enemy.Despawn();
         spawnedEnemies.Clear();
 
-        // Simplified flow per client request (2025-03-17):
-        //   Phase0 → Phase3 (trim) → Phase4 (gap fill) → Phase8 (assessment)
-        // Phases 1, 2, 5, 6, 7 are intentionally bypassed but their code is preserved for easy reversion.
         NHEJPhase next = currentPhase.Value switch
         {
             NHEJPhase.Phase0_Trigger    => NHEJPhase.Phase3_Trimming,    // skip KuBinding + DNAPKcs
@@ -353,6 +350,11 @@ public class NHEJManager : NetworkBehaviour
         currentPhase.Value = NHEJPhase.Phase0_Trigger;
     }
 
+
+    public void EndNHEJ()
+    {
+        // TODO: Chance shit to be implemented. This is the end of NHEJ.
+    }
 
     [ServerRpc(RequireOwnership = false)]
     public void ReportPlayerCompleteServerRpc(ulong clientId)

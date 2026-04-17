@@ -23,9 +23,16 @@ public class SpawnedDNAWall : MonoBehaviour
     public State CurrentState { get; private set; } = State.Free;
 
     DNASealPoint currentSealPoint;
+    DNASealPoint sealedBy;       // the seal point this wall bonded to
+    bool         sealedOnRight;  // which side of sealedBy this wall occupies
+    DNASealPoint ownSealPoint;   // the DNASealPoint added to this wall after sealing
     Renderer[]   renderers;
     Material[]   originalMaterials;
     Rigidbody    rb;
+
+    /// <summary>True if sealed but nothing has been sealed onto this wall yet.</summary>
+    public bool IsLeaf => CurrentState == State.Sealed &&
+                          (ownSealPoint == null || (!ownSealPoint.LeftSealed && !ownSealPoint.RightSealed));
 
     // ── Unity ─────────────────────────────────────────────────────────────────
 
@@ -69,6 +76,8 @@ public class SpawnedDNAWall : MonoBehaviour
 
     public void OnSealed(DNASealPoint by)
     {
+        sealedBy      = by;
+        sealedOnRight = by.IsRightSide(transform.position);
         currentSealPoint = null;
         SetState(State.Sealed);
 
@@ -79,14 +88,44 @@ public class SpawnedDNAWall : MonoBehaviour
         if (grab != null) grab.enabled = false;
 
         // Inherit a DNASealPoint so further spawned walls can chain onto this one.
-        var newSealPoint = gameObject.AddComponent<DNASealPoint>();
-        newSealPoint.helixAxisLocal  = by.helixAxisLocal;
-        newSealPoint.pendingMaterial = by.pendingMaterial;
-        newSealPoint.sealedMaterial  = by.sealedMaterial;
+        ownSealPoint = gameObject.AddComponent<DNASealPoint>();
+        ownSealPoint.helixAxisLocal  = by.helixAxisLocal;
+        ownSealPoint.pendingMaterial = by.pendingMaterial;
+        ownSealPoint.sealedMaterial  = by.sealedMaterial;
 
         gameObject.tag = "DNAWall";
 
         Debug.Log($"[SpawnedDNAWall] Sealed onto {by.gameObject.name}");
+    }
+
+    /// <summary>Detaches this wall from its seal point and returns it to a free state.</summary>
+    public void Detach()
+    {
+        if (CurrentState != State.Sealed) return;
+
+        // Unregister from the parent seal point.
+        if (sealedBy != null)
+            sealedBy.UnsealSide(sealedOnRight);
+
+        // Remove the DNASealPoint we added to ourselves.
+        if (ownSealPoint != null)
+        {
+            Destroy(ownSealPoint);
+            ownSealPoint = null;
+        }
+
+        // Restore physics and grab.
+        rb.isKinematic = false;
+        rb.useGravity  = true;
+
+        var grab = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+        if (grab != null) grab.enabled = true;
+
+        gameObject.tag = "Untagged";
+        sealedBy = null;
+        SetState(State.Free);
+
+        Debug.Log($"[SpawnedDNAWall] Detached from seal point.");
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────

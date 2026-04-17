@@ -8,7 +8,7 @@ using XRMultiplayer;
 public class LigaseSprayCan : NetworkBaseInteractable
 {
     [Header("Spray Settings")]
-    [SerializeField] float sprayRange = 0.5f;
+    [SerializeField] float sprayRange = 2f;
     [SerializeField] GameObject sprayVFXPrefab;
     [SerializeField] float sprayCooldown = 0.5f;
 
@@ -82,7 +82,10 @@ public class LigaseSprayCan : NetworkBaseInteractable
 
             DNASealPoint sealPoint = FindNearestPendingSealPoint(origin);
             if (sealPoint != null)
+            {
                 sealPoint.Seal();
+                CheckGapBridged();
+            }
         }
 
         // Return to home when not held
@@ -130,6 +133,17 @@ public class LigaseSprayCan : NetworkBaseInteractable
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────
+
+    void CheckGapBridged()
+    {
+        var bp = NHEJManager.Instance?.BreakPoint;
+        if (bp == null) return;
+        if (bp.IsGapBridged())
+        {
+            Debug.Log("[LigaseSprayCan] Gap bridged on both strands.");
+            NHEJManager.Instance.EndNHEJ();
+        }
+    }
 
     DNASealPoint FindNearestPendingSealPoint(Vector3 origin)
     {
