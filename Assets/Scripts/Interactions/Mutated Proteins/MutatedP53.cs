@@ -68,13 +68,23 @@ public class MutatedP53 : MonoBehaviour
         for(int i = 0; i < DNAPieces.Length; i++){
 
             // Check if the parent of the piece is a p53 (if it is already picked up)
-            var ParentComp = DNAPieces[i].transform.parent.gameObject.GetComponent<MutatedP53>();
-
             // if this piece isn't already stolen
-            if(ParentComp == null){
+            if(DNAPieces[i].transform.parent != null){
+                if(DNAPieces[i].transform.parent.gameObject.GetComponent<MutatedP53>() == null){
 
-                //Debug.Log("Piece isn't stolen");
+                    //Debug.Log("Piece isn't stolen");
 
+                    // if this is the first piece that isn't stolen
+                    if(Closest == null)
+                    {
+                        Closest = DNAPieces[i];
+                    }
+                    else if(Vector3.Distance(gameObject.transform.position, DNAPieces[i].transform.position) <= Vector3.Distance(gameObject.transform.position, Closest.transform.position))
+                    {
+                        Closest = DNAPieces[i];
+                    }
+                }
+            }else{
                 // if this is the first piece that isn't stolen
                 if(Closest == null)
                 {
@@ -92,8 +102,9 @@ public class MutatedP53 : MonoBehaviour
         return Closest;
     }
 
-    public void OnCollisionEnter(Collision col){
-        if(col.gameObject.tag.Equals("Laser")){
+    public void OnTriggerEnter(Collider col){
+        if(col.gameObject.CompareTag("LaserBullet")){
+            Debug.Log("I'M HIT! (mutated p53)");
             Health -= 10;
 
             Destroy(col.gameObject);
@@ -102,7 +113,7 @@ public class MutatedP53 : MonoBehaviour
                 HealthBar.SetActive(true);
             }
 
-            HealthBarValue.fillAmount = Health / MaxHealth;
+            HealthBarValue.fillAmount = (1.0f * Health) / (1.0f * MaxHealth);
 
             CheckDeath();
         }
@@ -110,7 +121,9 @@ public class MutatedP53 : MonoBehaviour
 
     void CheckDeath(){
         if(Health <= 0){
-            heldPiece.transform.SetParent(null);
+            if(heldPiece != null){
+                heldPiece.transform.SetParent(null);
+            }
 
             Destroy(gameObject);
         }

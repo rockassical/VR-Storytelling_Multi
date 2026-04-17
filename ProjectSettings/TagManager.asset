@@ -15,6 +15,7 @@ TagManager:
   - Interactable
   - Scannable
   - HR DNA Piece
+  - LaserBullet
   layers:
   - Default
   - TransparentFX

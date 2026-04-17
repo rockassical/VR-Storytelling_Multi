@@ -11,6 +11,9 @@ public class MutatedProteinSpawner : MonoBehaviour
 
     public bool isActive;
 
+    [Header("1/[Chance] to spawn every frame (500-600 base)")]
+    public int Chance;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,13 +24,18 @@ public class MutatedProteinSpawner : MonoBehaviour
     void Update()
     {
         if(isActive){
-            if(Random.Range(0, 750) == 154){
+            if(Random.Range(0, Chance) == 154){
                 SpawnP53();
             }
         }
     }
 
     void SpawnP53(){
-        Instantiate(mutatedP53, spawnPositions[Random.Range(0, spawnPositions.Length - 1)].transform.position, Quaternion.identity);
+        Vector3 minCorner = spawnPositions[0].transform.position;
+        Vector3 maxCorner = spawnPositions[1].transform.position;
+
+        Vector3 RandomPosition = new Vector3(Random.Range(minCorner.x, maxCorner.x), Random.Range(minCorner.y, maxCorner.y), Random.Range(minCorner.z, maxCorner.z));
+
+        Instantiate(mutatedP53, RandomPosition, Quaternion.identity);
     }
 }
