@@ -9,7 +9,7 @@ public class ProteinMenuUI : MonoBehaviour
     public Transform GO_spawnPos;
     [SerializeField] List<GameObject> DNA_Pieces = new List<GameObject>();
 
-    public GameObject Scanner;
+    public GameObject Scanner, Blaster, Artimis, Ligase;
 
     public Canvas canvas;
     bool canvasActive = false;
@@ -57,6 +57,18 @@ public class ProteinMenuUI : MonoBehaviour
             //    break;
             case 2:
                 Scanner.transform.position = GO_spawnPos.position;
+                Menu();
+                break;
+            //case 3:
+            //    Blaster.transform.position = GO_spawnPos.position;
+            //    Menu();
+            //    break;
+            case 4:
+                Artimis.transform.position = GO_spawnPos.position;
+                Menu();
+                break;
+            case 5:
+                Ligase.transform.position = GO_spawnPos.position;
                 Menu();
                 break;
         }
