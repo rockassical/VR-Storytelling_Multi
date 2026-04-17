@@ -69,8 +69,10 @@ public class DNASealPoint : MonoBehaviour
     /// <summary>
     /// Returns true if there is at least one pending (unsealed) wall ready to bond.
     /// </summary>
-    public bool HasPending => (leftPending != null && !leftSealed)
+    public bool HasPending  => (leftPending  != null && !leftSealed)
                            || (rightPending != null && !rightSealed);
+    public bool LeftSealed  => leftSealed;
+    public bool RightSealed => rightSealed;
 
     /// <summary>
     /// Seals whichever pending walls are currently in contact.
@@ -92,6 +94,14 @@ public class DNASealPoint : MonoBehaviour
             rightPending = null;
         }
 
+        RefreshGlow();
+    }
+
+    /// <summary>Reverses a seal on the given side — called when Artemis cuts a sealed wall off.</summary>
+    public void UnsealSide(bool isRight)
+    {
+        if (isRight) { rightSealed = false; rightPending = null; }
+        else         { leftSealed  = false; leftPending  = null; }
         RefreshGlow();
     }
 
