@@ -33,7 +33,7 @@ public class DEV_VoiceLineGenerator : MonoBehaviour
     async void GenerateVoiceLine(){
         using (Stream stream = await api.TextToSpeech.GetSpeechAsStreamAsync(
             input: VoiceLine,
-            voice: "alloy",
+            voice: "onyx",
             speed: 1.0,
             responseFormat: "wav",
             model: "tts-1"))

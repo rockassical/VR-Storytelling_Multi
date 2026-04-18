@@ -6693,7 +6693,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1571073421}
-  VoiceLine: This is goodbye, for now. Excellent work today!
+  VoiceLine: "This is bad, the DNA in this cell is much more damaged than we thought.
+    We\u2019ll need to initiate apoptosis, which will cause the cell to die to prevent
+    the spread of mutation. "
 --- !u!1001 &2078342788
 PrefabInstance:
   m_ObjectHideFlags: 0
