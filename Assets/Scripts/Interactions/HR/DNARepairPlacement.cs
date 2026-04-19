@@ -18,6 +18,7 @@ public class DNARepairPlacement : NetworkBehaviour
 
     // Netcode additions
     // assign all TemplatePiece scene objects here so the server can track when all pieces have been scanned and activate sockets on every client
+    // I did not do this in the inspector yet
     [Header("TEMPLATE PIECES (Netcode)")]
     public TemplatePiece[] TemplatePieces;
 
