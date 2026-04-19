@@ -61,15 +61,14 @@ public class GunInputXR : MonoBehaviour
 
             var template = col.gameObject.GetComponent<TemplatePiece>();
 
-            // Make sure piece isn't rescanned
-            if(!template.scanned){
+            // Netcode addition
+            if(!template.IsScanned){
 
                 Debug.Log("TEMPLATE PIECE SCANNED");
 
                 ScannedPieces++;
+                // ScanPiece() now routes through a ServerRpc so all clients see the material change
                 template.ScanPiece();
-
-                // if all pieces have been scanned, activate holograms
                 if(ScannedPieces >= Sockets.Length){
 
                     foreach(GameObject Socket in Sockets){

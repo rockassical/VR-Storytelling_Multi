@@ -356,6 +356,20 @@ public class NHEJManager : NetworkBehaviour
         // TODO: Chance shit to be implemented. This is the end of NHEJ.
     }
 
+    /// <summary>
+    /// Called by LigaseSprayCan (owner client) after each seal.
+    /// Server runs IsGapBridged() against the authoritative netState of all SpawnedDNAWalls.
+    /// </summary>
+    [ServerRpc(RequireOwnership = false)]
+    public void CheckGapBridgedServerRpc()
+    {
+        if (breakPoint != null && breakPoint.IsGapBridged())
+        {
+            Debug.Log("[NHEJManager] Gap bridged — calling EndNHEJ.");
+            EndNHEJ();
+        }
+    }
+
     [ServerRpc(RequireOwnership = false)]
     public void ReportPlayerCompleteServerRpc(ulong clientId)
     {

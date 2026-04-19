@@ -136,13 +136,8 @@ public class LigaseSprayCan : NetworkBaseInteractable
 
     void CheckGapBridged()
     {
-        var bp = NHEJManager.Instance?.BreakPoint;
-        if (bp == null) return;
-        if (bp.IsGapBridged())
-        {
-            Debug.Log("[LigaseSprayCan] Gap bridged on both strands.");
-            NHEJManager.Instance.EndNHEJ();
-        }
+        // Route through server so IsGapBridged() runs against authoritative netState values.
+        NHEJManager.Instance?.CheckGapBridgedServerRpc();
     }
 
     DNASealPoint FindNearestPendingSealPoint(Vector3 origin)

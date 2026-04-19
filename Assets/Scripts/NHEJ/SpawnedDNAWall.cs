@@ -1,4 +1,6 @@
+using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 // Attach to walls spawned via the NHEJSpawnPanel UI.
 //
@@ -10,8 +12,8 @@ using UnityEngine;
 // Uses a proximity check in Update() — no trigger collider required.
 // The existing wall just needs a DNASealPoint component added to it.
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable))]
-public class SpawnedDNAWall : MonoBehaviour
+[RequireComponent(typeof(XRGrabInteractable))]
+public class SpawnedDNAWall : NetworkBehaviour
 {
     [Tooltip("How close this wall needs to be to a DNASealPoint before it registers as pending.")]
     [SerializeField] float snapRadius = 0.3f;
@@ -20,12 +22,27 @@ public class SpawnedDNAWall : MonoBehaviour
     [SerializeField] Material pendingMaterial;
 
     public enum State { Free, Pending, Sealed }
-    public State CurrentState { get; private set; } = State.Free;
+
+    // ── Networked state ───────────────────────────────────────────────────────
+    // Server-authoritative: only Free (0) and Sealed (2) are broadcast.
+    // Pending is local-only visual feedback.
+
+    readonly NetworkVariable<byte> netState = new(
+        0,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server);
+
+    public State CurrentState => (State)netState.Value;
+
+    // Set on the client that initiated the seal, prevents double-apply when the
+    // server's netState echo arrives on that same client.
+    bool sealAppliedLocally;
+    bool detachAppliedLocally;
 
     DNASealPoint currentSealPoint;
-    DNASealPoint sealedBy;       // the seal point this wall bonded to
-    bool         sealedOnRight;  // which side of sealedBy this wall occupies
-    DNASealPoint ownSealPoint;   // the DNASealPoint added to this wall after sealing
+    DNASealPoint sealedBy;
+    bool         sealedOnRight;
+    DNASealPoint ownSealPoint;
     Renderer[]   renderers;
     Material[]   originalMaterials;
     Rigidbody    rb;
@@ -45,6 +62,43 @@ public class SpawnedDNAWall : MonoBehaviour
             originalMaterials[i] = renderers[i].material;
     }
 
+    public override void OnNetworkSpawn()
+    {
+        netState.OnValueChanged += OnNetStateChanged;
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        netState.OnValueChanged -= OnNetStateChanged;
+    }
+
+    // Runs on every client when server changes netState.
+    void OnNetStateChanged(byte prev, byte curr)
+    {
+        var newState = (State)curr;
+
+        if (newState == State.Sealed && (State)prev != State.Sealed)
+        {
+            if (sealAppliedLocally)
+            {
+                sealAppliedLocally = false;
+                return; // this client already applied via OnSealed()
+            }
+            ApplySealLocally();
+        }
+        else if (newState == State.Free && (State)prev == State.Sealed)
+        {
+            if (detachAppliedLocally)
+            {
+                detachAppliedLocally = false;
+                return; // this client already applied via Detach()
+            }
+            ApplyDetachLocally();
+        }
+    }
+
+    // ── Update ────────────────────────────────────────────────────────────────
+
     void Update()
     {
         if (CurrentState == State.Sealed) return;
@@ -53,7 +107,6 @@ public class SpawnedDNAWall : MonoBehaviour
 
         if (nearest != currentSealPoint)
         {
-            // Left old seal point
             if (currentSealPoint != null)
                 currentSealPoint.NotifyContactEnd(this);
 
@@ -63,11 +116,11 @@ public class SpawnedDNAWall : MonoBehaviour
             {
                 bool isRight = nearest.IsRightSide(transform.position);
                 nearest.NotifyContact(this, isRight);
-                SetState(State.Pending);
+                SetVisualState(State.Pending);
             }
             else
             {
-                SetState(State.Free);
+                SetVisualState(State.Free);
             }
         }
     }
@@ -79,53 +132,110 @@ public class SpawnedDNAWall : MonoBehaviour
         sealedBy      = by;
         sealedOnRight = by.IsRightSide(transform.position);
         currentSealPoint = null;
-        SetState(State.Sealed);
 
+        ApplySealPhysics();
+        AddOwnSealPoint(by);
+        SetVisualState(State.Sealed);
+
+        // Tell server — other clients will apply via OnNetStateChanged.
+        sealAppliedLocally = true;
+        if (IsSpawned) SealServerRpc();
+
+        Debug.Log($"[SpawnedDNAWall] Sealed onto {by.gameObject.name}");
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void SealServerRpc()
+    {
+        netState.Value = (byte)State.Sealed;
+    }
+
+    // Called on non-owning clients via netState change.
+    void ApplySealLocally()
+    {
+        var sp = FindNearestSealPoint();
+        if (sp != null)
+        {
+            sealedBy      = sp;
+            sealedOnRight = sp.IsRightSide(transform.position);
+            currentSealPoint = null;
+        }
+        ApplySealPhysics();
+        if (sp != null) AddOwnSealPoint(sp);
+        SetVisualState(State.Sealed);
+    }
+
+    void ApplySealPhysics()
+    {
         rb.isKinematic = true;
         rb.useGravity  = false;
 
-        var grab = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+        var grab = GetComponent<XRGrabInteractable>();
         if (grab != null) grab.enabled = false;
+    }
 
-        // Inherit a DNASealPoint so further spawned walls can chain onto this one.
+    void AddOwnSealPoint(DNASealPoint by)
+    {
+        if (ownSealPoint != null) return;
         ownSealPoint = gameObject.AddComponent<DNASealPoint>();
         ownSealPoint.helixAxisLocal  = by.helixAxisLocal;
         ownSealPoint.pendingMaterial = by.pendingMaterial;
         ownSealPoint.sealedMaterial  = by.sealedMaterial;
-
         gameObject.tag = "DNAWall";
-
-        Debug.Log($"[SpawnedDNAWall] Sealed onto {by.gameObject.name}");
     }
+
+    // ── Detach ────────────────────────────────────────────────────────────────
 
     /// <summary>Detaches this wall from its seal point and returns it to a free state.</summary>
     public void Detach()
     {
         if (CurrentState != State.Sealed) return;
 
-        // Unregister from the parent seal point.
         if (sealedBy != null)
             sealedBy.UnsealSide(sealedOnRight);
 
-        // Remove the DNASealPoint we added to ourselves.
         if (ownSealPoint != null)
         {
             Destroy(ownSealPoint);
             ownSealPoint = null;
         }
 
-        // Restore physics and grab.
+        ApplyDetachPhysics();
+        SetVisualState(State.Free);
+        sealedBy = null;
+
+        // Tell server — other clients will apply via OnNetStateChanged.
+        detachAppliedLocally = true;
+        if (IsSpawned) DetachServerRpc();
+
+        Debug.Log($"[SpawnedDNAWall] Detached from seal point.");
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void DetachServerRpc()
+    {
+        netState.Value = (byte)State.Free;
+    }
+
+    // Called on non-owning clients via netState change.
+    void ApplyDetachLocally()
+    {
+        if (sealedBy != null) sealedBy.UnsealSide(sealedOnRight);
+        if (ownSealPoint != null) { Destroy(ownSealPoint); ownSealPoint = null; }
+        sealedBy = null;
+        ApplyDetachPhysics();
+        SetVisualState(State.Free);
+    }
+
+    void ApplyDetachPhysics()
+    {
         rb.isKinematic = false;
         rb.useGravity  = true;
 
-        var grab = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+        var grab = GetComponent<XRGrabInteractable>();
         if (grab != null) grab.enabled = true;
 
         gameObject.tag = "Untagged";
-        sealedBy = null;
-        SetState(State.Free);
-
-        Debug.Log($"[SpawnedDNAWall] Detached from seal point.");
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────
@@ -137,19 +247,15 @@ public class SpawnedDNAWall : MonoBehaviour
 
         foreach (var sp in FindObjectsOfType<DNASealPoint>())
         {
-            // Don't snap to a seal point on ourselves (after sealing, we get one)
             if (sp.gameObject == gameObject) continue;
-
             float d = Vector3.Distance(transform.position, sp.transform.position);
             if (d < nearestDist) { nearestDist = d; nearest = sp; }
         }
         return nearest;
     }
 
-    void SetState(State next)
+    void SetVisualState(State next)
     {
-        CurrentState = next;
-
         Material target = next == State.Pending && pendingMaterial != null
             ? pendingMaterial
             : null;
