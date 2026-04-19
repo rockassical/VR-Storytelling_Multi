@@ -21,8 +21,8 @@ public class TalkToAI : MonoBehaviour
 
     public GameObject Camera;
 
-    float timer = 10f;
-    bool timerFinished = false;
+    //float timer = 10f;
+    //bool timerFinished = false;
     private bool recording;
 
     public AudioSource audioSource;
@@ -41,6 +41,10 @@ public class TalkToAI : MonoBehaviour
     public TextMeshProUGUI ConfirmationText;
     public Button ConfirmButton;
     public Button CancelButton;
+
+    [Header("Check for first interaction")]
+    public GameManager gameManager;
+    public bool firstInteraction = true;
 
     void OnEnable(){
         triggerAction.action.started += StartRecording;
@@ -271,7 +275,26 @@ public class TalkToAI : MonoBehaviour
             AudioClip clip = CreateAudioClipFromBytes(audioData, sampleRate: 24000, channels: 1);
 
             audioSource.clip = clip;
-            audioSource.Play();
+            StartCoroutine(PlayAndWait(audioSource));
+
+            //audioSource.Play();
+
+
+        }
+    }
+
+    // FUNCTION TO WAIT FOR ANSWER TO FINISH FOR FIRST INTERACTION
+    IEnumerator PlayAndWait(AudioSource source)
+    {
+        source.Play();
+
+        yield return new WaitWhile(() => source.isPlaying);
+
+        Debug.Log("Audio finished");
+        
+        if(firstInteraction){
+            firstInteraction = false;
+            gameManager.playPhase(1);
         }
     }
 
