@@ -58,9 +58,6 @@ public class ProteinMenuUI : MonoBehaviour
 
     public void Buttons(int b) 
     {
-        //Debug.Log(("Button Pressed"));
-
-  
         switch(b)
         {
             case 2:
@@ -76,10 +73,9 @@ public class ProteinMenuUI : MonoBehaviour
                 Menu();
                 break;
             case 3:
-                //Debug.Log("Blaster Filler");
                 Blaster.transform.position = GO_spawnPos.position;
+                Menu();
                 break;
-
             case 6:
                 if (DNA_Pieces.Count > 0)
                     setDNA_menuActive();
