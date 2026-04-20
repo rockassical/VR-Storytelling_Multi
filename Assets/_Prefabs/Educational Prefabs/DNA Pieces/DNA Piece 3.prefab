@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2144153122986417434}
   - component: {fileID: 6448920487120257761}
   - component: {fileID: 8261246315265923587}
+  - component: {fileID: 7622183346875798718}
   - component: {fileID: 6298584101171584280}
   - component: {fileID: 4469432611587958406}
   m_Layer: 0
@@ -249,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3579576990
+  GlobalObjectIdHash: 1633638164
   InScenePlacedSourceGlobalObjectIdHash: 1523588170
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -258,6 +259,21 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &7622183346875798718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7783593307358867827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a6d14794b4980f4aa5173ace63998a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snapRadius: 1.4
+  pendingMaterial: {fileID: 2100000, guid: c4e8423afbbccd148a3fc7662fd3ffc2, type: 2}
+  gameManager: {fileID: 0}
 --- !u!114 &6298584101171584280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,6 +290,8 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
+  firstCut: 0
+  gameManager: {fileID: 0}
 --- !u!64 &4469432611587958406
 MeshCollider:
   m_ObjectHideFlags: 0
