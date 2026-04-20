@@ -51,6 +51,9 @@ public class SpawnedDNAWall : NetworkBehaviour
     public bool IsLeaf => CurrentState == State.Sealed &&
                           (ownSealPoint == null || (!ownSealPoint.LeftSealed && !ownSealPoint.RightSealed));
 
+    /// <summary>The DNASealPoint added to this wall after sealing — the next node in the bridge graph.</summary>
+    public DNASealPoint OwnSealPoint => ownSealPoint;
+
     // ── Unity ─────────────────────────────────────────────────────────────────
 
     void Awake()
@@ -101,7 +104,7 @@ public class SpawnedDNAWall : NetworkBehaviour
 
     void Update()
     {
-        if (CurrentState == State.Sealed) return;
+        if (CurrentState == State.Sealed || sealAppliedLocally) return;
 
         DNASealPoint nearest = FindNearestSealPoint();
 
