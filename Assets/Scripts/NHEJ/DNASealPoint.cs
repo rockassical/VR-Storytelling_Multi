@@ -23,6 +23,10 @@ public class DNASealPoint : MonoBehaviour
     SpawnedDNAWall leftPending;
     SpawnedDNAWall rightPending;
 
+    // Stored so the graph BFS can traverse the seal chain.
+    SpawnedDNAWall leftSealedWall;
+    SpawnedDNAWall rightSealedWall;
+
     Renderer[]  renderers;
     Material[]  originalMaterials;
     bool        leftSealed;
@@ -74,6 +78,10 @@ public class DNASealPoint : MonoBehaviour
     public bool LeftSealed  => leftSealed;
     public bool RightSealed => rightSealed;
 
+    /// <summary>Returns the walls sealed onto this node for graph traversal.</summary>
+    public SpawnedDNAWall LeftSealedWall  => leftSealedWall;
+    public SpawnedDNAWall RightSealedWall => rightSealedWall;
+
     /// <summary>
     /// Seals whichever pending walls are currently in contact.
     /// Called by LigaseSprayCan when it sprays near this wall.
@@ -82,6 +90,7 @@ public class DNASealPoint : MonoBehaviour
     {
         if (leftPending != null && !leftSealed)
         {
+            leftSealedWall = leftPending;
             leftPending.OnSealed(this);
             leftSealed  = true;
             leftPending = null;
@@ -89,6 +98,7 @@ public class DNASealPoint : MonoBehaviour
 
         if (rightPending != null && !rightSealed)
         {
+            rightSealedWall = rightPending;
             rightPending.OnSealed(this);
             rightSealed  = true;
             rightPending = null;
@@ -100,8 +110,8 @@ public class DNASealPoint : MonoBehaviour
     /// <summary>Reverses a seal on the given side — called when Artemis cuts a sealed wall off.</summary>
     public void UnsealSide(bool isRight)
     {
-        if (isRight) { rightSealed = false; rightPending = null; }
-        else         { leftSealed  = false; leftPending  = null; }
+        if (isRight) { rightSealed = false; rightPending = null; rightSealedWall = null; }
+        else         { leftSealed  = false; leftPending  = null; leftSealedWall  = null; }
         RefreshGlow();
     }
 

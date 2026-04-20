@@ -3,23 +3,6 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-// Phase 4 (revamped): Gap Fill
-//
-// Flow:
-//   1. Ask NHEJBreakPoint for the gap positions left by the explosion in Phase 3.
-//   2. Show gap-fill glow indicators at each gap slot.
-//   3. Server spawns one DNAWallSegment (gapSegmentPrefab) per gap slot, scattered nearby.
-//      Each segment's correct position = the matching gap slot position.
-//   4. Server spawns LigaseIV spray can(s).
-//   5. Players grab segments and move them toward the gap; yellow glow hints "close enough".
-//      Pull the spray can trigger near a segment to seal it — score = placement accuracy.
-//   6. When all segments are sealed → average score → report → advance to Phase8_Assessment.
-//
-// Scene setup:
-//   - Assign gapSegmentPrefab (DNAWallSegment prefab, registered in NetworkPrefabs).
-//   - Assign ligaseSprayCanPrefab (LigaseSprayCan + NetworkObject, in NetworkPrefabs).
-//   - Optionally assign sprayCanSpawnPoints; otherwise cans spawn near DNA centre.
-//   - NHEJBreakPoint on the DNA_testcuts root is referenced via manager.BreakPoint.
 public class Phase4_GapFill : NHEJPhaseHandler
 {
     [Header("Gap Segment Prefab (spawned at runtime per gap slot)")]

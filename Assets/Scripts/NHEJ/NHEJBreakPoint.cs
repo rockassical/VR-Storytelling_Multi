@@ -27,6 +27,16 @@ public class NHEJBreakPoint : MonoBehaviour
     [Tooltip("Number of gap fill slots to interpolate between the two seam positions.")]
     [SerializeField] int gapFillSlotCount = 4;
 
+    [Header("Bridge Anchors — assign the 4 DNASealPoints at the gap edges")]
+    [Tooltip("Left edge, strand 1 (top).")]
+    [SerializeField] DNASealPoint leftAnchorStrand1;
+    [Tooltip("Left edge, strand 2 (bottom).")]
+    [SerializeField] DNASealPoint leftAnchorStrand2;
+    [Tooltip("Right edge, strand 1 (top).")]
+    [SerializeField] DNASealPoint rightAnchorStrand1;
+    [Tooltip("Right edge, strand 2 (bottom).")]
+    [SerializeField] DNASealPoint rightAnchorStrand2;
+
     // ── Runtime state ─────────────────────────────────────────────────────────
 
     List<Transform> sortedSegments = new();
@@ -141,65 +151,59 @@ public class NHEJBreakPoint : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns true when the gap is fully bridged on BOTH strands.
-    /// Sealed walls are grouped into columns by axis position.
-    /// Each column must have walls from both strands (≥2), and columns
-    /// must span continuously from the left seam to the right seam.
+    /// Returns true when the gap is fully bridged on both strands.
+    /// Uses graph connectivity: each strand must have an unbroken chain of sealed
+    /// SpawnedDNAWalls from its left anchor DNASealPoint to its right anchor.
+    /// Assign the four anchor fields in the inspector.
     /// </summary>
     public bool IsGapBridged()
     {
-        if (leftSeamPos == Vector3.zero && rightSeamPos == Vector3.zero) return false;
-
-        var allSealed = new List<SpawnedDNAWall>();
-        foreach (var w in FindObjectsOfType<SpawnedDNAWall>())
-            if (w.CurrentState == SpawnedDNAWall.State.Sealed)
-                allSealed.Add(w);
-
-        if (allSealed.Count == 0) return false;
-
-        float leftProj  = Proj(leftSeamPos);
-        float rightProj = Proj(rightSeamPos);
-        float colTol    = segmentSpacing * 0.5f;  // walls this close share a column
-        float maxGap    = segmentSpacing * 2f;     // max allowed axis gap between columns
-
-        // Build columns — each is a list of axis projections at the same position.
-        var columns = new List<List<float>>();
-        var projections = new List<float>();
-        foreach (var w in allSealed)
-            projections.Add(Proj(w.transform.position));
-        projections.Sort();
-
-        foreach (float p in projections)
+        if (leftAnchorStrand1  == null || leftAnchorStrand2  == null ||
+            rightAnchorStrand1 == null || rightAnchorStrand2 == null)
         {
-            bool added = false;
-            foreach (var col in columns)
-            {
-                if (Mathf.Abs(col[0] - p) <= colTol)
-                {
-                    col.Add(p);
-                    added = true;
-                    break;
-                }
-            }
-            if (!added) columns.Add(new List<float> { p });
+            Debug.LogWarning("[NHEJBreakPoint] Bridge anchors not assigned — cannot check IsGapBridged.");
+            return false;
         }
 
-        if (columns.Count == 0) return false;
+        return CanReach(leftAnchorStrand1, rightAnchorStrand1)
+            && CanReach(leftAnchorStrand2, rightAnchorStrand2);
+    }
 
-        // Must reach from left seam to right seam.
-        if (columns[0][0]                       > leftProj  + maxGap) return false;
-        if (columns[columns.Count - 1][0]       < rightProj - maxGap) return false;
+    /// <summary>
+    /// BFS through the seal-point graph.
+    /// Nodes  = DNASealPoints.
+    /// Edges  = SpawnedDNAWall (connects sealedBy ↔ ownSealPoint).
+    /// </summary>
+    bool CanReach(DNASealPoint start, DNASealPoint goal)
+    {
+        if (start == goal) return true;
 
-        for (int i = 0; i < columns.Count; i++)
+        var visited = new System.Collections.Generic.HashSet<DNASealPoint>();
+        var queue   = new System.Collections.Generic.Queue<DNASealPoint>();
+        queue.Enqueue(start);
+        visited.Add(start);
+
+        while (queue.Count > 0)
         {
-            // Each column needs walls on both strands.
-            if (columns[i].Count < 2) return false;
+            var node = queue.Dequeue();
+            if (node == goal) return true;
 
-            // No axis gap between consecutive columns.
-            if (i > 0 && columns[i][0] - columns[i - 1][0] > maxGap) return false;
+            // Traverse each wall sealed onto this node.
+            TryEnqueue(node.LeftSealedWall,  goal, visited, queue);
+            TryEnqueue(node.RightSealedWall, goal, visited, queue);
         }
 
-        return true;
+        return false;
+    }
+
+    void TryEnqueue(SpawnedDNAWall wall, DNASealPoint goal,
+        System.Collections.Generic.HashSet<DNASealPoint> visited,
+        System.Collections.Generic.Queue<DNASealPoint> queue)
+    {
+        if (wall == null || wall.OwnSealPoint == null) return;
+        var next = wall.OwnSealPoint;
+        if (next == goal) { queue.Enqueue(next); return; }
+        if (!visited.Contains(next)) { visited.Add(next); queue.Enqueue(next); }
     }
 
     // ── Private helpers ───────────────────────────────────────────────────────
