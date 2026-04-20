@@ -38,6 +38,10 @@ public class SpawnedDNAWall : NetworkBehaviour
     // server's netState echo arrives on that same client.
     bool sealAppliedLocally;
     bool detachAppliedLocally;
+    // Tracks whether seal visuals + physics have been applied locally — used as
+    // Update guard so proximity logic stops immediately after sealing, before
+    // the server's netState echo arrives.
+    bool isVisuallySealed;
 
     DNASealPoint currentSealPoint;
     DNASealPoint sealedBy;
@@ -46,6 +50,7 @@ public class SpawnedDNAWall : NetworkBehaviour
     Renderer[]   renderers;
     Material[]   originalMaterials;
     Rigidbody    rb;
+    XRGrabInteractable grab;
 
     /// <summary>True if sealed but nothing has been sealed onto this wall yet.</summary>
     public bool IsLeaf => CurrentState == State.Sealed &&
@@ -59,6 +64,7 @@ public class SpawnedDNAWall : NetworkBehaviour
     void Awake()
     {
         rb                = GetComponent<Rigidbody>();
+        grab              = GetComponentInChildren<XRGrabInteractable>();
         renderers         = GetComponentsInChildren<Renderer>();
         originalMaterials = new Material[renderers.Length];
         for (int i = 0; i < renderers.Length; i++)
@@ -104,7 +110,7 @@ public class SpawnedDNAWall : NetworkBehaviour
 
     void Update()
     {
-        if (CurrentState == State.Sealed || sealAppliedLocally) return;
+        if (isVisuallySealed) return;
 
         DNASealPoint nearest = FindNearestSealPoint();
 
@@ -139,6 +145,7 @@ public class SpawnedDNAWall : NetworkBehaviour
         ApplySealPhysics();
         AddOwnSealPoint(by);
         SetVisualState(State.Sealed);
+        isVisuallySealed = true;
 
         // Tell server — other clients will apply via OnNetStateChanged.
         sealAppliedLocally = true;
@@ -166,14 +173,13 @@ public class SpawnedDNAWall : NetworkBehaviour
         ApplySealPhysics();
         if (sp != null) AddOwnSealPoint(sp);
         SetVisualState(State.Sealed);
+        isVisuallySealed = true;
     }
 
     void ApplySealPhysics()
     {
         rb.isKinematic = true;
         rb.useGravity  = false;
-
-        var grab = GetComponent<XRGrabInteractable>();
         if (grab != null) grab.enabled = false;
     }
 
@@ -205,6 +211,7 @@ public class SpawnedDNAWall : NetworkBehaviour
 
         ApplyDetachPhysics();
         SetVisualState(State.Free);
+        isVisuallySealed = false;
         sealedBy = null;
 
         // Tell server — other clients will apply via OnNetStateChanged.
@@ -228,16 +235,14 @@ public class SpawnedDNAWall : NetworkBehaviour
         sealedBy = null;
         ApplyDetachPhysics();
         SetVisualState(State.Free);
+        isVisuallySealed = false;
     }
 
     void ApplyDetachPhysics()
     {
         rb.isKinematic = false;
         rb.useGravity  = true;
-
-        var grab = GetComponent<XRGrabInteractable>();
         if (grab != null) grab.enabled = true;
-
         gameObject.tag = "Untagged";
     }
 
