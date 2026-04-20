@@ -29,6 +29,9 @@ public class LigaseSprayCan : NetworkBaseInteractable
     float cooldownTimer;
     GameObject activeVFX;
 
+    public bool firstSeal;
+    public GameManager gameManager;
+
     // ── Lifecycle ─────────────────────────────────────────────────────────────
     // NOTE: Do NOT define OnEnable/OnDisable here — NetworkBaseInteractable.OnEnable
     // is private and Unity would call ours instead, breaking SetupListeners.
@@ -43,6 +46,8 @@ public class LigaseSprayCan : NetworkBaseInteractable
         if (rb != null) { rb.isKinematic = true; rb.useGravity = false; }
 
         sprayAction.action.Enable();
+
+        firstSeal = true;
     }
 
     public override void OnNetworkSpawn()
@@ -85,6 +90,11 @@ public class LigaseSprayCan : NetworkBaseInteractable
             {
                 sealPoint.Seal();
                 CheckGapBridged();
+
+                if(firstSeal){
+                    firstSeal = false;
+                    gameManager.playPhase(3);
+                }
             }
         }
 

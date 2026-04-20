@@ -12,6 +12,11 @@ TagManager:
   - Hole
   - Protein
   - DNAWall
+  - Interactable
+  - Scannable
+  - HR DNA Piece
+  - LaserBullet
+  - GameManager
   layers:
   - Default
   - TransparentFX

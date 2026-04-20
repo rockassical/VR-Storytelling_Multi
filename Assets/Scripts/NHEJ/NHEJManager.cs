@@ -39,6 +39,12 @@ public class NHEJManager : NetworkBehaviour
     public Transform RightDNAEnd => rightDNAEnd;
     public NHEJBreakPoint BreakPoint => breakPoint;
 
+    [Header("Sequence Stuff")]
+    public GameManager gameManager;
+    public bool firstCut;
+    public bool firstPlacement;
+    public bool firstLigase;
+
     readonly NetworkVariable<NHEJPhase> currentPhase = new(
         NHEJPhase.WaitingForPlayers,
         NetworkVariableReadPermission.Everyone,
@@ -353,7 +359,7 @@ public class NHEJManager : NetworkBehaviour
 
     public void EndNHEJ()
     {
-        // TODO: Chance shit to be implemented. This is the end of NHEJ.
+        gameManager.playPhase(3);
     }
 
     /// <summary>
@@ -457,6 +463,11 @@ public class NHEJManager : NetworkBehaviour
     {
         if (!IsServer) return;
         GetCurrentHandler()?.OnProteinPlaced(playerRole);
+
+        // Timeline update if this is the first placement
+        if(firstPlacement){
+            gameManager.playPhase(3);
+        }
     }
 
     /// <summary>Returns the handler for the currently active phase (null if none).</summary>
@@ -509,6 +520,11 @@ public class NHEJManager : NetworkBehaviour
         phase3?.OnCutMade(role);
 
         Debug.Log($"[NHEJ] Cut confirmed — role={role} score={score:P0}");
+
+        // Timeline update if this is the first cut
+        if(firstCut){
+            gameManager.playPhase(3);
+        }
     }
 
     [ClientRpc]

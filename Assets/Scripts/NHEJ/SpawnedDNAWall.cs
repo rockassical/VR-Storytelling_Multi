@@ -11,6 +11,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 //
 // Uses a proximity check in Update() — no trigger collider required.
 // The existing wall just needs a DNASealPoint component added to it.
+
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(XRGrabInteractable))]
 public class SpawnedDNAWall : NetworkBehaviour
@@ -52,6 +53,9 @@ public class SpawnedDNAWall : NetworkBehaviour
     Rigidbody    rb;
     XRGrabInteractable grab;
 
+    public GameManager gameManager;
+    public static bool firstPlacement = true;
+
     /// <summary>True if sealed but nothing has been sealed onto this wall yet.</summary>
     public bool IsLeaf => CurrentState == State.Sealed &&
                           (ownSealPoint == null || (!ownSealPoint.LeftSealed && !ownSealPoint.RightSealed));
@@ -69,6 +73,8 @@ public class SpawnedDNAWall : NetworkBehaviour
         originalMaterials = new Material[renderers.Length];
         for (int i = 0; i < renderers.Length; i++)
             originalMaterials[i] = renderers[i].material;
+
+        gameManager = GameObject.FindGameObjectsWithTag("GameManager")[0].GetComponent<GameManager>();
     }
 
     public override void OnNetworkSpawn()
@@ -126,6 +132,12 @@ public class SpawnedDNAWall : NetworkBehaviour
                 bool isRight = nearest.IsRightSide(transform.position);
                 nearest.NotifyContact(this, isRight);
                 SetVisualState(State.Pending);
+
+                // Timeline update if this is the first ligase
+                if(firstPlacement){
+                    firstPlacement = false;
+                    gameManager.playPhase(3);
+                }
             }
             else
             {

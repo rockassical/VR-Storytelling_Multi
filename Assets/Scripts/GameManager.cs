@@ -15,9 +15,9 @@ public class GameManager : NetworkBehaviour
     public GameObject StartGameUI;
     public Button StartGameButton;
 
-    [Header("Timeline")]
-    public PlayableDirector Timeline_HR;
-    public PlayableDirector Timeline_NHEJ, Timeline_Apoptosis, Timeline_Conclusion;
+    [Header("Timelines")]
+    public PlayableDirector Timeline_Intro;
+    public PlayableDirector Timeline_HR, Timeline_NHEJ, Timeline_Apoptosis, Timeline_Conclusion;
 
     [Header("Ships to Board")]
     public GameObject P53Ship;
@@ -88,12 +88,41 @@ public class GameManager : NetworkBehaviour
     public void playPhase(int phase)
     {
         BoardShipLocal(P53Ship.transform);
-        if (phase == 1)
-            Timeline_HR.Play();
-        else if(phase == 2)
-            Timeline_NHEJ.Play();
-        else if(phase==3)
-            Timeline_Apoptosis.Play();
+        //BoardShipLocal(ATMShip.transform);
+
+        switch(phase){
+            // Intro phase
+            case 1:
+                Timeline_Intro.Play();
+
+                break;
+
+            // HR phase
+            case 2:
+                Timeline_HR.Play();
+
+                break;
+
+            // NHEJ phase
+            case 3:
+               Timeline_NHEJ.Play();
+               
+               break;
+
+            // Apoptosis phase
+            case 4:
+                Timeline_Apoptosis.Play();
+
+                break;
+
+            default:
+                break;
+                
+        }
+    }
+
+    public void PauseForGameplay(PlayableDirector timeline){
+        timeline.Pause();
     }
 
     /*void StartGame()

@@ -15,6 +15,10 @@ public class GunInputXR : MonoBehaviour
 
     public int ScannedPieces;
 
+    [Header("Objects for post-scan")]
+    public GameManager gameManager;
+    public MutatedProteinSpawner spawner;
+
     void Awake()
     {
         grab = GetComponent<XRGrabInteractable>();
@@ -70,6 +74,9 @@ public class GunInputXR : MonoBehaviour
                 // ScanPiece() now routes through a ServerRpc so all clients see the material change
                 template.ScanPiece();
                 if(ScannedPieces >= Sockets.Length){
+
+                    gameManager.playPhase(2);
+                    spawner.isActive = true;
 
                     foreach(GameObject Socket in Sockets){
                         Socket.SetActive(true);
