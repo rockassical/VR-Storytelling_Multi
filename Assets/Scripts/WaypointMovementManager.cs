@@ -35,6 +35,10 @@ public class WaypointMovementManager : MonoBehaviour
               gameManager.playPhase(2);
 
               break;
+            case 2:
+                gameManager.playPhase(3);
+
+                break;
             default:
                 break;
         }

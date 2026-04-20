@@ -16,6 +16,7 @@ TagManager:
   - Scannable
   - HR DNA Piece
   - LaserBullet
+  - GameManager
   layers:
   - Default
   - TransparentFX

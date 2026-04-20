@@ -25,6 +25,9 @@ public class NHEJTool : MonoBehaviour
     [Header("Debug")]
     [SerializeField] bool debugMode = false;
 
+    public bool firstCut;
+    public GameManager gameManager;
+
     // ── Collision ─────────────────────────────────────────────────────────────
     // The trigger must be on the bladeTip child (or this GameObject).
     // Unity routes OnTriggerEnter to the script on the same GameObject as the collider,
@@ -39,6 +42,8 @@ public class NHEJTool : MonoBehaviour
         if (forwarder == null)
             forwarder = tip.gameObject.AddComponent<BladeTipForwarder>();
         forwarder.Init(this);
+
+        firstCut = true;
     }
 
     // Called by BladeTipForwarder when it detects a trigger enter.
@@ -92,6 +97,11 @@ public class NHEJTool : MonoBehaviour
             NHEJAudio.Instance.PlayLigationSuccess();
 
         StartCoroutine(CheckAllOverhangsCut());
+
+        if(firstCut){
+            firstCut = false;
+            gameManager.playPhase(3);
+        }
     }
 
     IEnumerator CheckAllOverhangsCut()

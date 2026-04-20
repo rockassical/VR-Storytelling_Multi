@@ -15,6 +15,7 @@ public class DNARepairPlacement : NetworkBehaviour
 
     [Header("GAME MANAGER")]
     public GameManager GM;
+    public MutatedProteinSpawner spawner;
 
     // Netcode additions
     // assign all TemplatePiece scene objects here so the server can track when all pieces have been scanned and activate sockets on every client
@@ -96,6 +97,7 @@ public class DNARepairPlacement : NetworkBehaviour
 
         var Socket = Sockets[index];
         var Piece = args.interactableObject.transform.gameObject;
+        Piece.tag = "Untagged";
 
         // route the fill through the server so both players see the socket disappear and the piece lock in
         // Original coroutine is now called via FillSocketVisualClientRpc on all clients instead of locally
@@ -144,6 +146,8 @@ public class DNARepairPlacement : NetworkBehaviour
     void AllSocketsFilledClientRpc()
     {
         Debug.Log("ALL SOCKETS ARE FILLED! TIME FOR NHEJ!");
+        spawner.DespawnAll();
+        spawner.isActive = false;
         GM.playPhase(2);
     }
 

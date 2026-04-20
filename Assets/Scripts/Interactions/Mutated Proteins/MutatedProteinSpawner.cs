@@ -9,6 +9,8 @@ public class MutatedProteinSpawner : MonoBehaviour
 
     public GameObject mutatedP53;
 
+    public List<GameObject> SpawnedProteins;
+
     public bool isActive;
 
     [Header("1/[Chance] to spawn every frame (500-600 base)")]
@@ -36,6 +38,14 @@ public class MutatedProteinSpawner : MonoBehaviour
 
         Vector3 RandomPosition = new Vector3(Random.Range(minCorner.x, maxCorner.x), Random.Range(minCorner.y, maxCorner.y), Random.Range(minCorner.z, maxCorner.z));
 
-        Instantiate(mutatedP53, RandomPosition, Quaternion.identity);
+        SpawnedProteins.Add(Instantiate(mutatedP53, RandomPosition, Quaternion.identity));
+    }
+
+    public void DespawnAll(){
+        for(int i = 0; i < SpawnedProteins.Count; i++){
+            if(SpawnedProteins[i] != null){
+                Destroy(SpawnedProteins[i]);
+            }
+        }
     }
 }
