@@ -36,6 +36,11 @@ public class DNASealPoint : MonoBehaviour
 
     void Awake()
     {
+        // When added at runtime to a SpawnedDNAWall, skip renderer capture entirely —
+        // the wall manages its own visuals. Capturing here would let RefreshGlow()
+        // overwrite the sealed wall's material with the pending colour.
+        if (GetComponent<SpawnedDNAWall>() != null) return;
+
         renderers        = GetComponentsInChildren<Renderer>();
         originalMaterials = new Material[renderers.Length];
         for (int i = 0; i < renderers.Length; i++)
