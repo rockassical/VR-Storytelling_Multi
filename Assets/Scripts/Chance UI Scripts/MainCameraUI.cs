@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditorInternal;
@@ -44,4 +44,4 @@ public class MainCameraUI : MonoBehaviour
             objectText.gameObject.SetActive(false);
         }
     }
-}
+}*/

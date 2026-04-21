@@ -14,8 +14,10 @@ public class GizmoMarker : MonoBehaviour
 
         if (drawLabel)
         {
+            #if UNITY_EDITOR
             UnityEditor.Handles.color = color;
             UnityEditor.Handles.Label(transform.position + Vector3.up * (radius + 0.02f), gameObject.name);
+            #endif
         }
     }
 }

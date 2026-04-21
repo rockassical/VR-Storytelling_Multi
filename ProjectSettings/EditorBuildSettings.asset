@@ -8,13 +8,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/_Scenes/BasicScene.unity
     guid: bc761d9a86b33554f85fd11bb1f87ba3
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Multi-usre Test.unity
     guid: 40208bd2762afbd4492e5a9aeaa2914b
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Oliver NHEJ Interactions.unity
     guid: d4947f82d62512544aa62ad54e5c8d95
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Chance Interactions UI.unity
     guid: 4015ed60987dbbf479a5ab14e0a79e84
   - enabled: 1
