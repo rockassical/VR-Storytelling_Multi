@@ -1,9 +1,17 @@
+using UnityEngine;
+using Unity.Netcode;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Playables;
+using Unity.XR.CoreUtils;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Movement;
+using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
+using Unity.XR.CoreUtils;
 using SWS;
 
-public class WaypointMovementManager : MonoBehaviour
+public class WaypointMovementManager : NetworkBehaviour
 {
 
     /*
@@ -12,6 +20,10 @@ public class WaypointMovementManager : MonoBehaviour
 
     [Header("Spline movement reference")]
     public splineMove p53;      // only need 1, both move equal time
+
+    [Header("Ship Seat References")]
+    public GameObject p53Ship;
+    public GameObject ATMShip;
 
     private int movePhase;     // track which phase we are in
 
@@ -29,6 +41,8 @@ public class WaypointMovementManager : MonoBehaviour
     void OnDestinationReached(){
         movePhase++;
 
+        StartCoroutine(UnboardShipLocal(p53Ship.transform));
+
         switch(movePhase){
             // Start of HR
             case 1:
@@ -42,5 +56,25 @@ public class WaypointMovementManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    IEnumerator UnboardShipLocal(Transform ship)
+    {
+        Transform xrOrigin = FindFirstObjectByType<XROrigin>().transform;
+
+        // Optional: preserve world pose before parenting (prevents sudden snap bugs)
+        Vector3 worldPos = xrOrigin.position;
+        Quaternion worldRot = xrOrigin.rotation;
+
+        xrOrigin.SetParent(null, true);
+        ship.SetParent(xrOrigin, true);
+
+        yield return null;
+
+        xrOrigin.gameObject.GetComponentInChildren<DynamicMoveProvider>().enabled = true;
+
+        // Snap cleanly into seat
+        xrOrigin.position = worldPos;
+        xrOrigin.rotation = worldRot;
     }
 }

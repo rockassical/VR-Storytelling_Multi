@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Playables;
 using Unity.XR.CoreUtils;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Locomotion.Movement;
+using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class GameManager : NetworkBehaviour
 {
@@ -62,9 +65,6 @@ public class GameManager : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        //BoardShipLocal(P53Ship.transform);
-        //Timeline_HR.Play();
-
         playPhase(1);
     }
 
@@ -78,11 +78,11 @@ public class GameManager : NetworkBehaviour
 
         xrOrigin.SetParent(shipSeat, false);
 
+        xrOrigin.gameObject.GetComponentInChildren<DynamicMoveProvider>().enabled = false;
+
         // Snap cleanly into seat
         xrOrigin.localPosition = Vector3.zero;
-        xrOrigin.localRotation = Quaternion.identity;
-
-        //Timeline_HR.Play();
+        //xrOrigin.localRotation = Quaternion.identity;
     }
 
     public void playPhase(int phase)
