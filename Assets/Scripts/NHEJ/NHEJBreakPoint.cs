@@ -165,8 +165,10 @@ public class NHEJBreakPoint : MonoBehaviour
             return false;
         }
 
-        return CanReach(leftAnchorStrand1, rightAnchorStrand1)
-            && CanReach(leftAnchorStrand2, rightAnchorStrand2);
+        bool s1 = CanReach(leftAnchorStrand1, rightAnchorStrand1);
+        bool s2 = CanReach(leftAnchorStrand2, rightAnchorStrand2);
+        Debug.Log($"[NHEJBreakPoint] IsGapBridged — strand1:{s1}  strand2:{s2}");
+        return s1 && s2;
     }
 
     /// <summary>
