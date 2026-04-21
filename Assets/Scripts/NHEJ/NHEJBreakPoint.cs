@@ -190,11 +190,14 @@ public class NHEJBreakPoint : MonoBehaviour
             var node = queue.Dequeue();
             if (node == goal) return true;
 
+            Debug.Log($"[BFS] At node {node.gameObject.name}  L:{node.LeftSealedWall?.gameObject.name ?? "null"}  R:{node.RightSealedWall?.gameObject.name ?? "null"}");
+
             // Traverse each wall sealed onto this node.
             TryEnqueue(node.LeftSealedWall,  goal, visited, queue);
             TryEnqueue(node.RightSealedWall, goal, visited, queue);
         }
 
+        Debug.Log($"[BFS] Could not reach {goal.gameObject.name} from {start.gameObject.name}");
         return false;
     }
 
