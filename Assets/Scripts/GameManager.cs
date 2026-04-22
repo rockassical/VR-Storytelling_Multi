@@ -16,7 +16,7 @@ public class GameManager : NetworkBehaviour
 
     [Header("UI Elements")]
     public GameObject StartGameUI;
-    public Button StartGameButton;
+    public Button StartGameButton, ApoptosisButton;
 
     [Header("Timelines")]
     public PlayableDirector Timeline_Intro;
@@ -27,10 +27,13 @@ public class GameManager : NetworkBehaviour
     public GameObject ATMShip;
 
 
+    
+
     //private int phaseCounter = 0;
 
     void Start(){
         StartGameButton.onClick.AddListener(() => StartGame());
+        ApoptosisButton.onClick.AddListener(() => playPhase(5));
     }
 
     public override void OnNetworkSpawn()
@@ -114,6 +117,11 @@ public class GameManager : NetworkBehaviour
                 Timeline_Apoptosis.Play();
 
                 break;
+            //Conlusion phase
+            case 5:
+                Timeline_Conclusion.Play();
+
+                break;
 
             default:
                 break;
@@ -124,13 +132,6 @@ public class GameManager : NetworkBehaviour
     public void PauseForGameplay(PlayableDirector timeline){
         timeline.Pause();
     }
-
-    /*void StartGame()
-    {
-        // Board Ship GameObject
-
-        Timeline.Play();
-    }*/
 
     public override void OnNetworkDespawn()
     {
