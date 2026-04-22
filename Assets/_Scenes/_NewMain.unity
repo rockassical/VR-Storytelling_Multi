@@ -11274,7 +11274,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 431688581}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -14913,7 +14913,7 @@ Transform:
   m_GameObject: {fileID: 531018101}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2658926, y: 0, z: 0, w: 0.9640027}
-  m_LocalPosition: {x: -0.008000001, y: -0.102, z: 0.3313}
+  m_LocalPosition: {x: -0.008000001, y: -0.102, z: 0.523}
   m_LocalScale: {x: 0.001, y: 0.001, z: 0.001}
   m_ConstrainProportionsScale: 1
   m_Children:
