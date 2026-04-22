@@ -16,7 +16,7 @@ public class GameManager : NetworkBehaviour
 
     [Header("UI Elements")]
     public GameObject StartGameUI;
-    public Button StartGameButton;
+    public Button StartGameButton, ApoptosisButton;
 
     [Header("Timelines")]
     public PlayableDirector Timeline_Intro;
@@ -31,6 +31,7 @@ public class GameManager : NetworkBehaviour
 
     void Start(){
         StartGameButton.onClick.AddListener(() => StartGame());
+        ApoptosisButton.onClick.AddListener(() => playPhase(5));
     }
 
     public override void OnNetworkSpawn()
@@ -87,6 +88,7 @@ public class GameManager : NetworkBehaviour
 
     public void playPhase(int phase)
     {
+        BoardShips();
         switch(phase){
             // Intro phase
             case 1:
@@ -111,6 +113,11 @@ public class GameManager : NetworkBehaviour
                 Timeline_Apoptosis.Play();
 
                 break;
+            //Conclusion phase
+            case 5:
+                Timeline_Conclusion.Play();
+
+                break;
 
             default:
                 break;
@@ -123,8 +130,10 @@ public class GameManager : NetworkBehaviour
     }
 
     public void BoardShips(){
-        BoardShipLocal(P53Ship.transform);
-        //BoardShipLocal(ATMShip.transform);
+        if(!IsServer) 
+            BoardShipLocal(ATMShip.transform);
+        else BoardShipLocal(P53Ship.transform);
+        
     }
 
     /*void StartGame()
