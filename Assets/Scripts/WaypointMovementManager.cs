@@ -41,21 +41,27 @@ public class WaypointMovementManager : NetworkBehaviour
     void OnDestinationReached(){
         movePhase++;
 
-        StartCoroutine(UnboardShipLocal(p53Ship.transform));
-
         switch(movePhase){
             // Start of HR
             case 1:
-              gameManager.playPhase(2);
+                UnboardShips();
+                gameManager.playPhase(2);
 
               break;
+            // Start of NHEJ
             case 2:
+                UnboardShips();
                 gameManager.playPhase(3);
 
                 break;
             default:
                 break;
         }
+    }
+
+    public void UnboardShips(){
+        StartCoroutine(UnboardShipLocal(p53Ship.transform));
+        //StartCoroutine(UnboardShipLocal(ATMShip.transform));
     }
 
     IEnumerator UnboardShipLocal(Transform ship)

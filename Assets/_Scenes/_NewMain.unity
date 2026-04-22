@@ -24159,7 +24159,7 @@ Transform:
   m_GameObject: {fileID: 860822455}
   serializedVersion: 2
   m_LocalRotation: {x: 0.49497578, y: -0.5049743, z: -0.49497578, w: 0.5049743}
-  m_LocalPosition: {x: -0, y: -0.030193364, z: 0.0011618051}
+  m_LocalPosition: {x: 0, y: -0.030193364, z: 0.0011618051}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -27292,7 +27292,7 @@ PrefabInstance:
     - target: {fileID: 1791713839524797409, guid: 95bd29654e15ad844be6210374a75967,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 60.251373
+      value: 60.251236
       objectReference: {fileID: 0}
     - target: {fileID: 2064547250712617484, guid: 95bd29654e15ad844be6210374a75967,
         type: 3}
@@ -30116,30 +30116,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 1073484674}
-          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
-          m_MethodName: ResetToStart
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1073484674}
-          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
-          m_MethodName: StartMove
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1073484674}
@@ -30149,30 +30125,6 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 406245319}
             m_ObjectArgumentAssemblyTypeName: SWS.PathManager, Assembly-CSharp
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1073484674}
-          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
-          m_MethodName: ResetToStart
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1073484674}
-          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
-          m_MethodName: StartMove
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -39118,30 +39070,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 1382226874}
-          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
-          m_MethodName: ResetToStart
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1382226874}
-          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
-          m_MethodName: StartMove
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1382226874}
@@ -39151,30 +39079,6 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 37187701}
             m_ObjectArgumentAssemblyTypeName: SWS.PathManager, Assembly-CSharp
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1382226874}
-          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
-          m_MethodName: ResetToStart
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1382226874}
-          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
-          m_MethodName: StartMove
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -43580,6 +43484,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1848579794}
+  - {fileID: 1623965765}
   m_Father: {fileID: 1622665345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1566573452
@@ -45024,7 +44929,7 @@ Transform:
   m_GameObject: {fileID: 1599252812}
   serializedVersion: 2
   m_LocalRotation: {x: 0.49497578, y: -0.5049743, z: -0.49497578, w: 0.5049743}
-  m_LocalPosition: {x: -0, y: -0.030193364, z: 0.0011618051}
+  m_LocalPosition: {x: 0, y: -0.030193364, z: 0.0011618051}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -45393,6 +45298,12 @@ Transform:
   - {fileID: 857739609}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1623965765 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7174019212652907432, guid: 77ac6b10722bcca4a8baf70e44d89e78,
+    type: 3}
+  m_PrefabInstance: {fileID: 1817053708}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1624525007
 GameObject:
   m_ObjectHideFlags: 0
@@ -46564,6 +46475,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: bb4ea21e652a6214fa2afcef337fa908, type: 2}
     - {fileID: 11400000, guid: 176dafdb92cae6446af4b2f485ce6706, type: 2}
     - {fileID: 11400000, guid: b87f202c9c9dd9b4e8fd0fdba1d65387, type: 2}
+    - {fileID: 11400000, guid: c8a00a61fd6731649849180ffa6d79f6, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -46633,6 +46545,20 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 1025335524}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Playables.PlayableDirector,
               UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1671914569}
+          m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+          m_MethodName: BoardShips
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -51758,7 +51684,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1566573451}
     m_Modifications:
     - target: {fileID: 463831141400273028, guid: 77ac6b10722bcca4a8baf70e44d89e78,
         type: 3}
@@ -52013,17 +51939,17 @@ PrefabInstance:
     - target: {fileID: 7174019212652907432, guid: 77ac6b10722bcca4a8baf70e44d89e78,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 27.843817
       objectReference: {fileID: 0}
     - target: {fileID: 7174019212652907432, guid: 77ac6b10722bcca4a8baf70e44d89e78,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 6.7744923
       objectReference: {fileID: 0}
     - target: {fileID: 7174019212652907432, guid: 77ac6b10722bcca4a8baf70e44d89e78,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10.173
+      value: 0.400321
       objectReference: {fileID: 0}
     - target: {fileID: 7174019212652907432, guid: 77ac6b10722bcca4a8baf70e44d89e78,
         type: 3}
@@ -148649,7 +148575,6 @@ SceneRoots:
   - {fileID: 1622665345}
   - {fileID: 1007657218}
   - {fileID: 1066551181}
-  - {fileID: 1817053708}
   - {fileID: 1400131922}
   - {fileID: 701527603}
   - {fileID: 758970794}

@@ -81,15 +81,12 @@ public class GameManager : NetworkBehaviour
         xrOrigin.gameObject.GetComponentInChildren<DynamicMoveProvider>().enabled = false;
 
         // Snap cleanly into seat
-        xrOrigin.localPosition = Vector3.zero;
-        //xrOrigin.localRotation = Quaternion.identity;
+        xrOrigin.localPosition = new Vector3(0f, -0.1f, 0f);
+        xrOrigin.rotation = shipSeat.rotation;
     }
 
     public void playPhase(int phase)
     {
-        BoardShipLocal(P53Ship.transform);
-        //BoardShipLocal(ATMShip.transform);
-
         switch(phase){
             // Intro phase
             case 1:
@@ -123,6 +120,11 @@ public class GameManager : NetworkBehaviour
 
     public void PauseForGameplay(PlayableDirector timeline){
         timeline.Pause();
+    }
+
+    public void BoardShips(){
+        BoardShipLocal(P53Ship.transform);
+        //BoardShipLocal(ATMShip.transform);
     }
 
     /*void StartGame()
