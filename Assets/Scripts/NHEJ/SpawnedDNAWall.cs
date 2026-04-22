@@ -198,30 +198,10 @@ public class SpawnedDNAWall : NetworkBehaviour
     void AddOwnSealPoint(DNASealPoint by)
     {
         if (ownSealPoint != null) return;
-
-        // If an existing DNASealPoint is within snap range (e.g. the opposite anchor or the
-        // other chain's last node), reuse it so the BFS graph closes the bridge correctly.
-        DNASealPoint nearby = null;
-        float bestDist = snapRadius;
-        foreach (var sp in FindObjectsOfType<DNASealPoint>())
-        {
-            if (sp.gameObject == gameObject) continue;
-            if (sp == by) continue;
-            float d = Vector3.Distance(transform.position, sp.transform.position);
-            if (d < bestDist) { bestDist = d; nearby = sp; }
-        }
-
-        if (nearby != null)
-        {
-            ownSealPoint = nearby;
-        }
-        else
-        {
-            ownSealPoint = gameObject.AddComponent<DNASealPoint>();
-            ownSealPoint.helixAxisLocal  = by.helixAxisLocal;
-            ownSealPoint.pendingMaterial = by.pendingMaterial;
-            ownSealPoint.sealedMaterial  = by.sealedMaterial;
-        }
+        ownSealPoint = gameObject.AddComponent<DNASealPoint>();
+        ownSealPoint.helixAxisLocal  = by.helixAxisLocal;
+        ownSealPoint.pendingMaterial = by.pendingMaterial;
+        ownSealPoint.sealedMaterial  = by.sealedMaterial;
         gameObject.tag = "DNAWall";
     }
 

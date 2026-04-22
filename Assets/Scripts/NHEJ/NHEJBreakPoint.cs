@@ -28,6 +28,8 @@ public class NHEJBreakPoint : MonoBehaviour
     [SerializeField] int gapFillSlotCount = 4;
 
     [Header("Bridge Anchors — assign the 4 DNASealPoints at the gap edges")]
+    [Tooltip("Max distance from the BFS frontier to the goal anchor that counts as bridged.")]
+    [SerializeField] float bridgeCompletionRadius = 0.5f;
     [Tooltip("Left edge, strand 1 (top).")]
     [SerializeField] DNASealPoint leftAnchorStrand1;
     [Tooltip("Left edge, strand 2 (bottom).")]
@@ -180,6 +182,13 @@ public class NHEJBreakPoint : MonoBehaviour
     {
         if (start == goal) return true;
 
+        // Goal must have at least one wall sealed onto it — someone physically reached it.
+        if (goal.LeftSealedWall == null && goal.RightSealedWall == null)
+        {
+            Debug.Log($"[BFS] {goal.gameObject.name} has no sealed walls — not yet reached.");
+            return false;
+        }
+
         var visited = new System.Collections.Generic.HashSet<DNASealPoint>();
         var queue   = new System.Collections.Generic.Queue<DNASealPoint>();
         queue.Enqueue(start);
@@ -190,9 +199,12 @@ public class NHEJBreakPoint : MonoBehaviour
             var node = queue.Dequeue();
             if (node == goal) return true;
 
-            Debug.Log($"[BFS] At node {node.gameObject.name}  L:{node.LeftSealedWall?.gameObject.name ?? "null"}  R:{node.RightSealedWall?.gameObject.name ?? "null"}");
+            float dist = Vector3.Distance(node.transform.position, goal.transform.position);
+            Debug.Log($"[BFS] At {node.gameObject.name}  dist-to-goal:{dist:F2}  L:{node.LeftSealedWall?.gameObject.name ?? "null"}  R:{node.RightSealedWall?.gameObject.name ?? "null"}");
 
-            // Traverse each wall sealed onto this node.
+            // Close enough to the goal — counts as bridged.
+            if (dist <= bridgeCompletionRadius) return true;
+
             TryEnqueue(node.LeftSealedWall,  goal, visited, queue);
             TryEnqueue(node.RightSealedWall, goal, visited, queue);
         }
