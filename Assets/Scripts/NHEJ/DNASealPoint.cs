@@ -59,22 +59,23 @@ public class DNASealPoint : MonoBehaviour
     {
         if (isRightSide)
         {
-            if (rightSealed) return;
+            if (rightSealed) { Debug.Log($"[SealPoint] {gameObject.name}: rightSealed=true, ignoring {wall.gameObject.name}"); return; }
             rightPending = wall;
         }
         else
         {
-            if (leftSealed) return;
+            if (leftSealed) { Debug.Log($"[SealPoint] {gameObject.name}: leftSealed=true, ignoring {wall.gameObject.name}"); return; }
             leftPending = wall;
         }
+        Debug.Log($"[SealPoint] {gameObject.name}: {wall.gameObject.name} pending on {(isRightSide ? "RIGHT" : "LEFT")} side");
         RefreshGlow();
     }
 
     /// <summary>A spawned wall has left contact range or been picked up again.</summary>
     public void NotifyContactEnd(SpawnedDNAWall wall)
     {
-        if (leftPending  == wall) leftPending  = null;
-        if (rightPending == wall) rightPending = null;
+        if (leftPending  == wall) { leftPending  = null; Debug.Log($"[SealPoint] {gameObject.name}: {wall.gameObject.name} left LEFT contact"); }
+        if (rightPending == wall) { rightPending = null; Debug.Log($"[SealPoint] {gameObject.name}: {wall.gameObject.name} left RIGHT contact"); }
         RefreshGlow();
     }
 
@@ -101,7 +102,11 @@ public class DNASealPoint : MonoBehaviour
         if (leftPending != null && !leftSealed)
         {
             leftSealedWall = leftPending;
-            leftPending.OnSealed(this);
+            Debug.Log($"[SealPoint] {gameObject.name}: sealing {leftPending.gameObject.name} on LEFT (alreadySealed={leftPending.IsSealed})");
+            if (!leftPending.IsSealed)
+                leftPending.OnSealed(this);
+            // If already sealed to the other anchor, just register it in the graph —
+            // the wall is kinematic/frozen in place and its OwnSealPoint is already live.
             leftSealed  = true;
             leftPending = null;
         }
@@ -109,11 +114,14 @@ public class DNASealPoint : MonoBehaviour
         if (rightPending != null && !rightSealed)
         {
             rightSealedWall = rightPending;
-            rightPending.OnSealed(this);
+            Debug.Log($"[SealPoint] {gameObject.name}: sealing {rightPending.gameObject.name} on RIGHT (alreadySealed={rightPending.IsSealed})");
+            if (!rightPending.IsSealed)
+                rightPending.OnSealed(this);
             rightSealed  = true;
             rightPending = null;
         }
 
+        Debug.Log($"[SealPoint] {gameObject.name}: after Seal — L={leftSealedWall?.gameObject.name} R={rightSealedWall?.gameObject.name}");
         RefreshGlow();
     }
 
