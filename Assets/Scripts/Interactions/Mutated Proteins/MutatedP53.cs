@@ -40,7 +40,7 @@ public class MutatedP53 : MonoBehaviour
         if(hasPiece == false){
             // Move towards the closest DNA piece to try and steal it
             GameObject closestPiece = FindClosestPiece();
-            Debug.Log("Moving to " + closestPiece);
+            //Debug.Log("Moving to " + closestPiece);
             transform.position = Vector3.MoveTowards(transform.position, closestPiece.transform.position, Speed);
 
             if(gameObject.transform.position.Equals(closestPiece.transform.position)){
@@ -97,14 +97,14 @@ public class MutatedP53 : MonoBehaviour
             }
         }
 
-        Debug.Log("Closest piece is " + Closest.ToString());
+        //Debug.Log("Closest piece is " + Closest.ToString());
 
         return Closest;
     }
 
     public void OnTriggerEnter(Collider col){
         if(col.gameObject.CompareTag("LaserBullet")){
-            Debug.Log("I'M HIT! (mutated p53)");
+            //Debug.Log("I'M HIT! (mutated p53)");
             Health -= 10;
 
             Destroy(col.gameObject);
