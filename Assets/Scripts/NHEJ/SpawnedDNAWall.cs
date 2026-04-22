@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -6,11 +7,13 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 //
 // States:
 //   Free    — physics active, player can grab and position it
-//   Pending — within snap radius of a DNASealPoint, glowing to indicate ready to bond
+//   Pending — within snap radius of one or more DNASealPoints, glowing to indicate ready to bond
 //   Sealed  — locked in place (kinematic), gets its own DNASealPoint for chaining
 //
 // Uses a proximity check in Update() — no trigger collider required.
-// The existing wall just needs a DNASealPoint component added to it.
+// A wall can be pending on MULTIPLE seal points simultaneously so that a single
+// piece can bridge two anchors: seal to anchor A first, then spray anchor C to
+// complete the second bond without moving the wall.
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(XRGrabInteractable))]
@@ -39,17 +42,27 @@ public class SpawnedDNAWall : NetworkBehaviour
     // server's netState echo arrives on that same client.
     bool sealAppliedLocally;
     bool detachAppliedLocally;
+    // Tracks whether seal visuals + physics have been applied locally — used as
+    // Update guard so proximity logic stops immediately after sealing, before
+    // the server's netState echo arrives.
+    bool isVisuallySealed;
 
-    DNASealPoint currentSealPoint;
+    // All DNASealPoints currently within snapRadius (can be more than one).
+    readonly HashSet<DNASealPoint> contactedSealPoints = new();
+
     DNASealPoint sealedBy;
     bool         sealedOnRight;
     DNASealPoint ownSealPoint;
     Renderer[]   renderers;
     Material[]   originalMaterials;
     Rigidbody    rb;
+    XRGrabInteractable grab;
 
     public GameManager gameManager;
     public static bool firstPlacement = true;
+
+    /// <summary>True once seal physics have been applied locally (independent of netState timing).</summary>
+    public bool IsSealed => isVisuallySealed;
 
     /// <summary>True if sealed but nothing has been sealed onto this wall yet.</summary>
     public bool IsLeaf => CurrentState == State.Sealed &&
@@ -63,6 +76,7 @@ public class SpawnedDNAWall : NetworkBehaviour
     void Awake()
     {
         rb                = GetComponent<Rigidbody>();
+        grab              = GetComponentInChildren<XRGrabInteractable>();
         renderers         = GetComponentsInChildren<Renderer>();
         originalMaterials = new Material[renderers.Length];
         for (int i = 0; i < renderers.Length; i++)
@@ -110,33 +124,41 @@ public class SpawnedDNAWall : NetworkBehaviour
 
     void Update()
     {
-        if (CurrentState == State.Sealed || sealAppliedLocally) return;
+        if (isVisuallySealed) return;
 
-        DNASealPoint nearest = FindNearestSealPoint();
-
-        if (nearest != currentSealPoint)
+        // Gather ALL seal points within snap radius (not just nearest).
+        // This lets a wall be pending on both gap anchors at once so the player
+        // can spray each side independently.
+        var newContacts = new HashSet<DNASealPoint>();
+        foreach (var sp in FindObjectsOfType<DNASealPoint>())
         {
-            if (currentSealPoint != null)
-                currentSealPoint.NotifyContactEnd(this);
+            if (sp.gameObject == gameObject) continue;
+            float d = Vector3.Distance(transform.position, sp.transform.position);
+            if (d < snapRadius) newContacts.Add(sp);
+        }
 
-            currentSealPoint = nearest;
+        // Notify seal points we left.
+        foreach (var sp in contactedSealPoints)
+            if (!newContacts.Contains(sp)) sp.NotifyContactEnd(this);
 
-            if (nearest != null)
+        // Notify seal points we newly entered.
+        foreach (var sp in newContacts)
+            if (!contactedSealPoints.Contains(sp))
             {
-                bool isRight = nearest.IsRightSide(transform.position);
-                nearest.NotifyContact(this, isRight);
-                SetVisualState(State.Pending);
+                bool isRight = sp.IsRightSide(transform.position);
+                sp.NotifyContact(this, isRight);
+            }
 
-                // Timeline update if this is the first ligase
-                if(firstPlacement){
-                    firstPlacement = false;
-                    gameManager.playPhase(3);
-                }
-            }
-            else
-            {
-                SetVisualState(State.Free);
-            }
+        contactedSealPoints.Clear();
+        foreach (var sp in newContacts) contactedSealPoints.Add(sp);
+
+        bool isNearAny = contactedSealPoints.Count > 0;
+        SetVisualState(isNearAny ? State.Pending : State.Free);
+
+        if (isNearAny && firstPlacement)
+        {
+            firstPlacement = false;
+            gameManager.playPhase(3);
         }
     }
 
@@ -146,11 +168,13 @@ public class SpawnedDNAWall : NetworkBehaviour
     {
         sealedBy      = by;
         sealedOnRight = by.IsRightSide(transform.position);
-        currentSealPoint = null;
+        // Do NOT clear contactedSealPoints — other seal points still hold this
+        // wall as pending so the player can spray them to complete the second bond.
 
         ApplySealPhysics();
         AddOwnSealPoint(by);
         SetVisualState(State.Sealed);
+        isVisuallySealed = true;
 
         // Tell server — other clients will apply via OnNetStateChanged.
         sealAppliedLocally = true;
@@ -168,24 +192,31 @@ public class SpawnedDNAWall : NetworkBehaviour
     // Called on non-owning clients via netState change.
     void ApplySealLocally()
     {
-        var sp = FindNearestSealPoint();
+        // Find the nearest seal point at the time of the network echo.
+        DNASealPoint sp = null;
+        float best = float.MaxValue;
+        foreach (var candidate in FindObjectsOfType<DNASealPoint>())
+        {
+            if (candidate.gameObject == gameObject) continue;
+            float d = Vector3.Distance(transform.position, candidate.transform.position);
+            if (d < best) { best = d; sp = candidate; }
+        }
+
         if (sp != null)
         {
             sealedBy      = sp;
             sealedOnRight = sp.IsRightSide(transform.position);
-            currentSealPoint = null;
         }
         ApplySealPhysics();
         if (sp != null) AddOwnSealPoint(sp);
         SetVisualState(State.Sealed);
+        isVisuallySealed = true;
     }
 
     void ApplySealPhysics()
     {
         rb.isKinematic = true;
         rb.useGravity  = false;
-
-        var grab = GetComponent<XRGrabInteractable>();
         if (grab != null) grab.enabled = false;
     }
 
@@ -197,6 +228,7 @@ public class SpawnedDNAWall : NetworkBehaviour
         ownSealPoint.pendingMaterial = by.pendingMaterial;
         ownSealPoint.sealedMaterial  = by.sealedMaterial;
         gameObject.tag = "DNAWall";
+        Debug.Log($"[SpawnedDNAWall] {gameObject.name}: OwnSealPoint created at {transform.position} (inherited axis from {by.gameObject.name})");
     }
 
     // ── Detach ────────────────────────────────────────────────────────────────
@@ -215,8 +247,14 @@ public class SpawnedDNAWall : NetworkBehaviour
             ownSealPoint = null;
         }
 
+        // Clear this wall from any seal point that still has it as pending.
+        foreach (var sp in FindObjectsOfType<DNASealPoint>())
+            sp.NotifyContactEnd(this);
+        contactedSealPoints.Clear();
+
         ApplyDetachPhysics();
         SetVisualState(State.Free);
+        isVisuallySealed = false;
         sealedBy = null;
 
         // Tell server — other clients will apply via OnNetStateChanged.
@@ -238,36 +276,23 @@ public class SpawnedDNAWall : NetworkBehaviour
         if (sealedBy != null) sealedBy.UnsealSide(sealedOnRight);
         if (ownSealPoint != null) { Destroy(ownSealPoint); ownSealPoint = null; }
         sealedBy = null;
+        foreach (var sp in FindObjectsOfType<DNASealPoint>())
+            sp.NotifyContactEnd(this);
+        contactedSealPoints.Clear();
         ApplyDetachPhysics();
         SetVisualState(State.Free);
+        isVisuallySealed = false;
     }
 
     void ApplyDetachPhysics()
     {
         rb.isKinematic = false;
         rb.useGravity  = true;
-
-        var grab = GetComponent<XRGrabInteractable>();
         if (grab != null) grab.enabled = true;
-
         gameObject.tag = "Untagged";
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────
-
-    DNASealPoint FindNearestSealPoint()
-    {
-        DNASealPoint nearest = null;
-        float nearestDist    = snapRadius;
-
-        foreach (var sp in FindObjectsOfType<DNASealPoint>())
-        {
-            if (sp.gameObject == gameObject) continue;
-            float d = Vector3.Distance(transform.position, sp.transform.position);
-            if (d < nearestDist) { nearestDist = d; nearest = sp; }
-        }
-        return nearest;
-    }
 
     void SetVisualState(State next)
     {

@@ -25,7 +25,7 @@ public class NHEJManager : NetworkBehaviour
 
     [Header("Debug")]
     [SerializeField] bool debugBypass = false;
-    [SerializeField] bool debugAutoCompletePlayerPhases = true;
+    [SerializeField] bool debugAutoCompletePlayerPhases = false;
     [SerializeField] float debugPlayerPhaseDelay = 3f;
 
     [Header("DNA Break Site")]

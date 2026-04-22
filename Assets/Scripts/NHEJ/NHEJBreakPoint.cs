@@ -28,6 +28,8 @@ public class NHEJBreakPoint : MonoBehaviour
     [SerializeField] int gapFillSlotCount = 4;
 
     [Header("Bridge Anchors — assign the 4 DNASealPoints at the gap edges")]
+    [Tooltip("Max distance from the BFS frontier to the goal anchor that counts as bridged.")]
+    [SerializeField] float bridgeCompletionRadius = 0.5f;
     [Tooltip("Left edge, strand 1 (top).")]
     [SerializeField] DNASealPoint leftAnchorStrand1;
     [Tooltip("Left edge, strand 2 (bottom).")]
@@ -165,8 +167,10 @@ public class NHEJBreakPoint : MonoBehaviour
             return false;
         }
 
-        return CanReach(leftAnchorStrand1, rightAnchorStrand1)
-            && CanReach(leftAnchorStrand2, rightAnchorStrand2);
+        bool s1 = CanReach(leftAnchorStrand1, rightAnchorStrand1);
+        bool s2 = CanReach(leftAnchorStrand2, rightAnchorStrand2);
+        Debug.Log($"[NHEJBreakPoint] IsGapBridged — strand1:{s1}  strand2:{s2}");
+        return s1 && s2;
     }
 
     /// <summary>
@@ -178,31 +182,57 @@ public class NHEJBreakPoint : MonoBehaviour
     {
         if (start == goal) return true;
 
-        var visited = new System.Collections.Generic.HashSet<DNASealPoint>();
-        var queue   = new System.Collections.Generic.Queue<DNASealPoint>();
-        queue.Enqueue(start);
-        visited.Add(start);
+        // Collect all nodes reachable from each anchor independently.
+        var fromStart = new System.Collections.Generic.HashSet<DNASealPoint>();
+        var fromGoal  = new System.Collections.Generic.HashSet<DNASealPoint>();
+        BFSCollect(start, fromStart);
+        BFSCollect(goal,  fromGoal);
 
-        while (queue.Count > 0)
-        {
-            var node = queue.Dequeue();
-            if (node == goal) return true;
+        Debug.Log($"[BFS] fromStart nodes: {fromStart.Count}  fromGoal nodes: {fromGoal.Count}");
 
-            // Traverse each wall sealed onto this node.
-            TryEnqueue(node.LeftSealedWall,  goal, visited, queue);
-            TryEnqueue(node.RightSealedWall, goal, visited, queue);
-        }
+        // Direct hit — one side reached the other's anchor.
+        if (fromStart.Contains(goal) || fromGoal.Contains(start)) return true;
 
+        // Shared node — chains met at a common OwnSealPoint.
+        foreach (var node in fromStart)
+            if (fromGoal.Contains(node)) return true;
+
+        // Proximity — the two frontiers are close enough to count as bridged.
+        foreach (var sNode in fromStart)
+            foreach (var gNode in fromGoal)
+            {
+                float d = Vector3.Distance(sNode.transform.position, gNode.transform.position);
+                if (d <= bridgeCompletionRadius)
+                {
+                    Debug.Log($"[BFS] Proximity bridge: {sNode.gameObject.name} ↔ {gNode.gameObject.name}  dist:{d:F2}");
+                    return true;
+                }
+            }
+
+        Debug.Log($"[BFS] Not bridged — closest frontier gap > {bridgeCompletionRadius}m");
         return false;
     }
 
-    void TryEnqueue(SpawnedDNAWall wall, DNASealPoint goal,
+    void BFSCollect(DNASealPoint start,
+        System.Collections.Generic.HashSet<DNASealPoint> visited)
+    {
+        var queue = new System.Collections.Generic.Queue<DNASealPoint>();
+        queue.Enqueue(start);
+        visited.Add(start);
+        while (queue.Count > 0)
+        {
+            var node = queue.Dequeue();
+            Collect(node.LeftSealedWall,  visited, queue);
+            Collect(node.RightSealedWall, visited, queue);
+        }
+    }
+
+    void Collect(SpawnedDNAWall wall,
         System.Collections.Generic.HashSet<DNASealPoint> visited,
         System.Collections.Generic.Queue<DNASealPoint> queue)
     {
-        if (wall == null || wall.OwnSealPoint == null) return;
+        if (wall?.OwnSealPoint == null) return;
         var next = wall.OwnSealPoint;
-        if (next == goal) { queue.Enqueue(next); return; }
         if (!visited.Contains(next)) { visited.Add(next); queue.Enqueue(next); }
     }
 
