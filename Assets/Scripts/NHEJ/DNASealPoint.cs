@@ -24,8 +24,8 @@ public class DNASealPoint : MonoBehaviour
     SpawnedDNAWall rightPending;
 
     // Stored so the graph BFS can traverse the seal chain.
-    SpawnedDNAWall leftSealedWall;
-    SpawnedDNAWall rightSealedWall;
+    [SerializeField] SpawnedDNAWall leftSealedWall;
+    [SerializeField] SpawnedDNAWall rightSealedWall;
 
     Renderer[]  renderers;
     Material[]  originalMaterials;
