@@ -3,51 +3,41 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// IMPORTANT: The GameObject this script lives on needs a NetworkObject component.
-// Tools (Artemis, Ligase, Scanner, Blaster) are scene objects that also need
-// NetworkObject + NetworkTransform so the server-driven position replicates to P2.
-// DNA piece prefabs need NetworkObject so Spawn() replicates them to all clients.
+// Setup requirements:
+//   - This GameObject needs a NetworkObject component.
+//   - All tool and DNA piece prefabs need a NetworkObject component.
+//   - All prefabs must be registered in NetworkManager → Network Prefabs.
 public class ProteinMenuUI : NetworkBehaviour
 {
     public Transform GO_spawnPos;
+
+    [Header("Tool Prefabs (spawned on button press)")]
+    public GameObject ScannerPrefab;
+    public GameObject BlasterPrefab;
+    public GameObject ArtimisPrefab;
+    public GameObject LigasePrefab;
+
+    [Header("DNA Piece Prefabs")]
     [SerializeField] List<GameObject> DNA_Pieces = new List<GameObject>();
 
-    public GameObject Scanner, Blaster, Artimis, Ligase, DNA_Menu;
-
+    [Header("UI")]
+    public GameObject DNA_Menu;
     public Canvas canvas;
-    bool canvasActive = false;
-    bool DNA_MenuActive = false;
 
     public InputActionProperty buttonAction;
 
-    // Cached NetworkObject refs for scene tools.
-    NetworkObject scannerNet;
-    NetworkObject blasterNet;
-    NetworkObject artemisNet;
-    NetworkObject ligaseNet;
+    bool canvasActive   = false;
+    bool DNA_MenuActive = false;
 
     private void OnEnable()  { buttonAction.action.Enable(); }
     private void OnDisable() { buttonAction.action.Disable(); }
 
-    private void Awake()
-    {
-        canvas.enabled = canvasActive;
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-        scannerNet = Scanner?.GetComponent<NetworkObject>();
-        blasterNet = Blaster?.GetComponent<NetworkObject>();
-        artemisNet = Artimis?.GetComponent<NetworkObject>();
-        ligaseNet  = Ligase?.GetComponent<NetworkObject>();
-    }
+    private void Awake() { canvas.enabled = canvasActive; }
 
     void Update()
     {
         if (buttonAction.action.WasPressedThisFrame())
         {
-            Debug.Log("Hit B");
             if (DNA_MenuActive) setDNA_menuActive();
             else Menu();
         }
@@ -69,10 +59,10 @@ public class ProteinMenuUI : NetworkBehaviour
     {
         switch (b)
         {
-            case 2: TeleportTool(scannerNet); Menu(); break;
-            case 3: TeleportTool(blasterNet); Menu(); break;
-            case 4: TeleportTool(artemisNet); Menu(); break;
-            case 5: TeleportTool(ligaseNet);  Menu(); break;
+            case 2: SpawnTool(ScannerPrefab);  Menu(); break;
+            case 3: SpawnTool(BlasterPrefab);  Menu(); break;
+            case 4: SpawnTool(ArtimisPrefab);  Menu(); break;
+            case 5: SpawnTool(LigasePrefab);   Menu(); break;
 
             case 6:
                 if (DNA_Pieces.Count > 0) setDNA_menuActive();
@@ -87,25 +77,15 @@ public class ProteinMenuUI : NetworkBehaviour
         }
     }
 
-    // ── Tool teleport ─────────────────────────────────────────────────────────
+    // ── Tool spawning ─────────────────────────────────────────────────────────
 
-    void TeleportTool(NetworkObject tool)
+    void SpawnTool(GameObject prefab)
     {
-        if (tool == null) { Debug.LogWarning("[ProteinMenuUI] Tool has no NetworkObject — add one."); return; }
-        TeleportToolServerRpc(tool.NetworkObjectId, GO_spawnPos.position);
+        if (prefab == null) { Debug.LogWarning("[ProteinMenuUI] Tool prefab not assigned."); return; }
+        SpawnPrefabServerRpc(GetPrefabIndex(prefab), GO_spawnPos.position);
     }
 
-    // Server sets the position; NetworkTransform on the tool replicates it to all clients.
-    [ServerRpc(RequireOwnership = false)]
-    void TeleportToolServerRpc(ulong netObjId, Vector3 position)
-    {
-        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(netObjId, out var no))
-            no.transform.position = position;
-        else
-            Debug.LogWarning($"[ProteinMenuUI] TeleportTool: NetworkObject {netObjId} not found.");
-    }
-
-    // ── DNA piece spawn ───────────────────────────────────────────────────────
+    // ── DNA piece spawning ────────────────────────────────────────────────────
 
     void SpawnDNAPiece(int index)
     {
@@ -117,9 +97,42 @@ public class ProteinMenuUI : NetworkBehaviour
     void SpawnDNAPieceServerRpc(int index, Vector3 position)
     {
         if (index >= DNA_Pieces.Count || DNA_Pieces[index] == null) return;
-        var go = Instantiate(DNA_Pieces[index], position, Quaternion.identity);
+        NetworkSpawn(DNA_Pieces[index], position);
+    }
+
+    // ── Shared tool spawn RPC ─────────────────────────────────────────────────
+
+    // Tools are identified by index rather than passing a GameObject over the network.
+    int GetPrefabIndex(GameObject prefab)
+    {
+        if (prefab == ScannerPrefab) return 0;
+        if (prefab == BlasterPrefab) return 1;
+        if (prefab == ArtimisPrefab) return 2;
+        if (prefab == LigasePrefab)  return 3;
+        return -1;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void SpawnPrefabServerRpc(int toolIndex, Vector3 position)
+    {
+        GameObject prefab = toolIndex switch
+        {
+            0 => ScannerPrefab,
+            1 => BlasterPrefab,
+            2 => ArtimisPrefab,
+            3 => LigasePrefab,
+            _ => null
+        };
+
+        if (prefab == null) return;
+        NetworkSpawn(prefab, position);
+    }
+
+    void NetworkSpawn(GameObject prefab, Vector3 position)
+    {
+        var go = Instantiate(prefab, position, Quaternion.identity);
         var no = go.GetComponent<NetworkObject>();
         if (no != null) no.Spawn();
-        else Debug.LogWarning($"[ProteinMenuUI] DNA_Pieces[{index}] has no NetworkObject — P2 won't see it.");
+        else Debug.LogWarning($"[ProteinMenuUI] '{prefab.name}' has no NetworkObject — P2 won't see it. Add one and register in NetworkManager.");
     }
 }
