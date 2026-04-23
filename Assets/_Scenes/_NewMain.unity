@@ -10580,7 +10580,6 @@ GameObject:
   - component: {fileID: 414279210}
   - component: {fileID: 414279213}
   - component: {fileID: 414279212}
-  - component: {fileID: 414279211}
   m_Layer: 0
   m_Name: ATM_Seat
   m_TagString: Untagged
@@ -10603,28 +10602,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 825965133}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &414279211
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 414279209}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5074191568705416904, guid: 624796854ebc59c4cae4e7cd61e83cc4, type: 3}
 --- !u!23 &414279212
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -21033,7 +21010,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p53: {fileID: 1382226874}
   p53Ship: {fileID: 1382226872}
-  ATMShip: {fileID: 1073484665}
+  ATMShip: {fileID: 927547637}
   gameManager: {fileID: 1671914569}
 --- !u!1 &729377372
 GameObject:
@@ -23754,6 +23731,8 @@ PlayableDirector:
     value: {fileID: 1382226875}
   - key: {fileID: -5928654629213190666, guid: cd4fa7a0f4b7fd84c8e9b989248996fa, type: 2}
     value: {fileID: 1116929206}
+  - key: {fileID: -8056915696408331411, guid: cd4fa7a0f4b7fd84c8e9b989248996fa, type: 2}
+    value: {fileID: 1671914570}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &838266647
@@ -26478,7 +26457,7 @@ Transform:
   m_GameObject: {fileID: 927547637}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 34.07, y: 8.19, z: -14.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -30884,7 +30863,7 @@ Transform:
   m_GameObject: {fileID: 1073484665}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5627162, y: 0.7206658, z: 0.09809933, w: 0.39289665}
-  m_LocalPosition: {x: 33.38, y: 7.9685287, z: -9.889999}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 49.510017, y: 49.509987, z: 49.510002}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -49828,6 +49807,8 @@ PlayableDirector:
     value: {fileID: 892620963}
   - key: {fileID: -4127318286281074543, guid: 2de958e8e347dc847a3210f148ee1b6b, type: 2}
     value: {fileID: 531018103}
+  - key: {fileID: 4749990704707297124, guid: 2de958e8e347dc847a3210f148ee1b6b, type: 2}
+    value: {fileID: 1671914570}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1705082733

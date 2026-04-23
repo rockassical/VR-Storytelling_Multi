@@ -60,8 +60,11 @@ public class WaypointMovementManager : NetworkBehaviour
     }
 
     public void UnboardShips(){
-        StartCoroutine(UnboardShipLocal(p53Ship.transform));
-        //StartCoroutine(UnboardShipLocal(ATMShip.transform));
+        if(!IsServer){
+            StartCoroutine(UnboardShipLocal(ATMShip.transform));
+        }else{
+            StartCoroutine(UnboardShipLocal(p53.transform));
+        }
     }
 
     IEnumerator UnboardShipLocal(Transform ship)
