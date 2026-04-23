@@ -41,15 +41,17 @@ public class MutatedP53 : MonoBehaviour
             // Move towards the closest DNA piece to try and steal it
             GameObject closestPiece = FindClosestPiece();
             //Debug.Log("Moving to " + closestPiece);
-            transform.position = Vector3.MoveTowards(transform.position, closestPiece.transform.position, Speed);
+            if(closestPiece != null){
+                transform.position = Vector3.MoveTowards(transform.position, closestPiece.transform.position, Speed);
 
-            if(gameObject.transform.position.Equals(closestPiece.transform.position)){
-                // Pickup object
-                heldPiece = closestPiece;
+                if(gameObject.transform.position.Equals(closestPiece.transform.position)){
+                    // Pickup object
+                    heldPiece = closestPiece;
 
-                heldPiece.transform.SetParent(gameObject.transform);
-                heldPiece.transform.localPosition = new Vector3(0f, 0f, 0f);
-                hasPiece = true;
+                    heldPiece.transform.SetParent(gameObject.transform);
+                    heldPiece.transform.localPosition = new Vector3(0f, 0f, 0f);
+                    hasPiece = true;
+                }
             }
         }
         else if(transform.position != spawnPos)

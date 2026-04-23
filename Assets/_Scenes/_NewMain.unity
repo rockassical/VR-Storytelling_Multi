@@ -6664,7 +6664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Timeline_NHEJ: {fileID: 1025335524}
   GM: {fileID: 1671914569}
-  spawner: {fileID: 0}
+  spawner: {fileID: 590353482}
   TemplatePieces:
   - {fileID: 5543065212115602141}
   - {fileID: 3436068825222302275}
@@ -15965,7 +15965,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1382226873}
-  - {fileID: 1073484666}
+  - {fileID: 927547638}
   m_Father: {fileID: 1622665345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &570149880
@@ -23749,7 +23749,7 @@ PlayableDirector:
   - key: {fileID: -5904169299299897190, guid: cd4fa7a0f4b7fd84c8e9b989248996fa, type: 2}
     value: {fileID: 1754648715}
   - key: {fileID: 3965578518940321964, guid: cd4fa7a0f4b7fd84c8e9b989248996fa, type: 2}
-    value: {fileID: 1073484673}
+    value: {fileID: 927547639}
   - key: {fileID: -3002279398835164358, guid: cd4fa7a0f4b7fd84c8e9b989248996fa, type: 2}
     value: {fileID: 1382226875}
   - key: {fileID: -5928654629213190666, guid: cd4fa7a0f4b7fd84c8e9b989248996fa, type: 2}
@@ -26451,6 +26451,175 @@ Transform:
   - {fileID: 516604216}
   m_Father: {fileID: 7568101785372272512}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &927547637
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 927547638}
+  - component: {fileID: 927547640}
+  - component: {fileID: 927547639}
+  m_Layer: 0
+  m_Name: ATM_Character
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &927547638
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927547637}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 1073484666}
+  m_Father: {fileID: 568316168}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &927547639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927547637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 48b1bd4bd6e6b0b47bd37d2083edb878, type: 2}
+    - {fileID: 11400000, guid: 176dafdb92cae6446af4b2f485ce6706, type: 2}
+    - {fileID: 11400000, guid: 97b0267e26740654f813d356b94224c7, type: 2}
+    - {fileID: 11400000, guid: dbc6ce0a0651988488ed6ed14b5467f4, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 927547640}
+          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
+          m_MethodName: ResetToStart
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 927547640}
+          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
+          m_MethodName: StartMove
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 927547640}
+          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
+          m_MethodName: SetPath
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 61704933}
+            m_ObjectArgumentAssemblyTypeName: SWS.PathManager, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 927547640}
+          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
+          m_MethodName: SetPath
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 406245319}
+            m_ObjectArgumentAssemblyTypeName: SWS.PathManager, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 927547640}
+          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
+          m_MethodName: SetPath
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1505781180}
+            m_ObjectArgumentAssemblyTypeName: SWS.PathManager, Assembly-CSharp
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &927547640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927547637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a2d9078dbe17bc4f966c9d2310be047, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pathContainer: {fileID: 566231933}
+  onStart: 0
+  moveToPath: 0
+  reverse: 0
+  startPoint: 0
+  currentPoint: 0
+  closeLoop: 0
+  localType: 0
+  lookAhead: 0
+  sizeToAdd: 0
+  timeValue: 1
+  speed: 5
+  animEaseType:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  loopType: 0
+  waypoints: []
+  pathType: 1
+  pathMode: 1
+  easeType: 1
+  lockPosition: 0
+  lockRotation: 0
+  waypointRotation: 0
+  rotationTarget: {fileID: 0}
+  movementStart:
+    m_PersistentCalls:
+      m_Calls: []
+  movementChange:
+    m_PersistentCalls:
+      m_Calls: []
+  movementEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &930681454
 GameObject:
   m_ObjectHideFlags: 0
@@ -28030,7 +28199,7 @@ PrefabInstance:
     - target: {fileID: 1791713839524797409, guid: 95bd29654e15ad844be6210374a75967,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 60.251236
+      value: 60.251373
       objectReference: {fileID: 0}
     - target: {fileID: 2064547250712617484, guid: 95bd29654e15ad844be6210374a75967,
         type: 3}
@@ -29517,7 +29686,7 @@ PlayableDirector:
   - key: {fileID: 200138023001352458, guid: 1f9ae0f35ef978e4ebc24b7b77da0f94, type: 2}
     value: {fileID: 1382226875}
   - key: {fileID: 7050532594519003773, guid: 1f9ae0f35ef978e4ebc24b7b77da0f94, type: 2}
-    value: {fileID: 1073484673}
+    value: {fileID: 927547639}
   - key: {fileID: 409300543528726890, guid: 1f9ae0f35ef978e4ebc24b7b77da0f94, type: 2}
     value: {fileID: 1671914570}
   - key: {fileID: -4590282875651112069, guid: 1f9ae0f35ef978e4ebc24b7b77da0f94, type: 2}
@@ -30699,11 +30868,8 @@ GameObject:
   - component: {fileID: 1073484666}
   - component: {fileID: 1073484672}
   - component: {fileID: 1073484671}
-  - component: {fileID: 1073484668}
-  - component: {fileID: 1073484674}
-  - component: {fileID: 1073484673}
   m_Layer: 0
-  m_Name: ATM_Character
+  m_Name: ATM Protein
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30718,34 +30884,13 @@ Transform:
   m_GameObject: {fileID: 1073484665}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5627162, y: 0.7206658, z: 0.09809933, w: 0.39289665}
-  m_LocalPosition: {x: 27.922497, y: 7.9685287, z: 6.951}
-  m_LocalScale: {x: 49.510014, y: 49.509995, z: 49.510002}
+  m_LocalPosition: {x: 33.38, y: 7.9685287, z: -9.889999}
+  m_LocalScale: {x: 49.510017, y: 49.509987, z: 49.510002}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 46603513}
-  m_Father: {fileID: 568316168}
+  m_Father: {fileID: 927547638}
   m_LocalEulerAnglesHint: {x: -35.702, y: 145.847, z: -64.668}
---- !u!65 &1073484668
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1073484665}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.042024627, y: 0.062161595, z: 0.039764658}
-  m_Center: {x: 0.0013693245, y: 0.0005100295, z: -0.0032004705}
 --- !u!23 &1073484671
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -30796,141 +30941,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1073484665}
   m_Mesh: {fileID: -347391815235382671, guid: 54cd3469c957df549951f4583d8c65cf, type: 3}
---- !u!114 &1073484673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1073484665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Events:
-    m_Signals:
-    - {fileID: 11400000, guid: 48b1bd4bd6e6b0b47bd37d2083edb878, type: 2}
-    - {fileID: 11400000, guid: 176dafdb92cae6446af4b2f485ce6706, type: 2}
-    - {fileID: 11400000, guid: 97b0267e26740654f813d356b94224c7, type: 2}
-    - {fileID: 11400000, guid: dbc6ce0a0651988488ed6ed14b5467f4, type: 2}
-    m_Events:
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1073484674}
-          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
-          m_MethodName: ResetToStart
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1073484674}
-          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
-          m_MethodName: StartMove
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1073484674}
-          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
-          m_MethodName: SetPath
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 61704933}
-            m_ObjectArgumentAssemblyTypeName: SWS.PathManager, Assembly-CSharp
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1073484674}
-          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
-          m_MethodName: SetPath
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 406245319}
-            m_ObjectArgumentAssemblyTypeName: SWS.PathManager, Assembly-CSharp
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1073484674}
-          m_TargetAssemblyTypeName: SWS.splineMove, Assembly-CSharp
-          m_MethodName: SetPath
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 1505781180}
-            m_ObjectArgumentAssemblyTypeName: SWS.PathManager, Assembly-CSharp
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
---- !u!114 &1073484674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1073484665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a2d9078dbe17bc4f966c9d2310be047, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pathContainer: {fileID: 566231933}
-  onStart: 0
-  moveToPath: 0
-  reverse: 0
-  startPoint: 0
-  currentPoint: 0
-  closeLoop: 0
-  localType: 0
-  lookAhead: 0
-  sizeToAdd: 0
-  timeValue: 1
-  speed: 5
-  animEaseType:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  loopType: 0
-  waypoints: []
-  pathType: 1
-  pathMode: 1
-  easeType: 1
-  lockPosition: 0
-  lockRotation: 0
-  waypointRotation: 0
-  rotationTarget: {fileID: 0}
-  movementStart:
-    m_PersistentCalls:
-      m_Calls: []
-  movementChange:
-    m_PersistentCalls:
-      m_Calls: []
-  movementEnd:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &1077957330
 GameObject:
   m_ObjectHideFlags: 0
@@ -44787,7 +44797,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1848579794}
-  - {fileID: 1623965765}
   m_Father: {fileID: 1622665345}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1566573452
@@ -46601,12 +46610,6 @@ Transform:
   - {fileID: 857739609}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1623965765 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7174019212652907432, guid: 77ac6b10722bcca4a8baf70e44d89e78,
-    type: 3}
-  m_PrefabInstance: {fileID: 1817053708}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1624525007
 GameObject:
   m_ObjectHideFlags: 0
@@ -47511,7 +47514,7 @@ PlayableDirector:
   - key: {fileID: 3722573290931755059, guid: 687146c7d0306a041984cf5a195c3148, type: 2}
     value: {fileID: 1382226875}
   - key: {fileID: -7183942717440327582, guid: 687146c7d0306a041984cf5a195c3148, type: 2}
-    value: {fileID: 1073484673}
+    value: {fileID: 927547639}
   - key: {fileID: -6352961866929955468, guid: 687146c7d0306a041984cf5a195c3148, type: 2}
     value: {fileID: 1852910671}
   - key: {fileID: 6836144319789411344, guid: 687146c7d0306a041984cf5a195c3148, type: 2}
@@ -49818,7 +49821,7 @@ PlayableDirector:
   - key: {fileID: -3739497739150624177, guid: 2de958e8e347dc847a3210f148ee1b6b, type: 2}
     value: {fileID: 1382226875}
   - key: {fileID: -7964920270743666465, guid: 2de958e8e347dc847a3210f148ee1b6b, type: 2}
-    value: {fileID: 1073484673}
+    value: {fileID: 927547639}
   - key: {fileID: 188915665632873761, guid: 2de958e8e347dc847a3210f148ee1b6b, type: 2}
     value: {fileID: 1947374243}
   - key: {fileID: 1858517255274100887, guid: 2de958e8e347dc847a3210f148ee1b6b, type: 2}
@@ -53263,7 +53266,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1566573451}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 463831141400273028, guid: 77ac6b10722bcca4a8baf70e44d89e78,
         type: 3}
@@ -53518,17 +53521,17 @@ PrefabInstance:
     - target: {fileID: 7174019212652907432, guid: 77ac6b10722bcca4a8baf70e44d89e78,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 27.843817
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7174019212652907432, guid: 77ac6b10722bcca4a8baf70e44d89e78,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.7744923
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7174019212652907432, guid: 77ac6b10722bcca4a8baf70e44d89e78,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.400321
+      value: -10.173
       objectReference: {fileID: 0}
     - target: {fileID: 7174019212652907432, guid: 77ac6b10722bcca4a8baf70e44d89e78,
         type: 3}
@@ -53749,6 +53752,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_EnableFly
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8537513404922650695, guid: 77ac6b10722bcca4a8baf70e44d89e78,
+        type: 3}
+      propertyPath: m_MoveSpeed
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8537513404922650695, guid: 77ac6b10722bcca4a8baf70e44d89e78,
         type: 3}
@@ -150560,6 +150568,7 @@ SceneRoots:
   - {fileID: 1622665345}
   - {fileID: 1007657218}
   - {fileID: 1066551181}
+  - {fileID: 1817053708}
   - {fileID: 1400131922}
   - {fileID: 701527603}
   - {fileID: 758970794}

@@ -77,6 +77,10 @@ public class GameManager : NetworkBehaviour
         Vector3 worldPos = xrOrigin.position;
         Quaternion worldRot = xrOrigin.rotation;
 
+        if(xrOrigin.parent != null){
+            xrOrigin.SetParent(null, false);
+        }
+
         xrOrigin.SetParent(shipSeat, false);
 
         xrOrigin.gameObject.GetComponentInChildren<DynamicMoveProvider>().enabled = false;
@@ -88,7 +92,6 @@ public class GameManager : NetworkBehaviour
 
     public void playPhase(int phase)
     {
-        BoardShips();
         switch(phase){
             // Intro phase
             case 1:
