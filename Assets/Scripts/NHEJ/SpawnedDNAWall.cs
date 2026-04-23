@@ -82,7 +82,10 @@ public class SpawnedDNAWall : NetworkBehaviour
         for (int i = 0; i < renderers.Length; i++)
             originalMaterials[i] = renderers[i].material;
 
-        gameManager = GameObject.FindGameObjectsWithTag("GameManager")[0].GetComponent<GameManager>();
+        var gmObjs = GameObject.FindGameObjectsWithTag("GameManager");
+        if (gmObjs.Length > 0) gameManager = gmObjs[0].GetComponent<GameManager>();
+        else gameManager = FindObjectOfType<GameManager>();
+        if (gameManager == null) Debug.LogError("[SpawnedDNAWall] GameManager not found — tag it 'GameManager' or ensure it exists in the scene.");
 
         if (grab != null)
         {

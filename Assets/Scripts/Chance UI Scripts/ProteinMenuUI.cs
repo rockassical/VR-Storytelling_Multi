@@ -132,7 +132,19 @@ public class ProteinMenuUI : NetworkBehaviour
     {
         var go = Instantiate(prefab, position, Quaternion.identity);
         var no = go.GetComponent<NetworkObject>();
-        if (no != null) no.Spawn();
-        else Debug.LogWarning($"[ProteinMenuUI] '{prefab.name}' has no NetworkObject — P2 won't see it. Add one and register in NetworkManager.");
+
+        if (no == null)
+        {
+            // NetworkObject might be on a child — NGO requires it on the root.
+            var child = go.GetComponentInChildren<NetworkObject>();
+            string hint = child != null
+                ? $"NetworkObject found on child '{child.gameObject.name}' — move it to the root prefab GameObject."
+                : "NetworkObject component is missing — add it to the root and register the prefab in NetworkManager.";
+            Debug.LogError($"[ProteinMenuUI] '{prefab.name}': {hint}");
+            Destroy(go);
+            return;
+        }
+
+        no.Spawn();
     }
 }
