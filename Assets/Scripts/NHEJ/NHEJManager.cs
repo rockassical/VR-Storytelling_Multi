@@ -63,6 +63,13 @@ public class NHEJManager : NetworkBehaviour
         NetworkVariableWritePermission.Server
     );
 
+    // Stored so late-joining clients can regenerate the break without waiting for a ClientRpc
+    // that was already sent before they connected.
+    readonly NetworkVariable<int> breakSeed = new(
+        -1,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server);
+
     readonly NetworkVariable<bool> player1PhaseComplete = new(
         false,
         NetworkVariableReadPermission.Everyone,
@@ -110,6 +117,18 @@ public class NHEJManager : NetworkBehaviour
             return;
         }
         Instance = this;
+
+        // Fallbacks in case inspector refs weren't set (e.g. NHEJManager was spawned
+        // from a prefab that can't hold scene-object references).
+        if (breakPoint == null)
+            breakPoint = FindObjectOfType<NHEJBreakPoint>();
+        if (leftDNAEnd == null || rightDNAEnd == null)
+        {
+            var bp = breakPoint != null ? breakPoint : FindObjectOfType<NHEJBreakPoint>();
+            if (bp != null && leftDNAEnd  == null) leftDNAEnd  = bp.transform;
+            if (bp != null && rightDNAEnd == null) rightDNAEnd = bp.transform;
+        }
+
         foreach (var point in FindObjectsOfType<ProteinPlacementPoint>())
             point.SetIndicatorVisible(false);
     }
@@ -143,10 +162,20 @@ public class NHEJManager : NetworkBehaviour
             }
         }
 
-        // If reconnecting into an active phase, start it locally
+        // If reconnecting into an active phase, start it locally.
         if (currentPhase.Value != NHEJPhase.WaitingForPlayers)
         {
             StartPhaseLocally(currentPhase.Value);
+
+            // Phase3+ requires the break to be generated. The ClientRpc that normally
+            // triggers this may have already fired before this client connected.
+            // Re-apply it now using the stored seed so P2 always sees the red overhangs.
+            if (!IsServer && breakSeed.Value >= 0)
+            {
+                if (breakPoint == null) breakPoint = FindObjectOfType<NHEJBreakPoint>();
+                breakPoint?.GenerateBreak(breakSeed.Value);
+                Debug.Log($"[NHEJManager] Late-join: regenerating break with seed {breakSeed.Value}");
+            }
         }
     }
 
@@ -482,13 +511,16 @@ public class NHEJManager : NetworkBehaviour
     public void TriggerBreakGeneration(int seed)
     {
         if (!IsServer) return;
+        breakSeed.Value = seed;        // persists for late joiners
         GenerateBreakClientRpc(seed);
     }
 
     [ClientRpc]
     void GenerateBreakClientRpc(int seed)
     {
-        breakPoint?.GenerateBreak(seed);
+        if (breakPoint == null) breakPoint = FindObjectOfType<NHEJBreakPoint>();
+        if (breakPoint != null) breakPoint.GenerateBreak(seed);
+        else Debug.LogError("[NHEJManager] GenerateBreakClientRpc: breakPoint is null — assign it in the inspector or place NHEJBreakPoint in the scene.");
     }
 
     /// <summary>
