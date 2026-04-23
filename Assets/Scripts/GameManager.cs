@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Playables;
 using Unity.XR.CoreUtils;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Movement;
+using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 public class GameManager : NetworkBehaviour
 {

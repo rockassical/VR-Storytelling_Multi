@@ -1,89 +1,77 @@
 using UnityEngine;
 using Unity.Netcode;
-using UnityEngine.SceneManagement;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
-using UnityEngine.Playables;
 using Unity.XR.CoreUtils;
-using UnityEngine.XR.Interaction.Toolkit.Locomotion.Movement;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
-using Unity.XR.CoreUtils;
 using SWS;
 
 public class WaypointMovementManager : NetworkBehaviour
 {
-
-    /*
-        This is meant to be a helper to the game manager specifically for managing path-based movement
-    */
-
     [Header("Spline movement reference")]
-    public splineMove p53;      // only need 1, both move equal time
+    public splineMove p53;      // server drives; NetworkTransform replicates to clients
 
     [Header("Ship Seat References")]
     public GameObject p53Ship;
     public GameObject ATMShip;
 
-    private int movePhase;     // track which phase we are in
-
     [Header("Game Manager Reference")]
     public GameManager gameManager;
 
-    // Start is called before the first frame update
+    private int movePhase;
+
     void Start()
     {
         movePhase = 0;
-
         p53.movementEnd.AddListener(OnDestinationReached);
     }
 
-    void OnDestinationReached(){
+    void OnDestinationReached()
+    {
+        // Only the server drives phase progression — prevents duplicate calls
+        // if SWS fires the event on multiple clients.
+        if (!IsServer) return;
+
         movePhase++;
 
-        switch(movePhase){
-            // Start of HR
+        switch (movePhase)
+        {
             case 1:
-                UnboardShips();
+                UnboardShipsClientRpc();
                 gameManager.playPhase(2);
-
-              break;
-            // Start of NHEJ
-            case 2:
-                UnboardShips();
-                gameManager.playPhase(3);
-
                 break;
-            default:
+            case 2:
+                UnboardShipsClientRpc();
+                gameManager.playPhase(3);
                 break;
         }
     }
 
-    public void UnboardShips(){
-        if(!IsServer){
-            StartCoroutine(UnboardShipLocal(ATMShip.transform));
-        }else{
-            StartCoroutine(UnboardShipLocal(p53.transform));
-        }
+    // Fires on all clients so each player unboards their own ship locally.
+    [ClientRpc]
+    void UnboardShipsClientRpc()
+    {
+        Transform ship = IsServer ? p53Ship.transform : ATMShip.transform;
+        StartCoroutine(UnboardShipLocal(ship));
     }
 
     IEnumerator UnboardShipLocal(Transform ship)
     {
-        Transform xrOrigin = FindFirstObjectByType<XROrigin>().transform;
+        var xrOrigin = FindFirstObjectByType<XROrigin>();
+        if (xrOrigin == null) yield break;
 
-        // Optional: preserve world pose before parenting (prevents sudden snap bugs)
-        Vector3 worldPos = xrOrigin.position;
-        Quaternion worldRot = xrOrigin.rotation;
+        Transform t = xrOrigin.transform;
+        Vector3 worldPos    = t.position;
+        Quaternion worldRot = t.rotation;
 
-        xrOrigin.SetParent(null, true);
-        ship.SetParent(xrOrigin, true);
+        t.SetParent(null, true);
+        ship.SetParent(t, true);
 
         yield return null;
 
-        xrOrigin.gameObject.GetComponentInChildren<DynamicMoveProvider>().enabled = true;
+        var move = t.GetComponentInChildren<DynamicMoveProvider>();
+        if (move != null) move.enabled = true;
 
-        // Snap cleanly into seat
-        xrOrigin.position = worldPos;
-        xrOrigin.rotation = worldRot;
+        t.position = worldPos;
+        t.rotation = worldRot;
     }
 }
