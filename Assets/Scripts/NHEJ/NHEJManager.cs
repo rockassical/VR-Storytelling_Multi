@@ -392,17 +392,15 @@ public class NHEJManager : NetworkBehaviour
     }
 
     /// <summary>
-    /// Called by LigaseSprayCan (owner client) after each seal.
-    /// Server runs IsGapBridged() against the authoritative netState of all SpawnedDNAWalls.
+    /// Called by LigaseSprayCan after it verifies IsGapBridged() locally.
+    /// The BFS graph lives only on the spraying client (DNASealPoint refs set by Seal()),
+    /// so we trust the client's result and advance the phase server-side.
     /// </summary>
     [ServerRpc(RequireOwnership = false)]
-    public void CheckGapBridgedServerRpc()
+    public void NotifyGapBridgedServerRpc()
     {
-        if (breakPoint != null && breakPoint.IsGapBridged())
-        {
-            Debug.Log("[NHEJManager] Gap bridged — calling EndNHEJ.");
-            EndNHEJ();
-        }
+        Debug.Log("[NHEJManager] Gap bridged (client-verified) — calling EndNHEJ.");
+        EndNHEJ();
     }
 
     [ServerRpc(RequireOwnership = false)]

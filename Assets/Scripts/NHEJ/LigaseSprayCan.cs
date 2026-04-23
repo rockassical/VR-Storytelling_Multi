@@ -146,8 +146,13 @@ public class LigaseSprayCan : NetworkBaseInteractable
 
     void CheckGapBridged()
     {
-        // Route through server so IsGapBridged() runs against authoritative netState values.
-        NHEJManager.Instance?.CheckGapBridgedServerRpc();
+        // BFS runs on the spraying client — it holds the complete in-memory graph
+        // (DNASealPoint.leftSealedWall / rightSealedWall set by Seal() locally).
+        // The server never has those refs, so we check here and only notify the server
+        // when the gap is actually bridged.
+        var bp = NHEJManager.Instance?.BreakPoint;
+        if (bp != null && bp.IsGapBridged())
+            NHEJManager.Instance.NotifyGapBridgedServerRpc();
     }
 
     DNASealPoint FindNearestPendingSealPoint(Vector3 origin)
