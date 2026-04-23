@@ -71,6 +71,8 @@ public class WaypointMovementManager : NetworkBehaviour
         var move = t.GetComponentInChildren<DynamicMoveProvider>();
         if (move != null) move.enabled = true;
 
+        t.localScale = new Vector3(1f, 1f, 1f);
+
         t.position = worldPos;
         t.rotation = worldRot;
     }
