@@ -1,10 +1,13 @@
-using System.Buffers;
-using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ProteinMenuUI : MonoBehaviour
+// IMPORTANT: The GameObject this script lives on needs a NetworkObject component.
+// Tools (Artemis, Ligase, Scanner, Blaster) are scene objects that also need
+// NetworkObject + NetworkTransform so the server-driven position replicates to P2.
+// DNA piece prefabs need NetworkObject so Spawn() replicates them to all clients.
+public class ProteinMenuUI : NetworkBehaviour
 {
     public Transform GO_spawnPos;
     [SerializeField] List<GameObject> DNA_Pieces = new List<GameObject>();
@@ -17,29 +20,35 @@ public class ProteinMenuUI : MonoBehaviour
 
     public InputActionProperty buttonAction;
 
-    private void OnEnable()
-    {
-        buttonAction.action.Enable();
-    }
+    // Cached NetworkObject refs for scene tools.
+    NetworkObject scannerNet;
+    NetworkObject blasterNet;
+    NetworkObject artemisNet;
+    NetworkObject ligaseNet;
 
-    private void OnDisable()
-    {
-        buttonAction.action.Disable();
-    }
+    private void OnEnable()  { buttonAction.action.Enable(); }
+    private void OnDisable() { buttonAction.action.Disable(); }
 
     private void Awake()
     {
         canvas.enabled = canvasActive;
     }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        scannerNet = Scanner?.GetComponent<NetworkObject>();
+        blasterNet = Blaster?.GetComponent<NetworkObject>();
+        artemisNet = Artimis?.GetComponent<NetworkObject>();
+        ligaseNet  = Ligase?.GetComponent<NetworkObject>();
+    }
+
     void Update()
     {
         if (buttonAction.action.WasPressedThisFrame())
         {
             Debug.Log("Hit B");
-            if(DNA_MenuActive)
-            {
-                setDNA_menuActive();
-            }
+            if (DNA_MenuActive) setDNA_menuActive();
             else Menu();
         }
     }
@@ -56,63 +65,61 @@ public class ProteinMenuUI : MonoBehaviour
         DNA_Menu.SetActive(DNA_MenuActive);
     }
 
-    public void Buttons(int b) 
+    public void Buttons(int b)
     {
-        switch(b)
+        switch (b)
         {
-            case 2:
-                Scanner.transform.position = GO_spawnPos.position;
-                Menu();
-                break;
-            case 4:
-                Artimis.transform.position = GO_spawnPos.position;
-                Menu();
-                break;
-            case 5:
-                Ligase.transform.position = GO_spawnPos.position;
-                Menu();
-                break;
-            case 3:
-                Blaster.transform.position = GO_spawnPos.position;
-                Menu();
-                break;
+            case 2: TeleportTool(scannerNet); Menu(); break;
+            case 3: TeleportTool(blasterNet); Menu(); break;
+            case 4: TeleportTool(artemisNet); Menu(); break;
+            case 5: TeleportTool(ligaseNet);  Menu(); break;
+
             case 6:
-                if (DNA_Pieces.Count > 0)
-                    setDNA_menuActive();
+                if (DNA_Pieces.Count > 0) setDNA_menuActive();
                 else Debug.Log("DNA List is Empty");
                 break;
-            case 7:
-                if (DNA_Pieces[0] != null)
-                    Instantiate(DNA_Pieces[0], GO_spawnPos.position, Quaternion.identity);
-                else Debug.Log("Null");
-                Menu();
-                break;
-            case 8:
-                if (DNA_Pieces[1] != null)
-                    Instantiate(DNA_Pieces[1], GO_spawnPos.position, Quaternion.identity);
-                else Debug.Log("Null");
-                Menu();
-                break;
-            case 9:
-                if (DNA_Pieces[2] != null)
-                    Instantiate(DNA_Pieces[2], GO_spawnPos.position, Quaternion.identity);
-                else Debug.Log("Null");
-                Menu();
-                break;
-            case 10:
-                if (DNA_Pieces[3] != null)
-                    Instantiate(DNA_Pieces[3], GO_spawnPos.position, Quaternion.identity);
-                else Debug.Log("Null");
-                Menu();
-                break;
-            case 11:
-                if (DNA_Pieces[4] != null)
-                    Instantiate(DNA_Pieces[4], GO_spawnPos.position, Quaternion.identity);
-                else Debug.Log("Null");
-                Menu();
-                break;
+
+            case 7:  SpawnDNAPiece(0); Menu(); break;
+            case 8:  SpawnDNAPiece(1); Menu(); break;
+            case 9:  SpawnDNAPiece(2); Menu(); break;
+            case 10: SpawnDNAPiece(3); Menu(); break;
+            case 11: SpawnDNAPiece(4); Menu(); break;
         }
+    }
 
+    // ── Tool teleport ─────────────────────────────────────────────────────────
 
+    void TeleportTool(NetworkObject tool)
+    {
+        if (tool == null) { Debug.LogWarning("[ProteinMenuUI] Tool has no NetworkObject — add one."); return; }
+        TeleportToolServerRpc(tool.NetworkObjectId, GO_spawnPos.position);
+    }
+
+    // Server sets the position; NetworkTransform on the tool replicates it to all clients.
+    [ServerRpc(RequireOwnership = false)]
+    void TeleportToolServerRpc(ulong netObjId, Vector3 position)
+    {
+        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(netObjId, out var no))
+            no.transform.position = position;
+        else
+            Debug.LogWarning($"[ProteinMenuUI] TeleportTool: NetworkObject {netObjId} not found.");
+    }
+
+    // ── DNA piece spawn ───────────────────────────────────────────────────────
+
+    void SpawnDNAPiece(int index)
+    {
+        if (index >= DNA_Pieces.Count || DNA_Pieces[index] == null) { Debug.Log("DNA piece null/missing"); return; }
+        SpawnDNAPieceServerRpc(index, GO_spawnPos.position);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void SpawnDNAPieceServerRpc(int index, Vector3 position)
+    {
+        if (index >= DNA_Pieces.Count || DNA_Pieces[index] == null) return;
+        var go = Instantiate(DNA_Pieces[index], position, Quaternion.identity);
+        var no = go.GetComponent<NetworkObject>();
+        if (no != null) no.Spawn();
+        else Debug.LogWarning($"[ProteinMenuUI] DNA_Pieces[{index}] has no NetworkObject — P2 won't see it.");
     }
 }
