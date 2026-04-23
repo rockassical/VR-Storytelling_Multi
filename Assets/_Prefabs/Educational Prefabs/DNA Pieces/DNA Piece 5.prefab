@@ -19,6 +19,8 @@ GameObject:
   - component: {fileID: -8169866774664855483}
   - component: {fileID: -2637368221702875909}
   - component: {fileID: -1257890494268879895}
+  - component: {fileID: -4195131790723449618}
+  - component: {fileID: -2453521482830110400}
   m_Layer: 0
   m_Name: DNA Piece 5
   m_TagString: Interactable
@@ -334,6 +336,8 @@ MonoBehaviour:
   helixAxisLocal: {x: 1, y: 0, z: 0}
   pendingMaterial: {fileID: 2100000, guid: 2b87a63c1e16b4549bf6d23b7c325731, type: 2}
   sealedMaterial: {fileID: 2100000, guid: 727f87098255ad04987a60f5f08390bc, type: 2}
+  leftSealedWall: {fileID: 0}
+  rightSealedWall: {fileID: 0}
 --- !u!65 &-1257890494268879895
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -355,3 +359,46 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.02620122, y: 0.02488995, z: 0.013605159}
   m_Center: {x: -0.0011139653, y: -0.002079659, z: -0.0011738009}
+--- !u!114 &-4195131790723449618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3893058613102336319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad8ef76c92ea87438ce932c5feacffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-2453521482830110400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3893058613102336319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  Interpolate: 1
+  SlerpPosition: 0

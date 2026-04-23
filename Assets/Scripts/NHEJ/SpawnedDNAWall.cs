@@ -83,6 +83,25 @@ public class SpawnedDNAWall : NetworkBehaviour
             originalMaterials[i] = renderers[i].material;
 
         gameManager = GameObject.FindGameObjectsWithTag("GameManager")[0].GetComponent<GameManager>();
+
+        if (grab != null)
+        {
+            grab.selectEntered.AddListener(OnGrabbed);
+        }
+    }
+
+    void OnGrabbed(UnityEngine.XR.Interaction.Toolkit.SelectEnterEventArgs _)
+    {
+        if (!IsSpawned) return;
+        ulong localId = NetworkManager.Singleton.LocalClientId;
+        if (OwnerClientId != localId)
+            RequestOwnershipServerRpc(localId);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void RequestOwnershipServerRpc(ulong requesterId)
+    {
+        NetworkObject.ChangeOwnership(requesterId);
     }
 
     public override void OnNetworkSpawn()
@@ -93,6 +112,8 @@ public class SpawnedDNAWall : NetworkBehaviour
     public override void OnNetworkDespawn()
     {
         netState.OnValueChanged -= OnNetStateChanged;
+        if (grab != null)
+            grab.selectEntered.RemoveListener(OnGrabbed);
     }
 
     // Runs on every client when server changes netState.
