@@ -120,6 +120,7 @@ public class GameManager : NetworkBehaviour
         if (move != null) move.enabled = false;
 
         t.localPosition = new Vector3(0f, -0.1f, 0f);
+        t.localScale = new Vector3(1f, 1f, 1f);
         t.rotation = shipSeat.rotation;
     }
 }
