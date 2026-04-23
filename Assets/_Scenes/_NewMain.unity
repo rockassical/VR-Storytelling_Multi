@@ -20974,6 +20974,7 @@ GameObject:
   m_Component:
   - component: {fileID: 717321832}
   - component: {fileID: 717321833}
+  - component: {fileID: 717321834}
   m_Layer: 0
   m_Name: WaypointSequenceManager
   m_TagString: Untagged
@@ -21012,6 +21013,27 @@ MonoBehaviour:
   p53Ship: {fileID: 1382226872}
   ATMShip: {fileID: 927547637}
   gameManager: {fileID: 1671914569}
+--- !u!114 &717321834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717321831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1261093070
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &729377372
 GameObject:
   m_ObjectHideFlags: 0
@@ -26441,6 +26463,7 @@ GameObject:
   - component: {fileID: 927547638}
   - component: {fileID: 927547640}
   - component: {fileID: 927547639}
+  - component: {fileID: 927547641}
   m_Layer: 0
   m_Name: ATM_Character
   m_TagString: Untagged
@@ -26599,6 +26622,27 @@ MonoBehaviour:
   movementEnd:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &927547641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927547637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3005201994
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &930681454
 GameObject:
   m_ObjectHideFlags: 0
@@ -40092,6 +40136,7 @@ GameObject:
   - component: {fileID: 1382226873}
   - component: {fileID: 1382226874}
   - component: {fileID: 1382226875}
+  - component: {fileID: 1382226876}
   m_Layer: 0
   m_Name: P53_Character
   m_TagString: Untagged
@@ -40250,6 +40295,27 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1382226876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382226872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 611169153
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &1390396994
 GameObject:
   m_ObjectHideFlags: 0
