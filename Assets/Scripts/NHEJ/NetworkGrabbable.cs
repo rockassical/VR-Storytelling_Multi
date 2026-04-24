@@ -30,6 +30,12 @@ public class NetworkGrabbable : NetworkBehaviour
             grab.selectEntered.RemoveListener(OnGrabbed);
     }
 
+    void Update()
+    {
+        if (IsOwner && IsSpawned)
+            Debug.Log($"[Sync] Owner {NetworkManager.Singleton.LocalClientId} moving {name} to {transform.position}");
+    }
+
     void OnGrabbed(SelectEnterEventArgs _)
     {
         Debug.Log($"[NetworkGrabbable] Grabbed by local client {NetworkManager.Singleton.LocalClientId}, current owner {OwnerClientId}");
