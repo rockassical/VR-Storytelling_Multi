@@ -5,36 +5,39 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 // Add to any spawned NetworkObject that players can grab.
 // Transfers NGO ownership to the grabbing client so NetworkTransform
-// replicates the movement to all other players.
+// (use ClientNetworkTransform for smooth motion) replicates movement to all other players.
+//
+// The XRGrabInteractable may be on the root OR on a child — this script finds whichever.
 [RequireComponent(typeof(NetworkObject))]
-[RequireComponent(typeof(XRGrabInteractable))]
 public class NetworkGrabbable : NetworkBehaviour
 {
     XRGrabInteractable grab;
 
     void Awake()
     {
-        grab = GetComponent<XRGrabInteractable>();
+        grab = GetComponentInChildren<XRGrabInteractable>(true);
+        if (grab == null)
+        {
+            Debug.LogError($"[NetworkGrabbable] No XRGrabInteractable found on '{name}' or its children.");
+            return;
+        }
         grab.selectEntered.AddListener(OnGrabbed);
-        grab.selectExited.AddListener(OnReleased);
     }
 
     void OnDestroy()
     {
-        if (grab == null) return;
-        grab.selectEntered.RemoveListener(OnGrabbed);
-        grab.selectExited.RemoveListener(OnReleased);
+        if (grab != null)
+            grab.selectEntered.RemoveListener(OnGrabbed);
     }
 
     void OnGrabbed(SelectEnterEventArgs _)
     {
+        Debug.Log($"[NetworkGrabbable] Grabbed by local client {NetworkManager.Singleton.LocalClientId}, current owner {OwnerClientId}");
         if (!IsSpawned) return;
         ulong localId = NetworkManager.Singleton.LocalClientId;
         if (OwnerClientId != localId)
             RequestOwnershipServerRpc(localId);
     }
-
-    void OnReleased(SelectExitEventArgs _) { }
 
     [ServerRpc(RequireOwnership = false)]
     void RequestOwnershipServerRpc(ulong requesterId)
