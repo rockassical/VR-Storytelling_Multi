@@ -18,6 +18,6 @@ public class ClientNetworkTransform : NetworkTransform
     protected override void OnOwnershipChanged(ulong previous, ulong current)
     {
         base.OnOwnershipChanged(previous, current);
-        Debug.Log($"[ClientNT] OwnershipChanged {name} {previous}->{current} local={NetworkManager.Singleton.LocalClientId} IsOwner={IsOwner} CanCommitToTransform={CanCommitToTransform}");
+        Debug.Log($"[ClientNT] OwnershipChanged {name} {previous}->{current} local={NetworkManager.LocalClientId} IsOwner={IsOwner} CanCommitToTransform={CanCommitToTransform}");
     }
 }
