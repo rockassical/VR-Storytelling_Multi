@@ -51,18 +51,32 @@ public class NetworkGrabbable : NetworkBehaviour
             grab.selectEntered.RemoveListener(OnGrabbed);
     }
 
-    // Diagnostic: log on every client every 0.5s so we can see whether
-    // non-owner instances are actually receiving position updates.
+    // ── Diagnostic: owner-authoritative NetworkVariable sanity check ──────────
+    // If this value syncs correctly from owner to other clients, the owner→others
+    // channel works at the NGO layer and the bug is isolated to NetworkTransform.
+    readonly Unity.Netcode.NetworkVariable<Vector3> _testOwnerPos = new(
+        Vector3.zero,
+        Unity.Netcode.NetworkVariableReadPermission.Everyone,
+        Unity.Netcode.NetworkVariableWritePermission.Owner);
+
     float _nextLog;
     Vector3 _lastLoggedPos;
     void Update()
     {
         if (!IsSpawned) return;
+
+        // Owner writes its live transform into the test variable every frame.
+        if (IsOwner)
+        {
+            try { _testOwnerPos.Value = transform.position; }
+            catch (System.Exception e) { Debug.LogError($"[NetworkGrabbable] Owner write failed: {e.Message}"); }
+        }
+
         if (Time.time < _nextLog) return;
         _nextLog = Time.time + 0.5f;
         bool moved = (transform.position - _lastLoggedPos).sqrMagnitude > 0.0001f;
         _lastLoggedPos = transform.position;
-        Debug.Log($"[Sync] {name} local={NetworkManager.Singleton.LocalClientId} owner={OwnerClientId} isOwner={IsOwner} pos={transform.position} movedSinceLast={moved}");
+        Debug.Log($"[Sync] {name} local={NetworkManager.Singleton.LocalClientId} owner={OwnerClientId} isOwner={IsOwner} pos={transform.position} testVar={_testOwnerPos.Value} movedSinceLast={moved}");
     }
 
     void OnGrabbed(SelectEnterEventArgs _)
