@@ -12,6 +12,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class NetworkGrabbable : NetworkBehaviour
 {
     XRGrabInteractable grab;
+    Rigidbody rb;
 
     void Awake()
     {
@@ -22,6 +23,26 @@ public class NetworkGrabbable : NetworkBehaviour
             return;
         }
         grab.selectEntered.AddListener(OnGrabbed);
+        rb = GetComponentInChildren<Rigidbody>(true);
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        ApplyOwnerKinematic();
+    }
+
+    protected override void OnOwnershipChanged(ulong previous, ulong current)
+    {
+        ApplyOwnerKinematic();
+    }
+
+    // Non-owners need a kinematic rigidbody so their local physics don't
+    // compete with incoming NetworkTransform updates (which causes the object
+    // to appear frozen on non-owner clients even though owner is broadcasting).
+    void ApplyOwnerKinematic()
+    {
+        if (rb == null) return;
+        rb.isKinematic = !IsOwner;
     }
 
     void OnDestroy()

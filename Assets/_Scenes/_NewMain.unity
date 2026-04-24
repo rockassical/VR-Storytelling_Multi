@@ -20224,8 +20224,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   p53: {fileID: 1382226874}
-  p53Ship: {fileID: 1382226872}
-  ATMShip: {fileID: 927547637}
   gameManager: {fileID: 1671914569}
 --- !u!114 &717321834
 MonoBehaviour:
