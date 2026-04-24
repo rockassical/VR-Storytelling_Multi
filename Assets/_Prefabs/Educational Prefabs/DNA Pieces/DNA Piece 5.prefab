@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: -2637368221702875909}
   - component: {fileID: -1257890494268879895}
   - component: {fileID: -4195131790723449618}
-  - component: {fileID: -2453521482830110400}
+  - component: {fileID: -200371176954689239}
   m_Layer: 0
   m_Name: DNA Piece 5
   m_TagString: Interactable
@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad8ef76c92ea87438ce932c5feacffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-2453521482830110400
+--- !u!114 &-200371176954689239
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -380,7 +380,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3893058613102336319}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 40f97eeef16fc8e4ca4329ee5bd83b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   UseUnreliableDeltas: 0
