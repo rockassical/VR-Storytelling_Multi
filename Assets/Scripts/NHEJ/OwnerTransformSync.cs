@@ -1,15 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
 
-// Replaces ClientNetworkTransform for cases where it silently fails to sync
-// in NGO 1.12 (owner-authoritative NetworkTransform can refuse to commit state
-// in certain host/client setups). This uses owner-write NetworkVariables, which
-// we verified do propagate owner → everyone correctly.
-//
-// Setup:
-//   - Remove ClientNetworkTransform (and NetworkRigidbody) from the prefab.
-//   - Add this component to the root alongside NetworkObject + NetworkGrabbable.
-//   - Leave the Rigidbody; NetworkGrabbable handles the kinematic flip.
 [RequireComponent(typeof(NetworkObject))]
 public class OwnerTransformSync : NetworkBehaviour
 {
