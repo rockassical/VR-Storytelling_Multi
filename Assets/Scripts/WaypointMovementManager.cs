@@ -29,11 +29,20 @@ public class WaypointMovementManager : NetworkBehaviour
         switch (movePhase)
         {
             case 1:
+                InvertShipParentingClientRpc();
                 gameManager.playPhase(2);
                 break;
             case 2:
+                InvertShipParentingClientRpc();
                 gameManager.playPhase(3);
                 break;
         }
+    }
+
+    // Fires on all clients so each player flips their own ship hierarchy locally.
+    [ClientRpc]
+    void InvertShipParentingClientRpc()
+    {
+        gameManager.InvertShipParenting();
     }
 }

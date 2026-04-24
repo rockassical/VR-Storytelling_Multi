@@ -123,4 +123,36 @@ public class GameManager : NetworkBehaviour
         t.localScale = new Vector3(1f, 1f, 1f);
         t.rotation = shipSeat.rotation;
     }
+
+    // ── Ship parent inversion ────────────────────────────────────────────────
+    // After the spline ride, flip the hierarchy: the ship becomes a child of
+    // the player so the ship follows the player instead of the other way around.
+    // Re-enables locomotion so the player can walk.
+    public void InvertShipParenting()
+    {
+        InvertShipParentingLocal();
+    }
+
+    void InvertShipParentingLocal()
+    {
+        var xrOrigin = FindFirstObjectByType<XROrigin>();
+        if (xrOrigin == null) return;
+
+        Transform t = xrOrigin.transform;
+        Transform ship = t.parent;
+        if (ship == null) return; // not currently a child of a ship
+
+        Vector3 worldPos = t.position;
+        Quaternion worldRot = t.rotation;
+
+        // Unparent player, then reparent ship under the player at the same world position.
+        t.SetParent(null, true);
+        ship.SetParent(t, true);
+
+        t.position = worldPos;
+        t.rotation = worldRot;
+
+        var move = t.GetComponentInChildren<DynamicMoveProvider>();
+        if (move != null) move.enabled = true;
+    }
 }
