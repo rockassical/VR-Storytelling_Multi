@@ -107,20 +107,25 @@ public class GameManager : NetworkBehaviour
         BoardShipLocal(seat);
     }
 
-    void BoardShipLocal(Transform shipSeat)
+    void BoardShipLocal(Transform ship)
     {
         var xrOrigin = FindFirstObjectByType<XROrigin>();
         if (xrOrigin == null) return;
 
         Transform t = xrOrigin.transform;
-        if (t.parent != null) t.SetParent(null, false);
-        t.SetParent(shipSeat, false);
+
+        // Snap the player to the ship's current world position/rotation first, then
+        // invert the hierarchy so the ship becomes a child of the player. Anything
+        // that moves the player (spline, teleport, locomotion) now carries the ship.
+        t.position = ship.position;
+        t.rotation = ship.rotation;
+
+        if (ship.parent != null) ship.SetParent(null, true);
+        ship.SetParent(t, true);
+        ship.localPosition = Vector3.zero;
+        ship.localRotation = Quaternion.identity;
 
         var move = t.GetComponentInChildren<DynamicMoveProvider>();
         if (move != null) move.enabled = false;
-
-        t.localPosition = new Vector3(0f, -0.1f, 0f);
-        t.localScale = new Vector3(1f, 1f, 1f);
-        t.rotation = shipSeat.rotation;
     }
 }

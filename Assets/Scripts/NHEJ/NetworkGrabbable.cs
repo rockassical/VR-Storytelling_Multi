@@ -30,10 +30,18 @@ public class NetworkGrabbable : NetworkBehaviour
             grab.selectEntered.RemoveListener(OnGrabbed);
     }
 
+    // Diagnostic: log on every client every 0.5s so we can see whether
+    // non-owner instances are actually receiving position updates.
+    float _nextLog;
+    Vector3 _lastLoggedPos;
     void Update()
     {
-        if (IsOwner && IsSpawned)
-            Debug.Log($"[Sync] Owner {NetworkManager.Singleton.LocalClientId} moving {name} to {transform.position}");
+        if (!IsSpawned) return;
+        if (Time.time < _nextLog) return;
+        _nextLog = Time.time + 0.5f;
+        bool moved = (transform.position - _lastLoggedPos).sqrMagnitude > 0.0001f;
+        _lastLoggedPos = transform.position;
+        Debug.Log($"[Sync] {name} local={NetworkManager.Singleton.LocalClientId} owner={OwnerClientId} isOwner={IsOwner} pos={transform.position} movedSinceLast={moved}");
     }
 
     void OnGrabbed(SelectEnterEventArgs _)
