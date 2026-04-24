@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: -2637368221702875909}
   - component: {fileID: -1257890494268879895}
   - component: {fileID: -4195131790723449618}
-  - component: {fileID: -200371176954689239}
+  - component: {fileID: -341588869717465561}
   m_Layer: 0
   m_Name: DNA Piece 5
   m_TagString: Interactable
@@ -371,7 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad8ef76c92ea87438ce932c5feacffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-200371176954689239
+--- !u!114 &-341588869717465561
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -380,25 +380,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 3893058613102336319}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40f97eeef16fc8e4ca4329ee5bd83b86, type: 3}
+  m_Script: {fileID: 11500000, guid: 7639aba664d18fa47995461deaee943f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseUnreliableDeltas: 0
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  UseQuaternionSynchronization: 0
-  UseQuaternionCompression: 0
-  UseHalfFloatPrecision: 0
-  InLocalSpace: 0
-  Interpolate: 1
-  SlerpPosition: 0
+  interpolationSpeed: 20
+  positionThreshold: 0.0005

@@ -334,8 +334,7 @@ GameObject:
   - component: {fileID: 2933387339121180815}
   - component: {fileID: -2439953704146984700}
   - component: {fileID: 8693610337224814223}
-  - component: {fileID: 1931682412726746354}
-  - component: {fileID: -4553446372941037471}
+  - component: {fileID: -8609743409802282054}
   m_Layer: 0
   m_Name: Scanner
   m_TagString: Untagged
@@ -620,7 +619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad8ef76c92ea87438ce932c5feacffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1931682412726746354
+--- !u!114 &-8609743409802282054
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -629,37 +628,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8509295216136564049}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40f97eeef16fc8e4ca4329ee5bd83b86, type: 3}
+  m_Script: {fileID: 11500000, guid: 7639aba664d18fa47995461deaee943f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UseUnreliableDeltas: 0
-  SyncPositionX: 1
-  SyncPositionY: 1
-  SyncPositionZ: 1
-  SyncRotAngleX: 1
-  SyncRotAngleY: 1
-  SyncRotAngleZ: 1
-  SyncScaleX: 1
-  SyncScaleY: 1
-  SyncScaleZ: 1
-  PositionThreshold: 0.001
-  RotAngleThreshold: 0.01
-  ScaleThreshold: 0.01
-  UseQuaternionSynchronization: 0
-  UseQuaternionCompression: 0
-  UseHalfFloatPrecision: 0
-  InLocalSpace: 0
-  Interpolate: 1
-  SlerpPosition: 0
---- !u!114 &-4553446372941037471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8509295216136564049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  interpolationSpeed: 20
+  positionThreshold: 0.0005
