@@ -19,7 +19,7 @@ public class NetworkGrabbable : NetworkBehaviour
         grab = GetComponentInChildren<XRGrabInteractable>(true);
         if (grab == null)
         {
-            Debug.LogError($"[NetworkGrabbable] No XRGrabInteractable found on '{name}' or its children.");
+            //Debug.LogError($"[NetworkGrabbable] No XRGrabInteractable found on '{name}' or its children.");
             return;
         }
         grab.selectEntered.AddListener(OnGrabbed);
@@ -69,19 +69,19 @@ public class NetworkGrabbable : NetworkBehaviour
         if (IsOwner)
         {
             try { _testOwnerPos.Value = transform.position; }
-            catch (System.Exception e) { Debug.LogError($"[NetworkGrabbable] Owner write failed: {e.Message}"); }
+            catch (System.Exception e) { /*Debug.LogError($"[NetworkGrabbable] Owner write failed: {e.Message}");*/ }
         }
 
         if (Time.time < _nextLog) return;
         _nextLog = Time.time + 0.5f;
         bool moved = (transform.position - _lastLoggedPos).sqrMagnitude > 0.0001f;
         _lastLoggedPos = transform.position;
-        Debug.Log($"[Sync] {name} local={NetworkManager.Singleton.LocalClientId} owner={OwnerClientId} isOwner={IsOwner} pos={transform.position} testVar={_testOwnerPos.Value} movedSinceLast={moved}");
+        //Debug.Log($"[Sync] {name} local={NetworkManager.Singleton.LocalClientId} owner={OwnerClientId} isOwner={IsOwner} pos={transform.position} testVar={_testOwnerPos.Value} movedSinceLast={moved}");
     }
 
     void OnGrabbed(SelectEnterEventArgs _)
     {
-        Debug.Log($"[NetworkGrabbable] Grabbed by local client {NetworkManager.Singleton.LocalClientId}, current owner {OwnerClientId}");
+        //Debug.Log($"[NetworkGrabbable] Grabbed by local client {NetworkManager.Singleton.LocalClientId}, current owner {OwnerClientId}");
         if (!IsSpawned) return;
         ulong localId = NetworkManager.Singleton.LocalClientId;
         if (OwnerClientId != localId)

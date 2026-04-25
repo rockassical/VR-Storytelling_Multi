@@ -107,13 +107,6 @@ public class GameManager : NetworkBehaviour
         BoardShipLocal(seat);
     }
 
-    /// <summary>
-    /// Use after a move-sequence has completed and the ship was inverted under the player.
-    /// Undoes the inversion and re-seats the player inside the ship for the next spline ride.
-    /// Call from a Timeline event (or manually) when HR completes, before the NHEJ ride.
-    /// </summary>
-    public void ReBoardShips() => BoardShips();
-
     void BoardShipLocal(Transform shipSeat)
     {
         var xrOrigin = FindFirstObjectByType<XROrigin>();
