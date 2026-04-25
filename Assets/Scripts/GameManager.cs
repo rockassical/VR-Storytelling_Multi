@@ -144,6 +144,28 @@ public class GameManager : NetworkBehaviour
     // Re-enables locomotion so the player can walk.
     public void InvertShipParenting()
     {
+        // Server-side: hand each ship's ownership to the player whose hierarchy it's
+        // joining, so its OwnerTransformSync (or NetworkTransform) broadcasts from
+        // the right client and both players see the motion.
+        if (IsServer)
+        {
+            ulong serverId = NetworkManager.Singleton.LocalClientId;
+            ulong otherId = ulong.MaxValue;
+            foreach (var c in NetworkManager.Singleton.ConnectedClientsIds)
+                if (c != serverId) { otherId = c; break; }
+
+            if (P53ShipRoot != null)
+            {
+                var no = P53ShipRoot.GetComponent<NetworkObject>();
+                if (no != null && no.OwnerClientId != serverId) no.ChangeOwnership(serverId);
+            }
+            if (ATMShipRoot != null && otherId != ulong.MaxValue)
+            {
+                var no = ATMShipRoot.GetComponent<NetworkObject>();
+                if (no != null && no.OwnerClientId != otherId) no.ChangeOwnership(otherId);
+            }
+        }
+
         InvertShipParentingLocal();
     }
 
