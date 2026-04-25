@@ -25,7 +25,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 37090
+  controlID: 48744
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 36989
+  controlID: 48646
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -578,9 +578,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -4.9077134, y: 12.452581, z: 47.30365}
+    m_Target: {x: 10.44473, y: 22.959314, z: 32.685352}
     speed: 2
-    m_Value: {x: -4.9077134, y: 12.452581, z: 47.30365}
+    m_Value: {x: 10.44473, y: 22.959314, z: 32.685352}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -626,13 +626,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.22139624, y: -0.42168555, z: 0.11085489, w: 0.8729039}
+    m_Target: {x: -0.18076916, y: 0.39677233, z: -0.08401567, w: -0.89662164}
     speed: 2
-    m_Value: {x: 0.22127624, y: -0.421457, z: 0.110794805, w: 0.8724308}
+    m_Value: {x: -0.18067028, y: 0.3965553, z: -0.08396971, w: -0.8961312}
   m_Size:
-    m_Target: 10
+    m_Target: 1.1689353
     speed: 2
-    m_Value: 10
+    m_Value: 1.1689353
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -926,21 +926,21 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: b64afdff1c4cfdff1efbffffba8f0000ae900000f6970000289c0000de9f0000d2a20000c2a80000d2ad000054b5000024b70000545d0200d25e02000e6502009a660200f66e0200da770200
+      m_ExpandedIDs: 701bfbffdce0fbffb6f6fbff50f8fbffb64afdff1c4cfdff1efbffffba8f0000ae900000f6970000289c0000de9f0000d2a20000c2a80000d2ad000054b5000024b70000545d0200d25e02008a5f02007e600200006502000e6502009a660200f66e0200da770200541f0400962404001426040008270400bc2704001a290400462c0400542c0400e02d04003c360400203f040090470400
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: P3
+        m_OriginalName: P3
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 281034
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 11}
       m_SearchString: 
@@ -1165,7 +1165,7 @@ MonoBehaviour:
     m_CachedPref: 159.20001
     m_ControlHash: 1412526313
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: 164484
+  m_LastInspectedObjectInstanceID: -1
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
