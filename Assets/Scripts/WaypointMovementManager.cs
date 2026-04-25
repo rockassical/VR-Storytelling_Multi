@@ -20,17 +20,14 @@ public class WaypointMovementManager : NetworkBehaviour
 
     void OnDestinationReached()
     {
-        // Only the server drives phase progression — prevents duplicate calls
-        // if SWS fires the event on multiple clients.
-        if (!IsServer) return;
 
-        // Stop the spline driver so it doesn't keep writing the ship's transform
-        // and fight the parent-follow after inversion.
         if (p53 != null)
         {
             p53.enabled = false;
-            Debug.Log("[Waypoint] Disabled splineMove p53 after destination reached.");
+            Debug.Log($"[Waypoint] Disabled splineMove p53 (IsServer={IsServer}).");
         }
+
+        if (!IsServer) return;
 
         movePhase++;
 
