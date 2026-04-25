@@ -20,8 +20,16 @@ public class GameManager : NetworkBehaviour
     public PlayableDirector Timeline_HR, Timeline_NHEJ, Timeline_Apoptosis, Timeline_Conclusion;
 
     [Header("Ships to Board")]
+    [Tooltip("Seat transform — the player gets parented to this to sit in the ship.")]
     public GameObject P53Ship;
+    [Tooltip("Seat transform — the player gets parented to this to sit in the ship.")]
     public GameObject ATMShip;
+
+    [Header("Ship Roots (for inversion)")]
+    [Tooltip("Actual ship root (typically the parent of the seat). This is what becomes a child of the player after the spline ride.")]
+    public GameObject P53ShipRoot;
+    [Tooltip("Actual ship root (typically the parent of the seat). This is what becomes a child of the player after the spline ride.")]
+    public GameObject ATMShipRoot;
 
     void Start()
     {
@@ -145,13 +153,18 @@ public class GameManager : NetworkBehaviour
         if (xrOrigin == null) return;
 
         Transform t = xrOrigin.transform;
-        Transform ship = t.parent;
-        if (ship == null) { Debug.Log("[Invert] Player has no parent ship — skipping."); return; }
+        GameObject shipGO = IsServer ? P53ShipRoot : ATMShipRoot;
+        if (shipGO == null)
+        {
+            Debug.LogWarning("[Invert] Ship root not assigned in GameManager — falling back to player's parent.");
+            shipGO = t.parent != null ? t.parent.gameObject : null;
+        }
+        if (shipGO == null) { Debug.Log("[Invert] No ship to invert — skipping."); return; }
+        Transform ship = shipGO.transform;
 
         Vector3 worldPos = t.position;
         Quaternion worldRot = t.rotation;
 
-        // Unparent player, then reparent ship under the player at the same world position.
         t.SetParent(null, true);
         ship.SetParent(t, true);
 
