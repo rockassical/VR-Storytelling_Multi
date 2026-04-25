@@ -153,7 +153,7 @@ public class GameManager : NetworkBehaviour
 
         Transform t = xrOrigin.transform;
         Transform ship = t.parent;
-        if (ship == null) return; // not currently a child of a ship
+        if (ship == null) { Debug.Log("[Invert] Player has no parent ship — skipping."); return; }
 
         Vector3 worldPos = t.position;
         Quaternion worldRot = t.rotation;
@@ -167,5 +167,17 @@ public class GameManager : NetworkBehaviour
 
         var move = t.GetComponentInChildren<DynamicMoveProvider>();
         if (move != null) move.enabled = true;
+
+        Debug.Log($"[Invert] After reparent: player={t.name} parent={(t.parent ? t.parent.name : "null")}, ship={ship.name} parent={(ship.parent ? ship.parent.name : "null")} shipWorldPos={ship.position}");
+        StartCoroutine(LogShipPosNextFrame(ship));
+    }
+
+    System.Collections.IEnumerator LogShipPosNextFrame(Transform ship)
+    {
+        Vector3 firstPos = ship.position;
+        yield return null;
+        Vector3 secondPos = ship.position;
+        bool snappedBack = (secondPos - firstPos).sqrMagnitude > 0.0001f;
+        Debug.Log($"[Invert] One frame later: ship.parent={(ship.parent ? ship.parent.name : "null")} pos={secondPos} snappedBack={snappedBack}");
     }
 }
