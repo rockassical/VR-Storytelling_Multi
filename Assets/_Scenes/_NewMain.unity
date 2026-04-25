@@ -46935,6 +46935,8 @@ MonoBehaviour:
   Timeline_Conclusion: {fileID: 836572902}
   P53Ship: {fileID: 368224279}
   ATMShip: {fileID: 561567122}
+  P53ShipRoot: {fileID: 1382226872}
+  ATMShipRoot: {fileID: 927547637}
 --- !u!114 &1671914570
 MonoBehaviour:
   m_ObjectHideFlags: 0
