@@ -25718,6 +25718,7 @@ GameObject:
   - component: {fileID: 927547640}
   - component: {fileID: 927547639}
   - component: {fileID: 927547641}
+  - component: {fileID: 927547642}
   m_Layer: 0
   m_Name: ATM_Character
   m_TagString: Untagged
@@ -25897,6 +25898,20 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &927547642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927547637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7639aba664d18fa47995461deaee943f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interpolationSpeed: 20
+  positionThreshold: 0.0005
 --- !u!1 &930681454
 GameObject:
   m_ObjectHideFlags: 0
@@ -39214,6 +39229,7 @@ GameObject:
   - component: {fileID: 1382226874}
   - component: {fileID: 1382226875}
   - component: {fileID: 1382226876}
+  - component: {fileID: 1382226877}
   m_Layer: 0
   m_Name: P53_Character
   m_TagString: Untagged
@@ -39393,6 +39409,20 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &1382226877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382226872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7639aba664d18fa47995461deaee943f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interpolationSpeed: 20
+  positionThreshold: 0.0005
 --- !u!1 &1390396994
 GameObject:
   m_ObjectHideFlags: 0
