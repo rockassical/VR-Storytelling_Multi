@@ -184,23 +184,38 @@ public class GameManager : NetworkBehaviour
         if (shipGO == null) { Debug.Log("[Invert] No ship to invert — skipping."); return; }
         Transform ship = shipGO.transform;
 
-        Vector3 worldPos = t.position;
-        Quaternion worldRot = t.rotation;
+        // Capture both world transforms BEFORE any parent changes.
+        Vector3    playerPos   = t.position;
+        Quaternion playerRot   = t.rotation;
+        Vector3    shipPos     = ship.position;
+        Quaternion shipRot     = ship.rotation;
+        Vector3    shipWorldSc = ship.lossyScale; // preserve visual size
 
         var shipNO = ship.GetComponent<NetworkObject>();
         if (shipNO != null) shipNO.AutoObjectParentSync = false;
 
-        t.SetParent(null, true);
-        ship.SetParent(t, true);
+        // Detach the player and force its localScale back to (1,1,1). If the seat
+        // had a non-1 lossyScale, SetParent(null, true) bakes that into the player's
+        // localScale, which throws off the camera offset and visually teleports
+        // the player. Resetting to 1 fixes that — but means we have to explicitly
+        // restore world position/rotation.
+        t.SetParent(null, false);
+        t.localScale = Vector3.one;
+        t.position = playerPos;
+        t.rotation = playerRot;
 
-        t.position = worldPos;
-        t.rotation = worldRot;
+        // Reparent the ship under the player and preserve its visual size.
+        // Since the player is now at lossyScale 1, ship.localScale = ship's old worldScale.
+        if (ship.parent != null) ship.SetParent(null, true);
+        ship.SetParent(t, false);
+        ship.position   = shipPos;
+        ship.rotation   = shipRot;
+        ship.localScale = shipWorldSc;
 
         var move = t.GetComponentInChildren<DynamicMoveProvider>();
         if (move != null) move.enabled = true;
 
-        Debug.Log($"[Invert] After reparent: player={t.name} parent={(t.parent ? t.parent.name : "null")}, ship={ship.name} parent={(ship.parent ? ship.parent.name : "null")} shipWorldPos={ship.position}");
-        StartCoroutine(LogShipPosNextFrame(ship));
+        Debug.Log($"[Invert] player.worldPos={t.position} player.lossyScale={t.lossyScale}, ship.worldPos={ship.position} ship.lossyScale={ship.lossyScale}");
     }
 
     System.Collections.IEnumerator LogShipPosNextFrame(Transform ship)

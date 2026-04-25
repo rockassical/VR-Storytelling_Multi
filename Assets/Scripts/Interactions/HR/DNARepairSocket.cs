@@ -37,11 +37,15 @@ public class DNARepairSocket : XRSocketInteractor
 
     protected override void OnSelectEntering(SelectEnterEventArgs args)
     {
-        // Capture the piece's world scale BEFORE XRI changes its parent.
         var t = args.interactableObject.transform;
-        _capturedWorldScale = t.lossyScale;
-        _capturedTransform = t;
-        _hasCapture = true;
+
+        // Prefer the prefab's rest scale (captured at Awake before any grab/parent
+        // could warp it). Fall back to current lossyScale only if no rest-scale
+        // component is present.
+        var rest = t.GetComponent<DNAPieceRestScale>();
+        _capturedWorldScale = rest != null ? rest.RestScale : t.lossyScale;
+        _capturedTransform  = t;
+        _hasCapture         = true;
 
         base.OnSelectEntering(args);
     }
@@ -49,11 +53,12 @@ public class DNARepairSocket : XRSocketInteractor
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
         base.OnSelectEntered(args);
-
         if (!_hasCapture || _capturedTransform == null) return;
+        ApplyCapturedScale();
+    }
 
-        // Compute the localScale needed to preserve the captured world scale
-        // under the new parent (the socket / its attach transform).
+    void ApplyCapturedScale()
+    {
         Vector3 parentLossy = _capturedTransform.parent != null
             ? _capturedTransform.parent.lossyScale
             : Vector3.one;
@@ -63,6 +68,15 @@ public class DNARepairSocket : XRSocketInteractor
             _capturedWorldScale.y / Mathf.Max(Mathf.Abs(parentLossy.y), 0.0001f),
             _capturedWorldScale.z / Mathf.Max(Mathf.Abs(parentLossy.z), 0.0001f)
         );
+    }
+
+    void LateUpdate()
+    {
+        // Re-enforce the desired scale on the socketed piece every frame. This
+        // catches the case where another component (XRI internals, OwnerTransformSync,
+        // etc.) writes localScale after our OnSelectEntered ran.
+        if (_hasCapture && _capturedTransform != null && hasSelection)
+            ApplyCapturedScale();
     }
 
     protected override void OnSelectExited(SelectExitEventArgs args)
