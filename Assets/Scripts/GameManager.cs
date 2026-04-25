@@ -107,12 +107,25 @@ public class GameManager : NetworkBehaviour
         BoardShipLocal(seat);
     }
 
+    /// <summary>
+    /// Use after a move-sequence has completed and the ship was inverted under the player.
+    /// Undoes the inversion and re-seats the player inside the ship for the next spline ride.
+    /// Call from a Timeline event (or manually) when HR completes, before the NHEJ ride.
+    /// </summary>
+    public void ReBoardShips() => BoardShips();
+
     void BoardShipLocal(Transform shipSeat)
     {
         var xrOrigin = FindFirstObjectByType<XROrigin>();
         if (xrOrigin == null) return;
 
         Transform t = xrOrigin.transform;
+
+        // If the ship is currently parented under the player (post-invert state),
+        // unparent it first so we can reverse the hierarchy cleanly.
+        if (shipSeat.IsChildOf(t))
+            shipSeat.SetParent(null, true);
+
         if (t.parent != null) t.SetParent(null, false);
         t.SetParent(shipSeat, false);
 
