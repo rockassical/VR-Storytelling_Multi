@@ -165,6 +165,9 @@ public class GameManager : NetworkBehaviour
         Vector3 worldPos = t.position;
         Quaternion worldRot = t.rotation;
 
+        var shipNO = ship.GetComponent<NetworkObject>();
+        if (shipNO != null) shipNO.AutoObjectParentSync = false;
+
         t.SetParent(null, true);
         ship.SetParent(t, true);
 
