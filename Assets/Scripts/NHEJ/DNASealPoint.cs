@@ -125,6 +125,29 @@ public class DNASealPoint : MonoBehaviour
         RefreshGlow();
     }
 
+    /// <summary>
+    /// Network-replication hook: register a wall as sealed onto this point without
+    /// going through Seal() (which would re-broadcast and require pending state).
+    /// Called by SpawnedDNAWall.ApplySealLocally() on non-spraying clients so the
+    /// BFS graph matches the spraying client's graph.
+    /// </summary>
+    public void RegisterSealedWall(SpawnedDNAWall wall, bool isRight)
+    {
+        if (isRight)
+        {
+            rightSealedWall = wall;
+            rightSealed = true;
+            rightPending = null;
+        }
+        else
+        {
+            leftSealedWall = wall;
+            leftSealed = true;
+            leftPending = null;
+        }
+        RefreshGlow();
+    }
+
     /// <summary>Reverses a seal on the given side — called when Artemis cuts a sealed wall off.</summary>
     public void UnsealSide(bool isRight)
     {
