@@ -230,6 +230,9 @@ public class SpawnedDNAWall : NetworkBehaviour
         {
             sealedBy      = sp;
             sealedOnRight = sp.IsRightSide(transform.position);
+            // Register this edge in the BFS graph so non-spraying clients have the
+            // same DNASealPoint.leftSealedWall / rightSealedWall state as the sprayer.
+            sp.RegisterSealedWall(this, sealedOnRight);
         }
         ApplySealPhysics();
         if (sp != null) AddOwnSealPoint(sp);

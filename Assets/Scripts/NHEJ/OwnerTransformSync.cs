@@ -29,10 +29,14 @@ public class OwnerTransformSync : NetworkBehaviour
         // so non-owners don't snap to (0,0,0) before the first write arrives.
         if (IsOwner)
         {
-            netPos.Value = transform.position;
-            netRot.Value = transform.rotation;
-            _lastSentPos = transform.position;
-            _lastSentRot = transform.rotation;
+            try
+            {
+                netPos.Value = transform.position;
+                netRot.Value = transform.rotation;
+                _lastSentPos = transform.position;
+                _lastSentRot = transform.rotation;
+            }
+            catch { }
         }
         else
         {
@@ -47,14 +51,19 @@ public class OwnerTransformSync : NetworkBehaviour
 
         if (IsOwner)
         {
-            // Only write if we've actually moved — avoids spamming unchanged state.
             if ((transform.position - _lastSentPos).sqrMagnitude > positionThreshold * positionThreshold ||
                 Quaternion.Angle(transform.rotation, _lastSentRot) > 0.1f)
             {
-                netPos.Value = transform.position;
-                netRot.Value = transform.rotation;
-                _lastSentPos = transform.position;
-                _lastSentRot = transform.rotation;
+                // Wrap in try/catch so a stale-frame write during ownership handoff
+                // doesn't bubble up as a critical NGO error.
+                try
+                {
+                    netPos.Value = transform.position;
+                    netRot.Value = transform.rotation;
+                    _lastSentPos = transform.position;
+                    _lastSentRot = transform.rotation;
+                }
+                catch { }
             }
         }
         else
