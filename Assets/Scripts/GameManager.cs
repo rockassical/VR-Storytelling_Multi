@@ -122,10 +122,14 @@ public class GameManager : NetworkBehaviour
 
         Transform t = xrOrigin.transform;
 
-        // If the ship is currently parented under the player (post-invert state),
-        // unparent it first so we can reverse the hierarchy cleanly.
-        if (shipSeat.IsChildOf(t))
-            shipSeat.SetParent(null, true);
+        // Undo any prior invert: detach the ship ROOT (not the seat) from the player.
+        GameObject shipGO = IsServer ? P53ShipRoot : ATMShipRoot;
+        if (shipGO != null)
+        {
+            Transform shipRoot = shipGO.transform;
+            if (shipRoot.IsChildOf(t))
+                shipRoot.SetParent(null, true);
+        }
 
         if (t.parent != null) t.SetParent(null, false);
         t.SetParent(shipSeat, false);
