@@ -20189,6 +20189,7 @@ GameObject:
   - component: {fileID: 717321832}
   - component: {fileID: 717321833}
   - component: {fileID: 717321834}
+  - component: {fileID: 717321835}
   m_Layer: 0
   m_Name: WaypointSequenceManager
   m_TagString: Untagged
@@ -20246,6 +20247,36 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+--- !u!114 &717321835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717321831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 27ff7e9ab8535da42b588f0ce55e7796, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 717321833}
+          m_TargetAssemblyTypeName: WaypointMovementManager, Assembly-CSharp
+          m_MethodName: ArmNextLeg
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &729377372
 GameObject:
   m_ObjectHideFlags: 0
@@ -28898,6 +28929,8 @@ PlayableDirector:
     value: {fileID: 1671914570}
   - key: {fileID: -4590282875651112069, guid: 1f9ae0f35ef978e4ebc24b7b77da0f94, type: 2}
     value: {fileID: 732087040}
+  - key: {fileID: 321901734327469929, guid: 1f9ae0f35ef978e4ebc24b7b77da0f94, type: 2}
+    value: {fileID: 717321835}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &1026575014
@@ -46723,6 +46756,8 @@ PlayableDirector:
     value: {fileID: 573867309}
   - key: {fileID: 6031269407273123973, guid: 687146c7d0306a041984cf5a195c3148, type: 2}
     value: {fileID: 1116929206}
+  - key: {fileID: 8533311531616104679, guid: 687146c7d0306a041984cf5a195c3148, type: 2}
+    value: {fileID: 717321835}
   m_ExposedReferences:
     m_References: []
 --- !u!1001 &1666960371
@@ -49032,6 +49067,8 @@ PlayableDirector:
     value: {fileID: 531018103}
   - key: {fileID: 4749990704707297124, guid: 2de958e8e347dc847a3210f148ee1b6b, type: 2}
     value: {fileID: 1671914570}
+  - key: {fileID: -170565056762388656, guid: 2de958e8e347dc847a3210f148ee1b6b, type: 2}
+    value: {fileID: 717321835}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1705082733

@@ -38,7 +38,7 @@ public class WaypointMovementManager : NetworkBehaviour
                 break;
             case 2:
                 InvertShipParentingClientRpc();
-                //gameManager.playPhase(3);
+                gameManager.playPhase(3);
                 break;
         }
     }
