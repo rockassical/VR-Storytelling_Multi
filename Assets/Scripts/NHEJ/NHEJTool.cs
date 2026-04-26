@@ -97,11 +97,6 @@ public class NHEJTool : MonoBehaviour
             NHEJAudio.Instance.PlayLigationSuccess();
 
         StartCoroutine(CheckAllOverhangsCut());
-
-        if(firstCut){
-            firstCut = false;
-            gameManager.playPhase(3);
-        }
     }
 
     IEnumerator CheckAllOverhangsCut()

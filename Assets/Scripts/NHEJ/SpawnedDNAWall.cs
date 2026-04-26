@@ -178,12 +178,6 @@ public class SpawnedDNAWall : NetworkBehaviour
 
         bool isNearAny = contactedSealPoints.Count > 0;
         SetVisualState(isNearAny ? State.Pending : State.Free);
-
-        if (isNearAny && firstPlacement)
-        {
-            firstPlacement = false;
-            gameManager.playPhase(3);
-        }
     }
 
     // ── Called by DNASealPoint when spray can seals this wall ─────────────────

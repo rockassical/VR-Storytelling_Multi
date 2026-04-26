@@ -131,6 +131,10 @@ public class NHEJManager : NetworkBehaviour
 
         foreach (var point in FindObjectsOfType<ProteinPlacementPoint>())
             point.SetIndicatorVisible(false);
+
+        firstCut = true;
+        firstLigase = true;
+        firstPlacement = true;
     }
 
     public override void OnNetworkSpawn()
@@ -493,6 +497,7 @@ public class NHEJManager : NetworkBehaviour
 
         // Timeline update if this is the first placement
         if(firstPlacement){
+            firstPlacement = false;
             gameManager.playPhase(3);
         }
     }
@@ -553,6 +558,7 @@ public class NHEJManager : NetworkBehaviour
 
         // Timeline update if this is the first cut
         if(firstCut){
+            firstCut = false;
             gameManager.playPhase(3);
         }
     }
@@ -618,6 +624,11 @@ public class NHEJManager : NetworkBehaviour
         {
             ReportLigationClientRpc(pointIndex, clientId);
             handler.ServerMarkSealed(pointIndex, role);
+        }
+
+        if(firstLigase){
+            firstLigase = false;
+            gameManager.playPhase(3);
         }
     }
 
