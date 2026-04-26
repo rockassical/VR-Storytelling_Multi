@@ -175,17 +175,20 @@ public class GameManager : NetworkBehaviour
 
     void InvertShipParentingLocal()
     {
+        Debug.Log($"[Invert] Called. IsServer={IsServer}");
+
         var xrOrigin = FindFirstObjectByType<XROrigin>();
-        if (xrOrigin == null) return;
+        if (xrOrigin == null) { Debug.LogError("[Invert] No XROrigin found."); return; }
 
         Transform t = xrOrigin.transform;
+        Debug.Log($"[Invert] Player parent={(t.parent ? t.parent.name : "null")} P53ShipRoot={(P53ShipRoot ? P53ShipRoot.name : "null")} ATMShipRoot={(ATMShipRoot ? ATMShipRoot.name : "null")}");
+
         GameObject shipGO = IsServer ? P53ShipRoot : ATMShipRoot;
         if (shipGO == null)
         {
-            Debug.LogWarning("[Invert] Ship root not assigned in GameManager — falling back to player's parent.");
-            shipGO = t.parent != null ? t.parent.gameObject : null;
+            Debug.LogError($"[Invert] {(IsServer ? "P53ShipRoot" : "ATMShipRoot")} is NOT assigned in GameManager Inspector. Aborting.");
+            return;
         }
-        if (shipGO == null) { Debug.Log("[Invert] No ship to invert — skipping."); return; }
         Transform ship = shipGO.transform;
 
         // Capture both world transforms BEFORE any parent changes.
