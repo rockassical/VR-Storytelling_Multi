@@ -23,8 +23,8 @@ public class GunInputXR : MonoBehaviour
     {
         grab = GetComponent<XRGrabInteractable>();
 
-        gameManager = GameObject.FindGameObjectsWithTag("Game Manager")[0].GetComponent<GameManager>();
-        spawner = GameObject.FindGameObjectsWithTag("Game Manager")[0].GetComponent<MutatedProteinSpawner>();
+        gameManager = GameObject.FindGameObjectsWithTag("GameManager")[0].GetComponent<GameManager>();
+        spawner = GameObject.FindGameObjectsWithTag("MutatedProteinSpawner")[0].GetComponent<MutatedProteinSpawner>();
     }
 
     void OnEnable()
