@@ -206,15 +206,22 @@ public class GameManager : NetworkBehaviour
         // localScale, which throws off the camera offset and visually teleports
         // the player. Resetting to 1 fixes that — but means we have to explicitly
         // restore world position/rotation.
-        t.SetParent(null, false);
+        try { t.SetParent(null, false); }
+        catch (System.Exception e) { Debug.LogError($"[Invert] t.SetParent(null) threw: {e.Message}"); }
+        Debug.Log($"[Invert] After unparent player → parent={(t.parent ? t.parent.name : "null")}");
+
         t.localScale = Vector3.one;
         t.position = playerPos;
         t.rotation = playerRot;
 
-        // Reparent the ship under the player and preserve its visual size.
-        // Since the player is now at lossyScale 1, ship.localScale = ship's old worldScale.
-        if (ship.parent != null) ship.SetParent(null, true);
-        ship.SetParent(t, false);
+        try { if (ship.parent != null) ship.SetParent(null, true); }
+        catch (System.Exception e) { Debug.LogError($"[Invert] ship.SetParent(null) threw: {e.Message}"); }
+        Debug.Log($"[Invert] After unparent ship → parent={(ship.parent ? ship.parent.name : "null")}");
+
+        try { ship.SetParent(t, false); }
+        catch (System.Exception e) { Debug.LogError($"[Invert] ship.SetParent(t) threw: {e.Message}"); }
+        Debug.Log($"[Invert] After reparent ship→player → ship.parent={(ship.parent ? ship.parent.name : "null")}");
+
         ship.position   = shipPos;
         ship.rotation   = shipRot;
         ship.localScale = shipWorldSc;
@@ -222,7 +229,7 @@ public class GameManager : NetworkBehaviour
         var move = t.GetComponentInChildren<DynamicMoveProvider>();
         if (move != null) move.enabled = true;
 
-        Debug.Log($"[Invert] player.worldPos={t.position} player.lossyScale={t.lossyScale}, ship.worldPos={ship.position} ship.lossyScale={ship.lossyScale}");
+        Debug.Log($"[Invert] FINAL — player.parent={(t.parent ? t.parent.name : "null")} ship.parent={(ship.parent ? ship.parent.name : "null")} player.worldPos={t.position} ship.worldPos={ship.position}");
     }
 
     System.Collections.IEnumerator LogShipPosNextFrame(Transform ship)
