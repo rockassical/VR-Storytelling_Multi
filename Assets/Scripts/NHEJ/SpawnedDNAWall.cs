@@ -150,21 +150,16 @@ public class SpawnedDNAWall : NetworkBehaviour
     {
         if (isVisuallySealed) return;
 
+        // Gather ALL seal points within snap radius (not just nearest).
+        // This lets a wall be pending on both gap anchors at once so the player
+        // can spray each side independently.
         var newContacts = new HashSet<DNASealPoint>();
-        DNASealPoint closestSp = null;
-        float closestDist = float.MaxValue;
         foreach (var sp in FindObjectsOfType<DNASealPoint>())
         {
             if (sp.gameObject == gameObject) continue;
             float d = Vector3.Distance(transform.position, sp.transform.position);
-            if (d < closestDist) { closestDist = d; closestSp = sp; }
             if (d < snapRadius) newContacts.Add(sp);
         }
-
-        // Spam-throttled diagnostic so we can see whether a wall is actually
-        // close enough to register as pending.
-        if (Time.frameCount % 60 == 0)
-            Debug.Log($"[Wall] {name} closest seal point: {(closestSp ? closestSp.gameObject.name : "none")} dist={closestDist:F2} snapRadius={snapRadius} contactsThisFrame={newContacts.Count}");
 
         // Notify seal points we left.
         foreach (var sp in contactedSealPoints)
