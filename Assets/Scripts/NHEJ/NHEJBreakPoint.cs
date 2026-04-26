@@ -222,6 +222,7 @@ public class NHEJBreakPoint : MonoBehaviour
         while (queue.Count > 0)
         {
             var node = queue.Dequeue();
+            Debug.Log($"[BFS] node={node.gameObject.name} L={(node.LeftSealedWall ? node.LeftSealedWall.gameObject.name : "null")} R={(node.RightSealedWall ? node.RightSealedWall.gameObject.name : "null")}");
             Collect(node.LeftSealedWall,  visited, queue);
             Collect(node.RightSealedWall, visited, queue);
         }
@@ -231,7 +232,8 @@ public class NHEJBreakPoint : MonoBehaviour
         System.Collections.Generic.HashSet<DNASealPoint> visited,
         System.Collections.Generic.Queue<DNASealPoint> queue)
     {
-        if (wall?.OwnSealPoint == null) return;
+        if (wall == null) { Debug.Log("[BFS] Collect: wall is null"); return; }
+        if (wall.OwnSealPoint == null) { Debug.Log($"[BFS] Collect: wall {wall.gameObject.name} has no OwnSealPoint"); return; }
         var next = wall.OwnSealPoint;
         if (!visited.Contains(next)) { visited.Add(next); queue.Enqueue(next); }
     }
