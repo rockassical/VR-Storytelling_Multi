@@ -167,6 +167,8 @@ public class DNASealPoint : MonoBehaviour
                         : anyPending && pendingMaterial != null ? pendingMaterial
                         : null;
 
+        Debug.Log($"[Glow] {gameObject.name}: anyPending={anyPending} allSealed={allSealed} pendingMatAssigned={pendingMaterial != null} renderers={renderers.Length} target={(target ? target.name : "null")}");
+
         for (int i = 0; i < renderers.Length; i++)
             renderers[i].material = target != null ? target : originalMaterials[i];
     }
