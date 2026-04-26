@@ -77,9 +77,6 @@ public class DNARepairSocket : XRSocketInteractor
         // etc.) writes localScale after our OnSelectEntered ran.
         if (_hasCapture && _capturedTransform != null && hasSelection)
             ApplyCapturedScale();
-
-        Debug.Log("Parent scale: " + _capturedTransform.parent.lossyScale);
-        Debug.Log("Applied local scale: " + _capturedTransform.localScale);
     }
 
     protected override void OnSelectExited(SelectExitEventArgs args)

@@ -92,7 +92,7 @@ public class DNARepairPlacement : NetworkBehaviour
     }
 
    // Process the socket whenever it is filled -> stop from grabbing piece and hide socket
-   public void FillSocket(int index, SelectEnterEventArgs args){
+   /*public void FillSocket(int index, SelectEnterEventArgs args){
         IsSocketFilled[index] = true;
 
         var Socket = Sockets[index];
@@ -110,11 +110,53 @@ public class DNARepairPlacement : NetworkBehaviour
         {
             // Fallback for non-networked testing
             StartCoroutine(WaitAndFillSocket(Socket, Piece));
+        }*/
+
+    public void FillSocket(int index, SelectEnterEventArgs args)
+    {
+        // 1. Local visual feedback (Safe for both)
+        IsSocketFilled[index] = true;
+ 
+        // 2. NETWORK LOGIC
+        if (!IsServer) 
+        {
+            // CLIENTS: Just send the request, do NOT touch NetworkVariables
+            ulong pieceId = args.interactableObject.transform.gameObject.GetComponent<NetworkObject>().NetworkObjectId;
+            FillSocketServerRpc(index, pieceId);
         }
-   }
+        else 
+        {
+            // SERVER: It is safe to update the NetworkVariable directly
+            UpdateSocketMask(index);
+            // Broadcast the visual change to everyone (including self)
+            ulong pieceId = args.interactableObject.transform.gameObject.GetComponent<NetworkObject>().NetworkObjectId;
+            FillSocketVisualClientRpc(index, pieceId);
+        }
+    }
+ 
+    [ServerRpc(RequireOwnership = false)]
+    void FillSocketServerRpc(int index, ulong pieceNetId)
+    {
+        // The server validates and updates the authoritative state
+        UpdateSocketMask(index);
+        FillSocketVisualClientRpc(index, pieceNetId);
+    }
+ 
+    void UpdateSocketMask(int index)
+    {
+        int bit = 1 << index;
+        if ((filledSocketMask.Value & bit) == 0)
+        {
+            filledSocketMask.Value |= bit;
+            // Check win condition on server
+            int fullMask = (1 << Sockets.Length) - 1;
+            if ((filledSocketMask.Value & fullMask) == fullMask)
+                AllSocketsFilledClientRpc();
+        }
+    }
 
     // server validates the fill, updates bitmask, and broadcasts visuals.
-    [ServerRpc(RequireOwnership = false)]
+    /*[ServerRpc(RequireOwnership = false)]
     void FillSocketServerRpc(int index, ulong pieceNetId)
     {
         int bit = 1 << index;
@@ -125,8 +167,8 @@ public class DNARepairPlacement : NetworkBehaviour
 
         int fullMask = (1 << Sockets.Length) - 1;
         if ((filledSocketMask.Value & fullMask) == fullMask)
-            AllSocketsFilledClientRpc();
-    }
+           AllSocketsFilledClientRpc();
+    }*/
 
     //  runs on every client - hides the socket and locks the piece
     [ClientRpc]
