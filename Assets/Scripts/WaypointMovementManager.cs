@@ -18,31 +18,18 @@ public class WaypointMovementManager : NetworkBehaviour
         p53.movementEnd.AddListener(OnDestinationReached);
     }
 
-    int _onDestReachedCount;
-
     void OnDestinationReached()
     {
-        _onDestReachedCount++;
-        Debug.Log($"[Waypoint] OnDestinationReached fire #{_onDestReachedCount} (IsServer={IsServer}, movePhase={movePhase}, splineMoveEnabled={(p53 != null && p53.enabled)})");
-
+        // Unsubscribe + Stop so SWS / DOTween can't double-fire.
         if (p53 != null)
         {
-            p53.enabled = false;
-            Debug.Log($"[Waypoint] Disabled splineMove p53 (IsServer={IsServer}).");
+            p53.movementEnd.RemoveListener(OnDestinationReached);
+            p53.Stop();
         }
 
         if (!IsServer) return;
 
-        // Guard against double-fire on the same phase. If we already advanced past
-        // this destination, ignore the repeat — prevents spline-restart loops.
-        if (movePhase >= 2)
-        {
-            Debug.LogWarning($"[Waypoint] Ignoring extra OnDestinationReached — already at movePhase={movePhase}.");
-            return;
-        }
-
         movePhase++;
-
         switch (movePhase)
         {
             case 1:
@@ -54,6 +41,14 @@ public class WaypointMovementManager : NetworkBehaviour
                 gameManager.playPhase(3);
                 break;
         }
+    }
+
+    /// <summary>Re-arm the spline before starting the next leg.</summary>
+    public void ArmNextLeg()
+    {
+        if (p53 == null) return;
+        p53.movementEnd.RemoveListener(OnDestinationReached);
+        p53.movementEnd.AddListener(OnDestinationReached);
     }
 
     // Fires on all clients so each player flips their own ship hierarchy locally.
