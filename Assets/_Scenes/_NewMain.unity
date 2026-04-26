@@ -28931,6 +28931,8 @@ PlayableDirector:
     value: {fileID: 732087040}
   - key: {fileID: 321901734327469929, guid: 1f9ae0f35ef978e4ebc24b7b77da0f94, type: 2}
     value: {fileID: 717321835}
+  - key: {fileID: -2044987405393497360, guid: 1f9ae0f35ef978e4ebc24b7b77da0f94, type: 2}
+    value: {fileID: 1116929206}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &1026575014
@@ -47022,6 +47024,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 176dafdb92cae6446af4b2f485ce6706, type: 2}
     - {fileID: 11400000, guid: b87f202c9c9dd9b4e8fd0fdba1d65387, type: 2}
     - {fileID: 11400000, guid: c8a00a61fd6731649849180ffa6d79f6, type: 2}
+    - {fileID: 11400000, guid: 97b0267e26740654f813d356b94224c7, type: 2}
+    - {fileID: 11400000, guid: 5f172bc0b00e6c4419fc87f946dffe5d, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -47105,6 +47109,35 @@ MonoBehaviour:
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1671914569}
+          m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+          m_MethodName: playPhase
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 4
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1671914569}
+          m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+          m_MethodName: PauseForGameplay
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 1705082732}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Playables.PlayableDirector,
+              UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -49069,6 +49102,8 @@ PlayableDirector:
     value: {fileID: 1671914570}
   - key: {fileID: -170565056762388656, guid: 2de958e8e347dc847a3210f148ee1b6b, type: 2}
     value: {fileID: 717321835}
+  - key: {fileID: 3350600735950345515, guid: 2de958e8e347dc847a3210f148ee1b6b, type: 2}
+    value: {fileID: 1116929206}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1705082733
