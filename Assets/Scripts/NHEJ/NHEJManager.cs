@@ -553,6 +553,7 @@ public class NHEJManager : NetworkBehaviour
 
         // Timeline update if this is the first cut
         if(firstCut){
+            //firstCut = false;
             gameManager.playPhase(3);
         }
     }
