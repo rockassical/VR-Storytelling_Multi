@@ -25,6 +25,7 @@ public class GunInputXR : MonoBehaviour
 
         gameManager = GameObject.FindGameObjectsWithTag("GameManager")[0].GetComponent<GameManager>();
         spawner = GameObject.FindGameObjectsWithTag("MutatedProteinSpawner")[0].GetComponent<MutatedProteinSpawner>();
+        Sockets = GameObject.FindGameObjectsWithTag("Scannable");
     }
 
     void OnEnable()
