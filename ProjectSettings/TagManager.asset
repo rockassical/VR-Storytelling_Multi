@@ -17,6 +17,7 @@ TagManager:
   - HR DNA Piece
   - LaserBullet
   - GameManager
+  - MutatedProteinSpawner
   layers:
   - Default
   - TransparentFX

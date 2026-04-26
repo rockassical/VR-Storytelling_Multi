@@ -26,7 +26,7 @@ public class NetworkGrabbable : NetworkBehaviour
         rb = GetComponentInChildren<Rigidbody>(true);
     }
 
-    public override void OnNetworkSpawn()
+    /*public override void OnNetworkSpawn()
     {
         ApplyOwnerKinematic();
     }
@@ -34,16 +34,16 @@ public class NetworkGrabbable : NetworkBehaviour
     protected override void OnOwnershipChanged(ulong previous, ulong current)
     {
         ApplyOwnerKinematic();
-    }
+    }*/
 
     // Non-owners need a kinematic rigidbody so their local physics don't
     // compete with incoming NetworkTransform updates (which causes the object
     // to appear frozen on non-owner clients even though owner is broadcasting).
-    void ApplyOwnerKinematic()
+    /*void ApplyOwnerKinematic()
     {
         if (rb == null) return;
         rb.isKinematic = !IsOwner;
-    }
+    }*/
 
     void OnDestroy()
     {

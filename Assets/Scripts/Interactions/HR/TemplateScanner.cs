@@ -13,7 +13,7 @@ public class GunInputXR : MonoBehaviour
     [Header("Socket Interaction Objects")]
     public GameObject[] Sockets;
 
-    public int ScannedPieces;
+    public static int ScannedPieces = 0;
 
     [Header("Objects for post-scan")]
     public GameManager gameManager;
@@ -23,7 +23,8 @@ public class GunInputXR : MonoBehaviour
     {
         grab = GetComponent<XRGrabInteractable>();
 
-        ScannedPieces = 0;
+        gameManager = GameObject.FindGameObjectsWithTag("Game Manager")[0].GetComponent<GameManager>();
+        spawner = GameObject.FindGameObjectsWithTag("Game Manager")[0].GetComponent<MutatedProteinSpawner>();
     }
 
     void OnEnable()
