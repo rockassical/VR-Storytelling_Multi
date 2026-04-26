@@ -18,8 +18,12 @@ public class WaypointMovementManager : NetworkBehaviour
         p53.movementEnd.AddListener(OnDestinationReached);
     }
 
+    int _onDestReachedCount;
+
     void OnDestinationReached()
     {
+        _onDestReachedCount++;
+        Debug.Log($"[Waypoint] OnDestinationReached fire #{_onDestReachedCount} (IsServer={IsServer}, movePhase={movePhase}, splineMoveEnabled={(p53 != null && p53.enabled)})");
 
         if (p53 != null)
         {
@@ -28,6 +32,14 @@ public class WaypointMovementManager : NetworkBehaviour
         }
 
         if (!IsServer) return;
+
+        // Guard against double-fire on the same phase. If we already advanced past
+        // this destination, ignore the repeat — prevents spline-restart loops.
+        if (movePhase >= 2)
+        {
+            Debug.LogWarning($"[Waypoint] Ignoring extra OnDestinationReached — already at movePhase={movePhase}.");
+            return;
+        }
 
         movePhase++;
 
