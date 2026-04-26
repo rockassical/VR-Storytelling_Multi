@@ -177,11 +177,16 @@ public class GameManager : NetworkBehaviour
     {
         Debug.Log($"[Invert] Called. IsServer={IsServer}");
 
-        var xrOrigin = FindFirstObjectByType<XROrigin>();
+        var origins = FindObjectsByType<XROrigin>(FindObjectsSortMode.None);
+        Debug.Log($"[Invert] Found {origins.Length} XROrigin(s) in scene:");
+        foreach (var o in origins)
+            Debug.Log($"[Invert]   - {o.gameObject.name}  parent={(o.transform.parent ? o.transform.parent.name : "null")}  active={o.gameObject.activeInHierarchy}");
+
+        var xrOrigin = origins.Length > 0 ? origins[0] : null;
         if (xrOrigin == null) { Debug.LogError("[Invert] No XROrigin found."); return; }
 
         Transform t = xrOrigin.transform;
-        Debug.Log($"[Invert] Player parent={(t.parent ? t.parent.name : "null")} P53ShipRoot={(P53ShipRoot ? P53ShipRoot.name : "null")} ATMShipRoot={(ATMShipRoot ? ATMShipRoot.name : "null")}");
+        Debug.Log($"[Invert] Using XROrigin '{t.name}'. parent={(t.parent ? t.parent.name : "null")}");
 
         GameObject shipGO = IsServer ? P53ShipRoot : ATMShipRoot;
         if (shipGO == null)
@@ -230,6 +235,15 @@ public class GameManager : NetworkBehaviour
         if (move != null) move.enabled = true;
 
         Debug.Log($"[Invert] FINAL — player.parent={(t.parent ? t.parent.name : "null")} ship.parent={(ship.parent ? ship.parent.name : "null")} player.worldPos={t.position} ship.worldPos={ship.position}");
+        StartCoroutine(VerifyParentsNextFrame(t, ship));
+    }
+
+    System.Collections.IEnumerator VerifyParentsNextFrame(Transform player, Transform ship)
+    {
+        yield return null;
+        Debug.Log($"[Invert +1 frame] player.parent={(player.parent ? player.parent.name : "null")} ship.parent={(ship.parent ? ship.parent.name : "null")}");
+        yield return new WaitForSeconds(1f);
+        Debug.Log($"[Invert +1 sec] player.parent={(player.parent ? player.parent.name : "null")} ship.parent={(ship.parent ? ship.parent.name : "null")}");
     }
 
     System.Collections.IEnumerator LogShipPosNextFrame(Transform ship)
