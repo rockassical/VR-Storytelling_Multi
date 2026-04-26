@@ -116,6 +116,8 @@ public class DNARepairPlacement : NetworkBehaviour
     {
         // 1. Local visual feedback (Safe for both)
         IsSocketFilled[index] = true;
+        var Piece = args.interactableObject.transform.gameObject;
+        Piece.tag = "Untagged";
  
         // 2. NETWORK LOGIC
         if (!IsServer) 

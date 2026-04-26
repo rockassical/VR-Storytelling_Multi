@@ -25,7 +25,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 8247
+  controlID: 37438
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 8169
+  controlID: 37348
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -578,9 +578,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -10.000434, y: 9.121825, z: 53.786766}
+    m_Target: {x: 2.7450309, y: 12.117044, z: 40.59028}
     speed: 2
-    m_Value: {x: -10.000434, y: 9.121825, z: 53.786766}
+    m_Value: {x: 2.7450309, y: 12.117044, z: 40.59028}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -626,9 +626,9 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.15246399, y: 0.1984782, z: -0.035459463, w: -0.9680944}
+    m_Target: {x: -0.21649082, y: 0.2369041, z: -0.05859184, w: -0.9458748}
     speed: 2
-    m_Value: {x: -0.15237997, y: 0.19836883, z: -0.035439923, w: -0.96756095}
+    m_Value: {x: -0.21637142, y: 0.23677345, z: -0.058559526, w: -0.94535315}
   m_Size:
     m_Target: 10
     speed: 2
@@ -929,18 +929,18 @@ MonoBehaviour:
       m_ExpandedIDs: 1efbffff7c8b00003e8e0000bc8f00007490000068910000ee950000789600000e9c0000e49f0000c8a80000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: HR Break Strand
-        m_OriginalName: HR Break Strand
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 40932
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 11}
       m_SearchString: 
