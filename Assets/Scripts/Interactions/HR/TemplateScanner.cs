@@ -73,6 +73,7 @@ public class GunInputXR : MonoBehaviour
                 Debug.Log("TEMPLATE PIECE SCANNED");
 
                 ScannedPieces++;
+                Debug.Log("Scanned Pieces is now " + ScannedPieces);
                 // ScanPiece() now routes through a ServerRpc so all clients see the material change
                 template.ScanPiece();
                 if(ScannedPieces >= Sockets.Length){
