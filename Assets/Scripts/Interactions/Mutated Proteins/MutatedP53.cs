@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class MutatedP53 : MonoBehaviour
 {
@@ -51,6 +52,8 @@ public class MutatedP53 : MonoBehaviour
                     heldPiece.transform.SetParent(gameObject.transform);
                     heldPiece.transform.localPosition = new Vector3(0f, 0f, 0f);
                     hasPiece = true;
+
+                    setXRGrabable(false);
                 }
             }
         }
@@ -71,32 +74,41 @@ public class MutatedP53 : MonoBehaviour
 
             // Check if the parent of the piece is a p53 (if it is already picked up)
             // if this piece isn't already stolen
-            if(DNAPieces[i].transform.parent != null){
-                if(DNAPieces[i].transform.parent.gameObject.GetComponent<MutatedP53>() == null){
+            if (DNAPieces[i].tag.Equals("HR DNA Piece"))
+            {
+                if (DNAPieces[i].transform.parent != null)
+                {
+                    if (DNAPieces[i].transform.parent.gameObject.GetComponent<MutatedP53>() == null)
+                    {
 
-                    //Debug.Log("Piece isn't stolen");
+                        //Debug.Log("Piece isn't stolen");
 
+                        // if this is the first piece that isn't stolen
+                        if (Closest == null)
+                        {
+                            Closest = DNAPieces[i];
+                        }
+                        else if (Vector3.Distance(gameObject.transform.position, DNAPieces[i].transform.position) <= Vector3.Distance(gameObject.transform.position, Closest.transform.position))
+                        {
+                            Closest = DNAPieces[i];
+                        }
+                    }
+                }
+                else
+                {
                     // if this is the first piece that isn't stolen
-                    if(Closest == null)
+                    if (Closest == null)
                     {
                         Closest = DNAPieces[i];
                     }
-                    else if(Vector3.Distance(gameObject.transform.position, DNAPieces[i].transform.position) <= Vector3.Distance(gameObject.transform.position, Closest.transform.position))
+                    else if (Vector3.Distance(gameObject.transform.position, DNAPieces[i].transform.position) <= Vector3.Distance(gameObject.transform.position, Closest.transform.position))
                     {
                         Closest = DNAPieces[i];
                     }
-                }
-            }else{
-                // if this is the first piece that isn't stolen
-                if(Closest == null)
-                {
-                    Closest = DNAPieces[i];
-                }
-                else if(Vector3.Distance(gameObject.transform.position, DNAPieces[i].transform.position) <= Vector3.Distance(gameObject.transform.position, Closest.transform.position))
-                {
-                    Closest = DNAPieces[i];
                 }
             }
+            
+                
         }
 
         //Debug.Log("Closest piece is " + Closest.ToString());
@@ -127,7 +139,27 @@ public class MutatedP53 : MonoBehaviour
                 heldPiece.transform.SetParent(null);
             }
 
+            setXRGrabable(true);
             Destroy(gameObject);
+        }
+    }
+
+    void setXRGrabable(bool value)
+    {
+        if(heldPiece == null) {
+            Debug.Log("Broke ur code dummy. Cannot set XR Grabable");
+            return;
+        }
+
+        XRGrabInteractable piece = heldPiece.GetComponent<XRGrabInteractable>();
+
+        if (value)
+        {
+            piece.enabled = true;
+        }
+        else
+        {
+            piece.enabled=false;
         }
     }
 }
