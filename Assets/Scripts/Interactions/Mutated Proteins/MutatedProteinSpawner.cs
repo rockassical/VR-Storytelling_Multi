@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class MutatedProteinSpawner : MonoBehaviour
+public class MutatedProteinSpawner : NetworkBehaviour
 {
 
     public GameObject[] spawnPositions;
@@ -33,12 +34,22 @@ public class MutatedProteinSpawner : MonoBehaviour
     }
 
     void SpawnP53(){
+        SpawnP53ServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void SpawnP53ServerRpc()
+    {
         Vector3 minCorner = spawnPositions[0].transform.position;
         Vector3 maxCorner = spawnPositions[1].transform.position;
 
         Vector3 RandomPosition = new Vector3(Random.Range(minCorner.x, maxCorner.x), Random.Range(minCorner.y, maxCorner.y), Random.Range(minCorner.z, maxCorner.z));
 
-        SpawnedProteins.Add(Instantiate(mutatedP53, RandomPosition, Quaternion.identity));
+        if(mutatedP53 == null) return;
+        var go = Instantiate(mutatedP53, RandomPosition, Quaternion.identity);
+        SpawnedProteins.Add(go);
+        var no = go.GetComponent<NetworkObject>();
+        if (no != null) no.Spawn();
     }
 
     public void DespawnAll(){
