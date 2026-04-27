@@ -61722,7 +61722,7 @@ GameObject:
   - component: {fileID: 5845218091511246133}
   m_Layer: 0
   m_Name: P10
-  m_TagString: Untagged
+  m_TagString: HR DNA Piece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65474,7 +65474,7 @@ GameObject:
   - component: {fileID: 6175260706398854841}
   m_Layer: 0
   m_Name: P12
-  m_TagString: Untagged
+  m_TagString: HR DNA Piece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79401,7 +79401,7 @@ GameObject:
   - component: {fileID: 5695091704358782222}
   m_Layer: 0
   m_Name: P14
-  m_TagString: Untagged
+  m_TagString: HR DNA Piece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110338,7 +110338,7 @@ GameObject:
   - component: {fileID: 6612933349156316283}
   m_Layer: 0
   m_Name: P6
-  m_TagString: Untagged
+  m_TagString: HR DNA Piece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -136368,7 +136368,7 @@ GameObject:
   - component: {fileID: 7831680000018908159}
   m_Layer: 0
   m_Name: P7
-  m_TagString: Untagged
+  m_TagString: HR DNA Piece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
