@@ -1,21 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class LaserBullet : MonoBehaviour
+public class LaserBullet : NetworkBehaviour
 {
-    
     public float lifeTime;
     public float speed;
 
-    // Update is called once per frame
     void Update()
     {
-        if(lifeTime > 0f){
+        // Only the server drives movement + lifetime. NetworkTransform replicates
+        // position to clients, and Despawn cleans up everywhere.
+        if (!IsSpawned || !IsServer) return;
+
+        if (lifeTime > 0f)
+        {
             transform.position += transform.forward * speed * Time.deltaTime;
             lifeTime -= Time.deltaTime;
-        }else{
-            Destroy(gameObject);
+        }
+        else
+        {
+            NetworkObject.Despawn();
         }
     }
 }
