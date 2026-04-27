@@ -120,7 +120,61 @@ public class GameManager : NetworkBehaviour
         var xrOrigin = FindFirstObjectByType<XROrigin>();
         if (xrOrigin == null) return;
 
+        Transform originT = xrOrigin.transform;
+        Transform cameraT = xrOrigin.Camera.transform;
+
+        GameObject shipGO = IsServer ? P53ShipRoot : ATMShipRoot;
+        if (shipGO == null) return;
+
+        Transform shipRoot = shipGO.transform;
+
+        // --- STEP 0: detach ship first (clean state) ---
+        if (shipRoot.IsChildOf(originT))
+            shipRoot.SetParent(null, true);
+
+        // =========================================================
+        // STEP 1: ALIGN XR ORIGIN TO SEAT (BEFORE PARENTING)
+        // =========================================================
+
+        // IMPORTANT: compute camera offset in WORLD space
+        Vector3 cameraOffset = cameraT.position - originT.position;
+
+        // move origin so camera lands exactly on seat
+        originT.position = shipSeat.position - cameraOffset;
+        originT.rotation = shipSeat.rotation;
+
+        // =========================================================
+        // STEP 2: NOW parent (this is safe AFTER alignment)
+        // =========================================================
+        originT.SetParent(shipRoot, true);
+
+        // =========================================================
+        // STEP 3: disable locomotion
+        // =========================================================
+        var move = originT.GetComponentInChildren<DynamicMoveProvider>();
+        if (move != null) move.enabled = false;
+
+        // cleanup scale (XR rigs must stay uniform)
+        originT.localScale = Vector3.one;
+    }
+
+    /*void BoardShipLocal(Transform shipSeat)
+    {
+        var xrOrigin = FindFirstObjectByType<XROrigin>();
+        if (xrOrigin == null) return;
+
         Transform t = xrOrigin.transform;
+
+        Transform camera = xrOrigin.Camera.gameObject.transform;
+
+        // Get offset between origin and camera
+        Vector3 cameraOffset = camera.position - t.position;
+
+        // Move origin so camera aligns with the seat
+        t.position = shipSeat.position - cameraOffset;
+
+        // Optional: match rotation
+        t.rotation = shipSeat.rotation;
 
         // Undo any prior invert: detach the ship ROOT (not the seat) from the player.
         GameObject shipGO = IsServer ? P53ShipRoot : ATMShipRoot;
@@ -140,7 +194,7 @@ public class GameManager : NetworkBehaviour
         t.localPosition = new Vector3(0f, -0.1f, 0f);
         t.localScale = new Vector3(1f, 1f, 1f);
         t.rotation = shipSeat.rotation;
-    }
+    }*/
 
     // ── Ship parent inversion ────────────────────────────────────────────────
     // After the spline ride, flip the hierarchy: the ship becomes a child of
@@ -153,6 +207,7 @@ public class GameManager : NetworkBehaviour
         // the right client and both players see the motion.
         if (IsServer)
         {
+
             ulong serverId = NetworkManager.Singleton.LocalClientId;
             ulong otherId = ulong.MaxValue;
             foreach (var c in NetworkManager.Singleton.ConnectedClientsIds)
@@ -174,6 +229,92 @@ public class GameManager : NetworkBehaviour
     }
 
     void InvertShipParentingLocal()
+    {
+        Debug.Log($"[Invert] Called. IsServer={IsServer}");
+
+        var origins = FindObjectsByType<XROrigin>(FindObjectsSortMode.None);
+        Debug.Log($"[Invert] Found {origins.Length} XROrigin(s) in scene:");
+        foreach (var o in origins)
+            Debug.Log($"[Invert]   - {o.gameObject.name}  parent={(o.transform.parent ? o.transform.parent.name : "null")}  active={o.gameObject.activeInHierarchy}");
+
+        var xrOrigin = origins.Length > 0 ? origins[0] : null;
+        if (xrOrigin == null) { Debug.LogError("[Invert] No XROrigin found."); return; }
+
+        Transform t = xrOrigin.transform;
+        Transform cameraT = xrOrigin.Camera.transform;
+
+        Debug.Log($"[Invert] Using XROrigin '{t.name}'. parent={(t.parent ? t.parent.name : "null")}");
+
+        GameObject shipGO = IsServer ? P53ShipRoot : ATMShipRoot;
+        if (shipGO == null)
+        {
+            Debug.LogError($"[Invert] {(IsServer ? "P53ShipRoot" : "ATMShipRoot")} is NOT assigned.");
+            return;
+        }
+        Transform ship = shipGO.transform;
+
+        // ✅ IMPORTANT: this MUST be a true head-position anchor
+        Transform seat = IsServer ? P53Ship.transform : ATMShip.transform;
+        if (seat == null)
+        {
+            Debug.LogError("[Invert] Seat anchor not assigned.");
+            return;
+        }
+
+        // Capture player transform BEFORE changes
+        Vector3    playerPos = t.position;
+        Quaternion playerRot = t.rotation;
+
+        Vector3 shipWorldSc = ship.lossyScale;
+
+        var shipNO = ship.GetComponent<NetworkObject>();
+        if (shipNO != null) shipNO.AutoObjectParentSync = false;
+
+        // --- Detach player ---
+        try { t.SetParent(null, true); }
+        catch (System.Exception e) { Debug.LogError($"[Invert] t.SetParent(null) threw: {e.Message}"); }
+
+        t.localScale = Vector3.one;
+        t.position = playerPos;
+        t.rotation = playerRot;
+
+        // --- Detach ship ---
+        try { if (ship.parent != null) ship.SetParent(null, true); }
+        catch (System.Exception e) { Debug.LogError($"[Invert] ship.SetParent(null) threw: {e.Message}"); }
+
+        // =========================================================
+        // ✅ CRITICAL FIX: proper rotation-aware alignment
+        // =========================================================
+
+        // 1. Match rotation FIRST (yaw only for comfort)
+        ship.rotation = Quaternion.Euler(0f, cameraT.eulerAngles.y, 0f);
+
+        // 2. Get seat offset in LOCAL SPACE
+        Vector3 localSeatOffset = ship.InverseTransformPoint(seat.position);
+
+        // 3. Convert to world using NEW rotation
+        Vector3 worldSeatOffset = ship.rotation * localSeatOffset;
+
+        // 4. Align seat to camera
+        ship.position = cameraT.position - worldSeatOffset;
+
+        // --- Parent ship to player ---
+        try { ship.SetParent(t, true); }
+        catch (System.Exception e) { Debug.LogError($"[Invert] ship.SetParent(t) threw: {e.Message}"); }
+
+        // Preserve scale
+        ship.localScale = shipWorldSc;
+
+        // --- Re-enable movement ---
+        var move = t.GetComponentInChildren<DynamicMoveProvider>();
+        if (move != null) move.enabled = true;
+
+        Debug.Log($"[Invert] FINAL — player.parent={(t.parent ? t.parent.name : "null")} ship.parent={(ship.parent ? ship.parent.name : "null")}");
+
+        StartCoroutine(VerifyParentsNextFrame(t, ship));
+    }
+
+    /*void InvertShipParentingLocal()
     {
         Debug.Log($"[Invert] Called. IsServer={IsServer}");
 
@@ -236,7 +377,7 @@ public class GameManager : NetworkBehaviour
 
         Debug.Log($"[Invert] FINAL — player.parent={(t.parent ? t.parent.name : "null")} ship.parent={(ship.parent ? ship.parent.name : "null")} player.worldPos={t.position} ship.worldPos={ship.position}");
         StartCoroutine(VerifyParentsNextFrame(t, ship));
-    }
+    }*/
 
     System.Collections.IEnumerator VerifyParentsNextFrame(Transform player, Transform ship)
     {
