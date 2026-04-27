@@ -1,19 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using Unity.Netcode; // Added for Netcode
 
+// Server-driven enemy that steals an HR DNA piece and runs back to spawn.
+// Health and held-piece state replicated via NetworkVariables; transform
+// replication relies on a NetworkTransform (or OwnerTransformSync) on this object.
 public class MutatedP53 : NetworkBehaviour
 {
-
-    /*
-    - Mutated p53 enemy that moves toward the floating DNA pieces and tries to steal them
-    - Runs away, but can't cause users to fail. Meant to be more of an annoyance than a threat
-    */
-
     public int Health;
     private int MaxHealth;
     public float Speed;
@@ -21,228 +15,127 @@ public class MutatedP53 : NetworkBehaviour
     public GameObject HealthBar;
     public Image HealthBarValue;
 
-    private NetworkVariable<bool> n_hasPiece = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    private NetworkVariable<bool> n_hasPiece = new NetworkVariable<bool>(
+        false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
-    // We use a NetworkVariable for Health so clients see the health bar update
-    private NetworkVariable<int> n_currentHealth = new NetworkVariable<int>(100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
-
-    //private bool hasPiece; //Comment out eventually
+    private NetworkVariable<int> n_currentHealth = new NetworkVariable<int>(
+        100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     [SerializeField] private GameObject[] DNAPieces;
     [SerializeField] private GameObject heldPiece;
     private Vector3 spawnPos;
 
-    // Start is called before the first frame update
     void Start()
     {
         MaxHealth = Health;
         if (IsServer) n_currentHealth.Value = Health;
 
         spawnPos = transform.position;
-        //hasPiece = false;//Comment out
-        
         DNAPieces = GameObject.FindGameObjectsWithTag("HR DNA Piece");
-        n_currentHealth.OnValueChanged += (oldVal, newVal) =>
-        {
-            UpdateHealthUI(newVal);
-        };
-            
+
+        n_currentHealth.OnValueChanged += (oldVal, newVal) => UpdateHealthUI(newVal);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (!IsServer) return; //Added
+        if (!IsServer) return;
 
-        //if(hasPiece == false){ //Commented out
-        if (n_hasPiece.Value == false) { 
-            // Move towards the closest DNA piece to try and steal it
+        if (n_hasPiece.Value == false)
+        {
             GameObject closestPiece = FindClosestPiece();
-            //Debug.Log("Moving to " + closestPiece);
-            if(closestPiece != null){
+            if (closestPiece != null)
+            {
                 transform.position = Vector3.MoveTowards(transform.position, closestPiece.transform.position, Speed);
-
-                //if(gameObject.transform.position.Equals(closestPiece.transform.position)){ //Commented out
-                if (Vector3.Distance(transform.position, closestPiece.transform.position) < 0.1f) { 
-                    // Pickup object
-
+                if (Vector3.Distance(transform.position, closestPiece.transform.position) < 0.1f)
                     PickUpPieceServer(closestPiece);
-                    //heldPiece = closestPiece; //Commented out
-
-                    //heldPiece.transform.SetParent(gameObject.transform);
-                    //heldPiece.transform.localPosition = new Vector3(0f, 0f, 0f);
-                    //hasPiece = true;
-
-                    //setXRGrabable(false);
-                }
             }
         }
-        else if(transform.position != spawnPos)
+        else if (transform.position != spawnPos)
         {
             transform.position = Vector3.MoveTowards(transform.position, spawnPos, Speed);
         }
 
-        if(heldPiece != null){
-            heldPiece.transform.localPosition = Vector3.zero;
-        }
+        // Pin the held piece to us. Position only — we own it via ownership transfer
+        // so OwnerTransformSync broadcasts from the server every frame.
+        if (heldPiece != null)
+            heldPiece.transform.position = transform.position;
     }
 
-    void PickUpPieceServer(GameObject piece) //Added
+    void PickUpPieceServer(GameObject piece)
     {
         heldPiece = piece;
 
-        // Sync the parenting over the network
-        NetworkObject pieceNetObj = heldPiece.GetComponent<NetworkObject>();
-        if (pieceNetObj != null)
-        {
-            pieceNetObj.TrySetParent(transform); // NGO way to sync parenting
-        }
-        else
-        {
-            heldPiece.transform.SetParent(transform);
-        }
+        // Take ownership so the piece's OwnerTransformSync broadcasts from the
+        // server (which is now driving its position via this enemy).
+        var pieceNO = piece.GetComponent<NetworkObject>();
+        if (pieceNO != null && pieceNO.OwnerClientId != NetworkManager.Singleton.LocalClientId)
+            pieceNO.ChangeOwnership(NetworkManager.Singleton.LocalClientId);
 
-        heldPiece.transform.localPosition = Vector3.zero;
         n_hasPiece.Value = true;
-
         SetXRGrabableClientRpc(false);
     }
 
-    //GameObject FindClosestPiece(){ //Commented out
-    //    GameObject Closest = null;
-
-    //    for(int i = 0; i < DNAPieces.Length; i++){
-
-    //        // Check if the parent of the piece is a p53 (if it is already picked up)
-    //        // if this piece isn't already stolen
-    //        if (DNAPieces[i].tag.Equals("HR DNA Piece"))
-    //        {
-    //            if (DNAPieces[i].transform.parent != null)
-    //            {
-    //                if (DNAPieces[i].transform.parent.gameObject.GetComponent<MutatedP53>() == null)
-    //                {
-
-    //                    //Debug.Log("Piece isn't stolen");
-
-    //                    // if this is the first piece that isn't stolen
-    //                    if (Closest == null)
-    //                    {
-    //                        Closest = DNAPieces[i];
-    //                    }
-    //                    else if (Vector3.Distance(gameObject.transform.position, DNAPieces[i].transform.position) <= Vector3.Distance(gameObject.transform.position, Closest.transform.position))
-    //                    {
-    //                        Closest = DNAPieces[i];
-    //                    }
-    //                }
-    //            }
-    //            else
-    //            {
-    //                // if this is the first piece that isn't stolen
-    //                if (Closest == null)
-    //                {
-    //                    Closest = DNAPieces[i];
-    //                }
-    //                else if (Vector3.Distance(gameObject.transform.position, DNAPieces[i].transform.position) <= Vector3.Distance(gameObject.transform.position, Closest.transform.position))
-    //                {
-    //                    Closest = DNAPieces[i];
-    //                }
-    //            }
-    //        }
-
-
-    //    }
-
-    //    //Debug.Log("Closest piece is " + Closest.ToString());
-
-    //    return Closest;
-    //}
-
-    private void UpdateHealthUI(int currentHealth) //Added
+    GameObject FindClosestPiece()
     {
-        if (HealthBar.activeSelf == false) HealthBar.SetActive(true);
-        HealthBarValue.fillAmount = (float)currentHealth / MaxHealth;
+        GameObject closest = null;
+        float closestDist = float.MaxValue;
+
+        foreach (var p in DNAPieces)
+        {
+            if (p == null) continue;
+            // Skip pieces already held by another enemy (parented under a MutatedP53).
+            if (p.transform.parent != null && p.transform.parent.GetComponent<MutatedP53>() != null)
+                continue;
+
+            float d = Vector3.Distance(transform.position, p.transform.position);
+            if (d < closestDist) { closestDist = d; closest = p; }
+        }
+        return closest;
     }
 
-    public void OnTriggerEnter(Collider col){
-        if (!IsServer) return; //Added
+    void UpdateHealthUI(int currentHealth)
+    {
+        if (HealthBar != null && !HealthBar.activeSelf) HealthBar.SetActive(true);
+        if (HealthBarValue != null) HealthBarValue.fillAmount = (float)currentHealth / MaxHealth;
+    }
+
+    public void OnTriggerEnter(Collider col)
+    {
+        if (!IsServer) return;
 
         if (col.gameObject.CompareTag("LaserBullet"))
         {
             n_currentHealth.Value -= 10;
-            Destroy(col.gameObject); // Bullet destruction is usually fine locally or via NetworkObject
+
+            // Bullet is a NetworkObject — must Despawn, not Destroy.
+            var bulletNO = col.gameObject.GetComponent<NetworkObject>();
+            if (bulletNO != null && bulletNO.IsSpawned) bulletNO.Despawn();
+            else Destroy(col.gameObject);
+
             CheckDeath();
         }
-
-        //if(col.gameObject.CompareTag("LaserBullet")){ //Commented out
-        //    //Debug.Log("I'M HIT! (mutated p53)");
-        //    Health -= 10;
-
-        //    Destroy(col.gameObject);
-
-        //    if(HealthBar.activeSelf == false){
-        //        HealthBar.SetActive(true);
-        //    }
-
-        //    HealthBarValue.fillAmount = (1.0f * Health) / (1.0f * MaxHealth);
-
-        //    CheckDeath();
-        //}
     }
 
-    void CheckDeath(){
-        if (n_currentHealth.Value <= 0) //Added
+    void CheckDeath()
+    {
+        if (n_currentHealth.Value > 0) return;
+
+        if (heldPiece != null)
         {
-            if (heldPiece != null)
-            {
-                NetworkObject pieceNetObj = heldPiece.GetComponent<NetworkObject>();
-                if (pieceNetObj != null) pieceNetObj.TryRemoveParent();
-                else heldPiece.transform.SetParent(null);
-
-                SetXRGrabableClientRpc(true);
-            }
-
-            // Despawn the enemy across the network
-            GetComponent<NetworkObject>().Despawn();
+            // Re-enable grab and release ownership back to the server's default.
+            SetXRGrabableClientRpc(true);
+            heldPiece = null;
         }
 
-        //if(Health <= 0){ //Commented out
-        //    if(heldPiece != null){
-        //        heldPiece.transform.SetParent(null);
-        //    }
-
-        //    setXRGrabable(true);
-        //    Destroy(gameObject);
-        //}
+        n_hasPiece.Value = false;
+        GetComponent<NetworkObject>().Despawn();
     }
 
-    // added
     [ClientRpc]
     void SetXRGrabableClientRpc(bool value)
     {
         if (heldPiece == null) return;
-        XRGrabInteractable pieceGrab = heldPiece.GetComponent<XRGrabInteractable>();
+        var pieceGrab = heldPiece.GetComponent<XRGrabInteractable>();
         if (pieceGrab != null) pieceGrab.enabled = value;
     }
-
-    // FindClosestPiece logic remains mostly the same, but should only run on Server
-    GameObject FindClosestPiece() { /* Your existing logic */ return null; }
-
-    //void setXRGrabable(bool value) //Commented out
-    //{
-    //    if(heldPiece == null) {
-    //        Debug.Log("Broke ur code dummy. Cannot set XR Grabable");
-    //        return;
-    //    }
-
-    //    XRGrabInteractable piece = heldPiece.GetComponent<XRGrabInteractable>();
-
-    //    if (value)
-    //    {
-    //        piece.enabled = true;
-    //    }
-    //    else
-    //    {
-    //        piece.enabled=false;
-    //    }
-    //}
 }
