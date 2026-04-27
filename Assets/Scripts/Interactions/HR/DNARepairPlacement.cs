@@ -81,6 +81,7 @@ public class DNARepairPlacement : NetworkBehaviour
             if (tp != null && tp.IsScanned) scanned++;
         if (scanned >= TemplatePieces.Length)
             ActivateSocketsClientRpc();
+            ActivateProteinSpawningClientRpc();
     }
 
     // server tells every client to show the hologram sockets.
@@ -89,6 +90,13 @@ public class DNARepairPlacement : NetworkBehaviour
     {
         foreach (var socket in Sockets)
             if (socket != null) socket.SetActive(true);
+    }
+
+    // server tells every client to show the hologram sockets.
+    [ClientRpc]
+    void ActivateProteinSpawningClientRpc()
+    {
+        spawner.isActive = true;
     }
 
    // Process the socket whenever it is filled -> stop from grabbing piece and hide socket
