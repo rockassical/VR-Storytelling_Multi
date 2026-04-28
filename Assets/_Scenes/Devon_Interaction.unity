@@ -2973,6 +2973,8 @@ MonoBehaviour:
   ConfirmationText: {fileID: 1784579955}
   ConfirmButton: {fileID: 583464712}
   CancelButton: {fileID: 145338228}
+  gameManager: {fileID: 0}
+  firstInteraction: 1
 --- !u!1 &714684804
 GameObject:
   m_ObjectHideFlags: 0
@@ -4171,6 +4173,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Timeline_NHEJ: {fileID: 0}
   GM: {fileID: 0}
+  spawner: {fileID: 0}
+  TemplatePieces: []
   Sockets:
   - {fileID: 1249679018}
   - {fileID: 714684804}
@@ -5302,7 +5306,8 @@ MonoBehaviour:
   Sockets:
   - {fileID: 1249679018}
   - {fileID: 714684804}
-  ScannedPieces: 0
+  gameManager: {fileID: 0}
+  spawner: {fileID: 0}
 --- !u!1 &1571073419
 GameObject:
   m_ObjectHideFlags: 0
@@ -6693,9 +6698,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1571073421}
-  VoiceLine: "This is bad, the DNA in this cell is much more damaged than we thought.
-    We\u2019ll need to initiate apoptosis, which will cause the cell to die to prevent
-    the spread of mutation. "
+  VoiceLine: 'The DNA in this cell is much more damaged than we thought. We may need
+    to initiate apoptosis, which will cause the cell to die to prevent the spread
+    of mutation. Hold the A button on your right controller and request a report
+    from Alysia. If you have any other questions about Homologous Recombination or
+    Non-Homologous End Joining, now is the time to ask. '
 --- !u!1001 &2078342788
 PrefabInstance:
   m_ObjectHideFlags: 0

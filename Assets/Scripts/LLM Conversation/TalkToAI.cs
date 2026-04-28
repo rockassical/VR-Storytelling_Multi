@@ -86,8 +86,8 @@ public class TalkToAI : MonoBehaviour
     }
 
     // Custom prompt --(for later)--
-    ChatMessage SetPrompt(string Prompt){
-        return new ChatMessage(ChatMessageRole.System, Prompt);
+    public void AddPrompt(string Prompt){
+        messages.Add(new ChatMessage(ChatMessageRole.System, Prompt));
     }
 
     // Initial prompt
@@ -97,7 +97,7 @@ public class TalkToAI : MonoBehaviour
         "The experience guides users through the processes of Homologous Recombination (HR) and Non-Homologous End-Joining (NHEJ). " +
         "Your task is to answer questions about the concept as well as the mechanical aspects of the experience (which will be given to you)." + 
         "ONLY answer from information given to you (if provided), and keep your responses simply worded (educational) and under 75 tokens. " +
-        "You should have a warm, mentoring tone. Do not answer any questions not about the experience (i.e. not questions about DNA damage and repair or mechanics help), " +
+        "You should have a warm, mentoring tone. Do not answer any questions not about the experience (i.e. not questions about DNA damage and repair or mechanics help, but DO answer questions similar to these topics), " +
         "simply reply with something like 'stay focused on the mission'.");
     }
 

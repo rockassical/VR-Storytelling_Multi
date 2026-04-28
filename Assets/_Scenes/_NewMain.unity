@@ -22030,6 +22030,8 @@ PlayableDirector:
     value: {fileID: 717321835}
   - key: {fileID: -2044987405393497360, guid: 1f9ae0f35ef978e4ebc24b7b77da0f94, type: 2}
     value: {fileID: 1116929206}
+  - key: {fileID: 7277721787331889379, guid: 1f9ae0f35ef978e4ebc24b7b77da0f94, type: 2}
+    value: {fileID: 1291095274}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &1026575014
@@ -27822,6 +27824,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1291095272}
   - component: {fileID: 1291095273}
+  - component: {fileID: 1291095274}
   m_Layer: 0
   m_Name: LLM Communication Manager
   m_TagString: Untagged
@@ -27888,6 +27891,118 @@ MonoBehaviour:
   CancelButton: {fileID: 1902996144}
   gameManager: {fileID: 1671914569}
   firstInteraction: 1
+--- !u!114 &1291095274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291095271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 199844726fdab1e4dbcfbf3240448870, type: 2}
+    - {fileID: 11400000, guid: 062c9fa6135c0044f9080390154058b4, type: 2}
+    - {fileID: 11400000, guid: 10b4b99b31543164ba8e0a1116ddca61, type: 2}
+    - {fileID: 11400000, guid: 0f2dcc5673a3b9b4a9069ba143728836, type: 2}
+    - {fileID: 11400000, guid: f062103250e00134488cae5dc0d783ab, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1291095273}
+          m_TargetAssemblyTypeName: TalkToAI, Assembly-CSharp
+          m_MethodName: AddPrompt
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: The users are now working to complete a Homologous
+              Recombination (HR). They have access to a scanner by pressing the B
+              button on their right controller (Meta Quest 3). They should be looking
+              for intact, SCANNABLE DNA pieces, which are highlighted in light blue,
+              and positioning those pieces inside the scan pulse. Once they scan
+              the template, they need to return to the damage site, where there are
+              holograms to show the users where to fill pieces in, and they just
+              need to put the pieces back into place. Mutated proteins also spawn,
+              and can be destroyed with a laser blaster in the tools menu (B button),
+              and will steal the DNA pieces otherwise.
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1291095273}
+          m_TargetAssemblyTypeName: TalkToAI, Assembly-CSharp
+          m_MethodName: AddPrompt
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 'The users have now reached a site with worse damage,
+              and need to perform a non-homologous end joining (NHEJ). The first
+              step is to cut off the ends with the artemis tool. '
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1291095273}
+          m_TargetAssemblyTypeName: TalkToAI, Assembly-CSharp
+          m_MethodName: AddPrompt
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: The users have done all they can to repair the DNA
+              in this cell, but it is too damaged to continue, and must proceed to
+              apoptosis. They have been instructed to ask you for a report about
+              the damage on the cell and what their next step should be, inform them
+              to initiate apoptosis and ask any other questions they may need to
+              before the experience ends.
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1291095273}
+          m_TargetAssemblyTypeName: TalkToAI, Assembly-CSharp
+          m_MethodName: AddPrompt
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 'The users have cut the ends, and now need to position
+              DNA pieces in line with the broken ends. Doing this highlights the
+              pieces yellow. '
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1291095273}
+          m_TargetAssemblyTypeName: TalkToAI, Assembly-CSharp
+          m_MethodName: AddPrompt
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: They have put at least one piece into place, and now
+              need to use the ligase can from the tools menu (B button) to spray
+              ligase on the connection point and seal it. They need to bridge the
+              two strands according to their colors (dark blue and a more cyan-type
+              color) for the task to be complete.
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1291567860
 GameObject:
   m_ObjectHideFlags: 0
@@ -32273,8 +32388,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1505781178}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12149823, y: 0.39839366, z: -0.05333399, w: 0.90756613}
-  m_LocalPosition: {x: -23.39, y: 12.528334, z: -34.65}
+  m_LocalRotation: {x: 0.09320721, y: -0.7054405, z: 0.09443911, w: 0.6962381}
+  m_LocalPosition: {x: -44, y: 12.528334, z: -54.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -32284,7 +32399,7 @@ Transform:
   - {fileID: 1746474147}
   - {fileID: 1793499546}
   m_Father: {fileID: 660652472}
-  m_LocalEulerAnglesHint: {x: 15.25, y: 47.4, z: 0}
+  m_LocalEulerAnglesHint: {x: 15.25, y: -90.752, z: 0}
 --- !u!114 &1505781180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35605,6 +35720,8 @@ PlayableDirector:
     value: {fileID: 1116929206}
   - key: {fileID: 8533311531616104679, guid: 687146c7d0306a041984cf5a195c3148, type: 2}
     value: {fileID: 717321835}
+  - key: {fileID: 1763609809607813642, guid: 687146c7d0306a041984cf5a195c3148, type: 2}
+    value: {fileID: 1291095274}
   m_ExposedReferences:
     m_References: []
 --- !u!1001 &1666960371
@@ -37668,6 +37785,8 @@ PlayableDirector:
     value: {fileID: 717321835}
   - key: {fileID: 3350600735950345515, guid: 2de958e8e347dc847a3210f148ee1b6b, type: 2}
     value: {fileID: 1116929206}
+  - key: {fileID: 1223231287524831350, guid: 2de958e8e347dc847a3210f148ee1b6b, type: 2}
+    value: {fileID: 1291095274}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1705082733
@@ -43917,8 +44036,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960210455}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12149823, y: 0.39839366, z: -0.05333399, w: 0.90756613}
-  m_LocalPosition: {x: -31.2, y: 12.528334, z: -24.9}
+  m_LocalRotation: {x: 0.04435835, y: -0.66926724, z: 0.028707793, w: 0.7411408}
+  m_LocalPosition: {x: -34.14, y: 12.528334, z: -27.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -43928,7 +44047,7 @@ Transform:
   - {fileID: 937631782}
   - {fileID: 1531871060}
   m_Father: {fileID: 143750511}
-  m_LocalEulerAnglesHint: {x: 15.25, y: 47.4, z: 0}
+  m_LocalEulerAnglesHint: {x: 5.98, y: -84.216, z: -0.969}
 --- !u!114 &1960210457
 MonoBehaviour:
   m_ObjectHideFlags: 0
