@@ -45,6 +45,7 @@ public class TalkToAI : MonoBehaviour
     [Header("Check for first interaction")]
     public GameManager gameManager;
     public bool firstInteraction = true;
+    public bool apoptosisInteraction = false;
 
     void OnEnable(){
         triggerAction.action.started += StartRecording;
@@ -111,6 +112,10 @@ public class TalkToAI : MonoBehaviour
 
     void CloseRecordingUI(){
         LLMUI.SetActive(false);
+    }
+
+    public void SetApoptosisInteraction(){
+        apoptosisInteraction = !apoptosisInteraction;
     }
 
     void ShowConfirmationUI(string message){
@@ -295,6 +300,8 @@ public class TalkToAI : MonoBehaviour
         if(firstInteraction){
             firstInteraction = false;
             gameManager.playPhase(1);
+        }else if(apoptosisInteraction){
+            gameManager.playPhase(4);
         }
     }
 

@@ -27891,6 +27891,7 @@ MonoBehaviour:
   CancelButton: {fileID: 1902996144}
   gameManager: {fileID: 1671914569}
   firstInteraction: 1
+  apoptosisInteraction: 1
 --- !u!114 &1291095274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27967,6 +27968,18 @@ MonoBehaviour:
               the damage on the cell and what their next step should be, inform them
               to initiate apoptosis and ask any other questions they may need to
               before the experience ends.
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1291095273}
+          m_TargetAssemblyTypeName: TalkToAI, Assembly-CSharp
+          m_MethodName: SetApoptosisInteraction
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
     - m_PersistentCalls:
