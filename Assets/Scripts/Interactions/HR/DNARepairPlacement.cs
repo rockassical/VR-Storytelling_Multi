@@ -82,6 +82,7 @@ public class DNARepairPlacement : NetworkBehaviour
         if (scanned >= TemplatePieces.Length)
             ActivateSocketsClientRpc();
             ActivateProteinSpawningClientRpc();
+            GM.playPhase(2);
     }
 
     // server tells every client to show the hologram sockets.
@@ -228,10 +229,7 @@ public class DNARepairPlacement : NetworkBehaviour
 
        if(AllFilled){
            Debug.Log("ALL SOCKETS ARE FILLED! TIME FOR NHEJ!");
-            // ACTIVATE TIMELINE --> MOVE TO NEXT PART
-            //Timeline_NHEJ.Play();
-
-            GM.playPhase(2);
+           GM.playPhase(2);
 
        }
    }

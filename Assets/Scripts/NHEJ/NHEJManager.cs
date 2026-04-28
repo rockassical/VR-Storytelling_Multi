@@ -131,15 +131,15 @@ public class NHEJManager : NetworkBehaviour
 
         foreach (var point in FindObjectsOfType<ProteinPlacementPoint>())
             point.SetIndicatorVisible(false);
-
-        firstCut = true;
-        firstLigase = true;
-        firstPlacement = true;
     }
 
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
+
+        firstCut = true;
+        firstLigase = true;
+        firstPlacement = true;
 
         for (int i = 0; i < phaseHandlers.Length; i++)
         {

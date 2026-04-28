@@ -36614,9 +36614,24 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 7e9a3d66cd318bd49a4e32f6ea3284da, type: 2}
     - target: {fileID: 735704944959300416, guid: ae0d93619d1787546907c88f6a71ba16,
         type: 3}
+      propertyPath: firstCut
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 735704944959300416, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: firstLigase
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 735704944959300416, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1671914569}
+    - target: {fileID: 735704944959300416, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: firstPlacement
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1122888154010771620, guid: ae0d93619d1787546907c88f6a71ba16,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
