@@ -25,8 +25,8 @@ public class NHEJTool : MonoBehaviour
     [Header("Debug")]
     [SerializeField] bool debugMode = false;
 
-    public bool firstCut;
-    public GameManager gameManager;
+    static bool firstCut = true;
+    GameManager gameManager;
 
     // ── Collision ─────────────────────────────────────────────────────────────
     // The trigger must be on the bladeTip child (or this GameObject).
@@ -43,7 +43,7 @@ public class NHEJTool : MonoBehaviour
             forwarder = tip.gameObject.AddComponent<BladeTipForwarder>();
         forwarder.Init(this);
 
-        firstCut = true;
+        gameManager = GameObject.FindGameObjectsWithTag("GameManager")[0].GetComponent<GameManager>();
     }
 
     // Called by BladeTipForwarder when it detects a trigger enter.
@@ -55,6 +55,13 @@ public class NHEJTool : MonoBehaviour
         {
             if (debugMode) Debug.Log($"[NHEJTool] Cutting overhang: {pair.gameObject.name}");
             CutSegment(pair.gameObject);
+
+            if(firstCut){
+                Debug.Log("THIS IS FIRST CUT! (NHEJTool)");
+                firstCut = false;
+                gameManager.playPhase(3);
+            }
+
             return;
         }
 

@@ -494,12 +494,6 @@ public class NHEJManager : NetworkBehaviour
     {
         if (!IsServer) return;
         GetCurrentHandler()?.OnProteinPlaced(playerRole);
-
-        // Timeline update if this is the first placement
-        if(firstPlacement){
-            firstPlacement = false;
-            gameManager.playPhase(3);
-        }
     }
 
     /// <summary>Returns the handler for the currently active phase (null if none).</summary>
@@ -557,7 +551,9 @@ public class NHEJManager : NetworkBehaviour
         Debug.Log($"[NHEJ] Cut confirmed — role={role} score={score:P0}");
 
         // Timeline update if this is the first cut
+        Debug.Log("CHECKING IF FIRST CUT");
         if(firstCut){
+            Debug.Log("THIS IS FIRST CUT!");
             firstCut = false;
             gameManager.playPhase(3);
         }
@@ -626,7 +622,9 @@ public class NHEJManager : NetworkBehaviour
             handler.ServerMarkSealed(pointIndex, role);
         }
 
+        Debug.Log("CHECKING IF FIRST LIGASE");
         if(firstLigase){
+            Debug.Log("THIS IS FIRST LIGASE!");
             firstLigase = false;
             gameManager.playPhase(3);
         }

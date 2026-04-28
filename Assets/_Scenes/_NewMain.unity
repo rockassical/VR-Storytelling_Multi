@@ -36570,6 +36570,11 @@ PrefabInstance:
       propertyPath: firstPlacement
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 735704944959300416, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      propertyPath: placementConfirmDelay
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1122888154010771620, guid: ae0d93619d1787546907c88f6a71ba16,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -49231,8 +49236,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &250153913232279477
 GameObject:
   m_ObjectHideFlags: 0
@@ -49883,8 +49886,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &308319769428598069
 Transform:
   m_ObjectHideFlags: 0
@@ -50423,8 +50424,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &344556774086537122
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -50996,8 +50995,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &378888748192619750
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -51265,8 +51262,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &442512021384442059
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -51348,8 +51343,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &444682650877860982
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -53428,8 +53421,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &600453695798106800
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -54497,8 +54488,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &765387695605879538
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -55904,8 +55893,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &949699101931673595
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -57184,8 +57171,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &1081350432136973608
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -57328,8 +57313,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &1100237023112082611
 Transform:
   m_ObjectHideFlags: 0
@@ -59169,8 +59152,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &1260376715476841136
 Transform:
   m_ObjectHideFlags: 0
@@ -60359,8 +60340,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &1374222272974160468
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -60541,8 +60520,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!114 &1388592751832691357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60681,8 +60658,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &1395735825018002125
 Transform:
   m_ObjectHideFlags: 0
@@ -61181,8 +61156,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &1452910113243217352
 Transform:
   m_ObjectHideFlags: 0
@@ -61316,8 +61289,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &1465118732608604946
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -61769,8 +61740,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!114 &1513447615090102237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63023,8 +62992,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &1673552978735509585
 GameObject:
   m_ObjectHideFlags: 0
@@ -68453,8 +68420,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &2302484581175225470
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -69072,8 +69037,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &2381691980338707211
 Transform:
   m_ObjectHideFlags: 0
@@ -69246,8 +69209,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &2399218289037915732
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -70067,8 +70028,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!114 &2492135886219076165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70085,8 +70044,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &2492443652257701606
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -71617,8 +71574,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &2631511358946091506
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -72141,8 +72096,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &2688242665329078006
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -72758,8 +72711,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &2749124158406652327
 GameObject:
   m_ObjectHideFlags: 0
@@ -75132,8 +75083,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &3021567724255603811
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -77200,8 +77149,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &3247083206710299181
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -77449,8 +77396,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &3271649809058532980
 GameObject:
   m_ObjectHideFlags: 0
@@ -77686,8 +77631,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &3285301280454112380
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -77878,8 +77821,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &3303808270932869758
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -78556,8 +78497,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &3375476969591894168
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -78879,8 +78818,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!64 &3407597250021915320
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -79268,8 +79205,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &3450978717358891082
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -79633,8 +79568,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &3485311053984346827
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -79884,8 +79817,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &3513956094158560023
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -80334,8 +80265,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &3544253276482596124
 Transform:
   m_ObjectHideFlags: 0
@@ -82854,8 +82783,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &3822855425422407110
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -84514,8 +84441,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &4034265741732622343
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -85339,8 +85264,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &4106561824457967508
 GameObject:
   m_ObjectHideFlags: 0
@@ -87228,8 +87151,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!114 &4294372160980404869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87753,8 +87674,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &4375718291691211951
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -87779,8 +87698,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &4381466363660407443
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -90408,8 +90325,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &4690553315744128706
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -91324,8 +91239,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!114 &4798361513549761177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91342,8 +91255,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &4798798542494472901
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -91565,8 +91476,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &4813715246436927292
 Transform:
   m_ObjectHideFlags: 0
@@ -92932,8 +92841,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &4983752439876502382
 Transform:
   m_ObjectHideFlags: 0
@@ -93135,8 +93042,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!114 &5003133262438054942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94648,8 +94553,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &5162319440051906835
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -95007,8 +94910,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &5200454049041400317
 Transform:
   m_ObjectHideFlags: 0
@@ -95343,8 +95244,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!114 &5252964000059582475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96246,8 +96145,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &5366879100641354003
 GameObject:
   m_ObjectHideFlags: 0
@@ -96424,8 +96321,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &5384346031298592971
 GameObject:
   m_ObjectHideFlags: 0
@@ -99035,8 +98930,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &5625024548715296070
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -99387,8 +99280,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &5665958880880226059
 Transform:
   m_ObjectHideFlags: 0
@@ -99428,8 +99319,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &5676688734209257853
 GameObject:
   m_ObjectHideFlags: 0
@@ -100534,8 +100423,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &5775994429067104624
 GameObject:
   m_ObjectHideFlags: 0
@@ -102555,8 +102442,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &6011612793967538393
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -103602,8 +103487,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &6127291464987948831
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -103819,8 +103702,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &6146515593364346310
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -104150,8 +104031,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &6175069581204994131
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -104666,8 +104545,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &6211412165903865658
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -105509,8 +105386,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &6292242974966400799
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -107759,8 +107634,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &6572926833007090028
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -109361,8 +109234,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &6716896721221730915
 GameObject:
   m_ObjectHideFlags: 0
@@ -109835,8 +109706,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!64 &6757626181481793627
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -109898,8 +109767,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &6768238818997110118
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -111734,8 +111601,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &6951397149360918751
 GameObject:
   m_ObjectHideFlags: 0
@@ -112299,8 +112164,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &7012955956615348509
 GameObject:
   m_ObjectHideFlags: 0
@@ -113056,8 +112919,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &7067889104361199943
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -113813,8 +113674,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &7140499088406796702
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -114533,8 +114392,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &7199598858530917574
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -114985,8 +114842,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &7247939655819158572
 GameObject:
   m_ObjectHideFlags: 0
@@ -115980,8 +115835,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &7336869752366857595
 Transform:
   m_ObjectHideFlags: 0
@@ -117247,8 +117100,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &7451223310739343936
 Transform:
   m_ObjectHideFlags: 0
@@ -120734,8 +120585,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &7742715687077484948
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -121244,8 +121093,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &7787028057813467579
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -122142,8 +121989,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &7850073913378829849
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -123924,8 +123769,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &8061864554462759862
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -124809,8 +124652,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &8134593886263721445
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -124963,8 +124804,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &8168611590860862527
 Transform:
   m_ObjectHideFlags: 0
@@ -125544,8 +125383,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &8231778927057293633
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -126083,8 +125920,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &8298600805175330004
 GameObject:
   m_ObjectHideFlags: 0
@@ -126374,8 +126209,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &8343678565670790256
 GameObject:
   m_ObjectHideFlags: 0
@@ -128004,8 +127837,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &8543122031506420132
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -128127,8 +127958,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &8578075763866146524
 Transform:
   m_ObjectHideFlags: 0
@@ -128251,8 +128080,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &8596075212876919526
 Transform:
   m_ObjectHideFlags: 0
@@ -128420,8 +128247,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &8609568199083935432
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -128633,8 +128458,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!33 &8622331091683627197
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -130407,8 +130230,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!1 &8764935582725356259
 GameObject:
   m_ObjectHideFlags: 0
@@ -132276,8 +132097,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!4 &8909979158425971113
 Transform:
   m_ObjectHideFlags: 0
@@ -133070,8 +132889,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!23 &8985825470918349521
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -133723,8 +133540,6 @@ MonoBehaviour:
   despawnDelay: 2
   cutForce: 1.5
   debugMode: 0
-  firstCut: 0
-  gameManager: {fileID: 0}
 --- !u!114 &9064588161848812728
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -32,6 +32,10 @@ public class DNASealPoint : MonoBehaviour
     bool        leftSealed;
     bool        rightSealed;
 
+    static bool firstPlacement = true;
+    static bool firstLigase = true;
+    public GameManager gameManager;
+
     // ── Unity ─────────────────────────────────────────────────────────────────
 
     void Awake()
@@ -50,6 +54,8 @@ public class DNASealPoint : MonoBehaviour
         originalMaterials = new Material[renderers.Length];
         for (int i = 0; i < renderers.Length; i++)
             originalMaterials[i] = renderers[i].material;
+
+        gameManager = GameObject.FindGameObjectsWithTag("GameManager")[0].GetComponent<GameManager>();
     }
 
     // ── Called by SpawnedDNAWall ──────────────────────────────────────────────
@@ -69,6 +75,12 @@ public class DNASealPoint : MonoBehaviour
         }
         Debug.Log($"[SealPoint] {gameObject.name}: {wall.gameObject.name} pending on {(isRightSide ? "RIGHT" : "LEFT")} side");
         RefreshGlow();
+
+        // Timeline update if this is the first placement
+        if(firstPlacement){
+            firstPlacement = false;
+            gameManager.playPhase(3);
+        }
     }
 
     /// <summary>A spawned wall has left contact range or been picked up again.</summary>
@@ -123,6 +135,12 @@ public class DNASealPoint : MonoBehaviour
 
         Debug.Log($"[SealPoint] {gameObject.name}: after Seal — L={leftSealedWall?.gameObject.name} R={rightSealedWall?.gameObject.name}");
         RefreshGlow();
+
+        if(firstLigase){
+            Debug.Log("THIS IS FIRST LIGASE! (DNASealPoint)");
+            firstLigase = false;
+            gameManager.playPhase(3);
+        }
     }
 
     /// <summary>

@@ -79,10 +79,12 @@ public class DNARepairPlacement : NetworkBehaviour
         int scanned = 0;
         foreach (var tp in TemplatePieces)
             if (tp != null && tp.IsScanned) scanned++;
-        if (scanned >= TemplatePieces.Length)
+            
+        if (scanned >= TemplatePieces.Length){
             ActivateSocketsClientRpc();
             ActivateProteinSpawningClientRpc();
             GM.playPhase(2);
+        }
     }
 
     // server tells every client to show the hologram sockets.
@@ -225,12 +227,6 @@ public class DNARepairPlacement : NetworkBehaviour
            if(!IsSocketFilled[i]){
                AllFilled = false;
            }
-       }
-
-       if(AllFilled){
-           Debug.Log("ALL SOCKETS ARE FILLED! TIME FOR NHEJ!");
-           GM.playPhase(2);
-
        }
    }
 }
