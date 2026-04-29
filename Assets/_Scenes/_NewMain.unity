@@ -27893,7 +27893,7 @@ MonoBehaviour:
   CancelButton: {fileID: 1902996144}
   gameManager: {fileID: 1671914569}
   firstInteraction: 1
-  apoptosisInteraction: 1
+  apoptosisInteraction: 0
 --- !u!114 &1291095274
 MonoBehaviour:
   m_ObjectHideFlags: 0
