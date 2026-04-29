@@ -25,7 +25,7 @@ public class NHEJTool : MonoBehaviour
     [Header("Debug")]
     [SerializeField] bool debugMode = false;
 
-    static bool firstCut = true;
+    public static bool firstCut = true;
     GameManager gameManager;
 
     // ── Collision ─────────────────────────────────────────────────────────────

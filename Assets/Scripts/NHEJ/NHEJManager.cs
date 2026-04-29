@@ -630,6 +630,18 @@ public class NHEJManager : NetworkBehaviour
         }
     }
 
+    public void setFirstCut(){
+        NHEJTool.firstCut = false;
+    }
+
+    public void setFirstPlacement(){
+        DNASealPoint.firstPlacement = false;
+    }
+
+    public void setFirstSeal(){
+        DNASealPoint.firstLigase = false;
+    }
+
     [ClientRpc]
     void ReportLigationClientRpc(int pointIndex, ulong clientId)
     {

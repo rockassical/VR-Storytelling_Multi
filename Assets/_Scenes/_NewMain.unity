@@ -22032,6 +22032,8 @@ PlayableDirector:
     value: {fileID: 1116929206}
   - key: {fileID: 7277721787331889379, guid: 1f9ae0f35ef978e4ebc24b7b77da0f94, type: 2}
     value: {fileID: 1291095274}
+  - key: {fileID: -8286796376670077223, guid: 1f9ae0f35ef978e4ebc24b7b77da0f94, type: 2}
+    value: {fileID: 1694094554}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &1026575014
@@ -37261,7 +37263,11 @@ PrefabInstance:
     - {fileID: 5642657879450511665, guid: ae0d93619d1787546907c88f6a71ba16, type: 3}
     - {fileID: 9201041191459584476, guid: ae0d93619d1787546907c88f6a71ba16, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 252260146454910223, guid: ae0d93619d1787546907c88f6a71ba16,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1694094554}
   m_SourcePrefab: {fileID: 100100000, guid: ae0d93619d1787546907c88f6a71ba16, type: 3}
 --- !u!114 &1694094548 stripped
 MonoBehaviour:
@@ -37311,6 +37317,84 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a894e19ca583a641936af4d3ddc3e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1694094552 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 252260146454910223, guid: ae0d93619d1787546907c88f6a71ba16,
+    type: 3}
+  m_PrefabInstance: {fileID: 1694094547}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1694094553 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 735704944959300416, guid: ae0d93619d1787546907c88f6a71ba16,
+    type: 3}
+  m_PrefabInstance: {fileID: 1694094547}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694094552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a569710e91f41d449b425a6516fc85da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1694094554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1694094552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 32d234820e8f4b24991358189fa62eb0, type: 2}
+    - {fileID: 11400000, guid: 8a3de495eca371043b6a3feb32e3698c, type: 2}
+    - {fileID: 11400000, guid: b82ed9e5ba9ae9343b08097454cff981, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1694094553}
+          m_TargetAssemblyTypeName: NHEJManager, Assembly-CSharp
+          m_MethodName: setFirstCut
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1694094553}
+          m_TargetAssemblyTypeName: NHEJManager, Assembly-CSharp
+          m_MethodName: setFirstPlacement
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1694094553}
+          m_TargetAssemblyTypeName: NHEJManager, Assembly-CSharp
+          m_MethodName: setFirstSeal
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1694581576
 GameObject:
   m_ObjectHideFlags: 0

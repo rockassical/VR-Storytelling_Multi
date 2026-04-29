@@ -32,8 +32,8 @@ public class DNASealPoint : MonoBehaviour
     bool        leftSealed;
     bool        rightSealed;
 
-    static bool firstPlacement = true;
-    static bool firstLigase = true;
+    public static bool firstPlacement = true;
+    public static bool firstLigase = true;
     public GameManager gameManager;
 
     // ── Unity ─────────────────────────────────────────────────────────────────
