@@ -12304,6 +12304,8 @@ PlayableDirector:
     value: {fileID: 1158195466}
   - key: {fileID: 175246866157014805, guid: d34c798fcaf50c148949f3fee63d997e, type: 2}
     value: {fileID: 1671914570}
+  - key: {fileID: -4526950524117201619, guid: d34c798fcaf50c148949f3fee63d997e, type: 2}
+    value: {fileID: 1291095274}
   m_ExposedReferences:
     m_References: []
 --- !u!1 &623361560
@@ -27913,6 +27915,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 10b4b99b31543164ba8e0a1116ddca61, type: 2}
     - {fileID: 11400000, guid: 0f2dcc5673a3b9b4a9069ba143728836, type: 2}
     - {fileID: 11400000, guid: f062103250e00134488cae5dc0d783ab, type: 2}
+    - {fileID: 11400000, guid: 94dc80776d5005840875f536650af6e4, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -28016,6 +28019,20 @@ MonoBehaviour:
               ligase on the connection point and seal it. They need to bridge the
               two strands according to their colors (dark blue and a more cyan-type
               color) for the task to be complete.
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1291095273}
+          m_TargetAssemblyTypeName: TalkToAI, Assembly-CSharp
+          m_MethodName: SetFirstInteraction
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &1291567860

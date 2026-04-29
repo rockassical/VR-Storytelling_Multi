@@ -118,6 +118,10 @@ public class TalkToAI : MonoBehaviour
         apoptosisInteraction = !apoptosisInteraction;
     }
 
+    public void SetFirstInteraction(){
+        firstInteraction = false;
+    }
+
     void ShowConfirmationUI(string message){
         RecordingUI.SetActive(false);
         ConfirmationUI.SetActive(true);
@@ -298,7 +302,6 @@ public class TalkToAI : MonoBehaviour
         Debug.Log("Audio finished");
         
         if(firstInteraction){
-            firstInteraction = false;
             gameManager.playPhase(1);
         }else if(apoptosisInteraction){
             gameManager.playPhase(4);
