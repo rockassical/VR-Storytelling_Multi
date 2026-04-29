@@ -12,8 +12,9 @@ using System.Threading.Tasks;
 using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.UI;
+using Unity.Netcode;
 
-public class TalkToAI : MonoBehaviour
+public class TalkToAI : NetworkBehaviour
 {
     
     [SerializeField] private AudioClip MicClip;
@@ -33,6 +34,11 @@ public class TalkToAI : MonoBehaviour
     public InputActionProperty triggerAction;
 
     private List<ChatMessage> messages;
+
+    // ---NETWORKING---
+    List<byte> receivedData = new List<byte>();
+    int expectedLength = 0;
+    const int CHUNK_SIZE = 8192;
 
     [Header("UI Elements")]
     public GameObject LLMUI;
@@ -221,7 +227,15 @@ public class TalkToAI : MonoBehaviour
     }
 
     void ConfirmInput(){
-        AiTalk();
+        if (IsServer)
+        {
+            AiTalk(SpeechToText);
+        }
+        else
+        {
+            RequestAiTalkServerRpc(SpeechToText);
+        }
+
         CloseRecordingUI();
     }
 
@@ -230,11 +244,20 @@ public class TalkToAI : MonoBehaviour
     }
 
     /*
+        NETWORK AITalk
+    */
+    [ServerRpc]
+    void RequestAiTalkServerRpc(string text)
+    {
+        AiTalk(text);
+    }
+
+    /*
         Call the OpenAI API --> input the user's words into the LLM, then convert the response into an audio clip to play back (partially from ChatGPT)
     */
-    async void AiTalk(){
+    async void AiTalk(string input){
         //send the player input to the "user" end of the AI
-        ChatMessage userMessage = new ChatMessage(ChatMessageRole.User, SpeechToText);
+        ChatMessage userMessage = new ChatMessage(ChatMessageRole.User, input);
 
         messages.Add(userMessage);
 
@@ -274,6 +297,11 @@ public class TalkToAI : MonoBehaviour
                 return;
             }
 
+            if (IsServer)
+            {
+                SendAudio(audioData);
+            }
+
             // Save for debugging
             string filePath = Path.Combine(Application.persistentDataPath, "tts_debug.wav");
             File.WriteAllBytes(filePath, audioData);
@@ -289,6 +317,45 @@ public class TalkToAI : MonoBehaviour
             //audioSource.Play();
 
 
+        }
+    }
+
+    void SendAudio(byte[] audioData)
+    {
+        for (int i = 0; i < audioData.Length; i += CHUNK_SIZE)
+        {
+            int size = Mathf.Min(CHUNK_SIZE, audioData.Length - i);
+            byte[] chunk = new byte[size];
+            Array.Copy(audioData, i, chunk, 0, size);
+
+            ReceiveAudioChunkClientRpc(chunk, audioData.Length);
+        }
+    }
+
+    [ClientRpc]
+    void ReceiveAudioChunkClientRpc(byte[] chunk, int totalLength)
+    {
+        // Skip sender (they already play it locally)
+        if (IsOwner) return;
+
+        if (expectedLength == 0)
+        {
+            expectedLength = totalLength;
+            receivedData.Clear();
+        }
+
+        receivedData.AddRange(chunk);
+
+        if (receivedData.Count >= expectedLength)
+        {
+            byte[] fullData = receivedData.ToArray();
+
+            receivedData.Clear();
+            expectedLength = 0;
+
+            AudioClip clip = CreateAudioClipFromBytes(fullData, 24000, 1);
+            audioSource.clip = clip;
+            StartCoroutine(PlayAndWait(audioSource));
         }
     }
 
