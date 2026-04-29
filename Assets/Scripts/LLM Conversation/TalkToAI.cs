@@ -246,7 +246,7 @@ public class TalkToAI : NetworkBehaviour
     /*
         NETWORK AITalk
     */
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     void RequestAiTalkServerRpc(string text)
     {
         AiTalk(text);
@@ -332,7 +332,7 @@ public class TalkToAI : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
+    [ClientRpc(RequireOwnership = false)]
     void ReceiveAudioChunkClientRpc(byte[] chunk, int totalLength)
     {
         // Skip sender (they already play it locally)
