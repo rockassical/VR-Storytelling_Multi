@@ -220,6 +220,24 @@ public class SpawnedDNAWall : NetworkBehaviour
     void SealServerRpc()
     {
         netState.Value = (byte)State.Sealed;
+        // Push onto the global placement stack for ordered undo via Artemis.
+        NHEJManager.Instance?.RegisterSealedWall(this);
+    }
+
+
+    public void RequestCut()
+    {
+        if (!IsSpawned) return;
+        if (CurrentState != State.Sealed) return;
+        RequestCutServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void RequestCutServerRpc()
+    {
+        if (NHEJManager.Instance == null) return;
+        if (!NHEJManager.Instance.TryPopSealedWall(this)) return; // not the most-recent placement
+        Detach(); // server runs Detach locally; netState change replicates the undo to clients
     }
 
     // Called on non-owning clients via netState change.
