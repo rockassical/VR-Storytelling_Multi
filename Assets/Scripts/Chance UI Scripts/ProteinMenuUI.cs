@@ -29,6 +29,8 @@ public class ProteinMenuUI : NetworkBehaviour
     bool canvasActive   = false;
     bool DNA_MenuActive = false;
 
+    [SerializeField] public bool separateTasks;
+
     private void OnEnable()  { buttonAction.action.Enable(); }
     private void OnDisable() { buttonAction.action.Disable(); }
 
@@ -59,21 +61,76 @@ public class ProteinMenuUI : NetworkBehaviour
     {
         switch (b)
         {
-            case 2: SpawnTool(ScannerPrefab);  Menu(); break;
-            case 3: SpawnTool(BlasterPrefab);  Menu(); break;
+            case 2: SpawnTool(ScannerPrefab); Menu(); break;
+            case 3: 
+                if(separateTasks && !IsServer){
+                    SpawnTool(BlasterPrefab);  
+                    Menu();
+                }else if(!separateTasks){
+                    SpawnTool(BlasterPrefab);  
+                    Menu();
+                }
+                break;
             case 4: SpawnTool(ArtimisPrefab);  Menu(); break;
-            case 5: SpawnTool(LigasePrefab);   Menu(); break;
-
+            case 5: 
+                if(separateTasks && !IsServer){
+                    SpawnTool(LigasePrefab);   
+                    Menu(); 
+                }else if(!separateTasks){
+                    SpawnTool(LigasePrefab);   
+                    Menu(); 
+                }
+                break;
             case 6:
                 if (DNA_Pieces.Count > 0) setDNA_menuActive();
                 else Debug.Log("DNA List is Empty");
                 break;
 
-            case 7:  SpawnDNAPiece(0); Menu(); break;
-            case 8:  SpawnDNAPiece(1); Menu(); break;
-            case 9:  SpawnDNAPiece(2); Menu(); break;
-            case 10: SpawnDNAPiece(3); Menu(); break;
-            case 11: SpawnDNAPiece(4); Menu(); break;
+            case 7:  
+                if(separateTasks && IsServer){    
+                    SpawnDNAPiece(0); 
+                    Menu();
+                }else if(!separateTasks){
+                    SpawnDNAPiece(0); 
+                    Menu();
+                }
+                break;
+            case 8:
+                if(separateTasks && IsServer){    
+                    SpawnDNAPiece(1); 
+                    Menu(); 
+                }else if(!separateTasks){
+                    SpawnDNAPiece(1); 
+                    Menu(); 
+                }
+                break;
+            case 9:  
+                if(separateTasks && IsServer){    
+                    SpawnDNAPiece(2); 
+                    Menu(); 
+                }else if(!separateTasks){
+                    SpawnDNAPiece(2); 
+                    Menu();
+                }
+                break;
+            case 10: 
+                if(separateTasks && IsServer){    
+                    SpawnDNAPiece(3); 
+                    Menu(); 
+                }else if(!separateTasks){
+                    SpawnDNAPiece(3); 
+                    Menu();
+                }
+                break;
+            case 11:
+                if(separateTasks && IsServer){    
+                    SpawnDNAPiece(4); 
+                    Menu(); 
+                }else if(!separateTasks){
+                    SpawnDNAPiece(4); 
+                    Menu(); 
+                }
+                break;
         }
     }
 

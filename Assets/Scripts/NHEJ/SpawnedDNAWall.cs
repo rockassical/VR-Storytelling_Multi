@@ -150,16 +150,31 @@ public class SpawnedDNAWall : NetworkBehaviour
     {
         if (isVisuallySealed) return;
 
-        // Gather ALL seal points within snap radius (not just nearest).
-        // This lets a wall be pending on both gap anchors at once so the player
-        // can spray each side independently.
+        // A wall may be pending on at most ONE original anchor (closest within range),
+        // plus any number of OwnSealPoints (runtime-added to other SpawnedDNAWalls).
+        // This prevents a single wall from bridging two same-side anchors and breaking
+        // the BFS — chain extension via OwnSealPoints still works freely.
         var newContacts = new HashSet<DNASealPoint>();
+        DNASealPoint closestAnchor = null;
+        float closestAnchorDist = snapRadius;
+
         foreach (var sp in FindObjectsOfType<DNASealPoint>())
         {
             if (sp.gameObject == gameObject) continue;
             float d = Vector3.Distance(transform.position, sp.transform.position);
-            if (d < snapRadius) newContacts.Add(sp);
+            if (d >= snapRadius) continue;
+
+            bool isAnchor = sp.GetComponent<SpawnedDNAWall>() == null;
+            if (isAnchor)
+            {
+                if (d < closestAnchorDist) { closestAnchorDist = d; closestAnchor = sp; }
+            }
+            else
+            {
+                newContacts.Add(sp); // OwnSealPoints — chain freely
+            }
         }
+        if (closestAnchor != null) newContacts.Add(closestAnchor);
 
         // Notify seal points we left.
         foreach (var sp in contactedSealPoints)
@@ -186,8 +201,8 @@ public class SpawnedDNAWall : NetworkBehaviour
     {
         sealedBy      = by;
         sealedOnRight = by.IsRightSide(transform.position);
-        // Do NOT clear contactedSealPoints — other seal points still hold this
-        // wall as pending so the player can spray them to complete the second bond.
+        // Other contacted seal points (OwnSealPoints from chain extension) stay
+        // pending so the player can spray them to extend the chain after sealing.
 
         ApplySealPhysics();
         AddOwnSealPoint(by);
@@ -205,6 +220,24 @@ public class SpawnedDNAWall : NetworkBehaviour
     void SealServerRpc()
     {
         netState.Value = (byte)State.Sealed;
+        // Push onto the global placement stack for ordered undo via Artemis.
+        NHEJManager.Instance?.RegisterSealedWall(this);
+    }
+
+
+    public void RequestCut()
+    {
+        if (!IsSpawned) return;
+        if (CurrentState != State.Sealed) return;
+        RequestCutServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    void RequestCutServerRpc()
+    {
+        if (NHEJManager.Instance == null) return;
+        if (!NHEJManager.Instance.TryPopSealedWall(this)) return; // not the most-recent placement
+        Detach(); // server runs Detach locally; netState change replicates the undo to clients
     }
 
     // Called on non-owning clients via netState change.
@@ -224,10 +257,9 @@ public class SpawnedDNAWall : NetworkBehaviour
         {
             sealedBy      = sp;
             sealedOnRight = sp.IsRightSide(transform.position);
-            // Register this edge in the BFS graph so non-spraying clients have the
-            // same DNASealPoint.leftSealedWall / rightSealedWall state as the sprayer.
             sp.RegisterSealedWall(this, sealedOnRight);
         }
+
         ApplySealPhysics();
         if (sp != null) AddOwnSealPoint(sp);
         SetVisualState(State.Sealed);

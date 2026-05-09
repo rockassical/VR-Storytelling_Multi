@@ -65,12 +65,12 @@ public class NHEJTool : MonoBehaviour
             return;
         }
 
-        // Priority 2: Sealed SpawnedDNAWall that is a leaf (nothing sealed onto it yet).
+        // Priority 2: Sealed SpawnedDNAWall — server validates LIFO undo.
         SpawnedDNAWall wall = other.GetComponentInParent<SpawnedDNAWall>();
-        if (wall != null && wall.IsLeaf)
+        if (wall != null && wall.CurrentState == SpawnedDNAWall.State.Sealed)
         {
-            if (debugMode) Debug.Log($"[NHEJTool] Detaching sealed wall: {wall.gameObject.name}");
-            wall.Detach();
+            if (debugMode) Debug.Log($"[NHEJTool] Requesting cut: {wall.gameObject.name}");
+            wall.RequestCut();
         }
     }
 

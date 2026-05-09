@@ -395,6 +395,33 @@ public class NHEJManager : NetworkBehaviour
         gameManager.playPhase(3);
     }
 
+    // ── Server-authoritative undo stack ───────────────────────────────────────
+    // Tracks placement order across both players so Artemis cuts only the
+    // most-recently-placed wall (LIFO), shared between clients.
+    readonly System.Collections.Generic.List<SpawnedDNAWall> placementStack = new();
+
+    public void RegisterSealedWall(SpawnedDNAWall wall)
+    {
+        if (!IsServer || wall == null) return;
+        placementStack.Add(wall);
+        Debug.Log($"[NHEJManager] Stack push: {wall.gameObject.name} (depth={placementStack.Count})");
+    }
+
+    public bool TryPopSealedWall(SpawnedDNAWall wall)
+    {
+        if (!IsServer || wall == null) return false;
+        int last = placementStack.Count - 1;
+        if (last < 0) return false;
+        if (placementStack[last] != wall)
+        {
+            Debug.Log($"[NHEJManager] Cut denied: {wall.gameObject.name} is not the top (top={placementStack[last].gameObject.name}).");
+            return false;
+        }
+        placementStack.RemoveAt(last);
+        Debug.Log($"[NHEJManager] Stack pop: {wall.gameObject.name} (depth={placementStack.Count})");
+        return true;
+    }
+
     /// <summary>
     /// Called by LigaseSprayCan after it verifies IsGapBridged() locally.
     /// The BFS graph lives only on the spraying client (DNASealPoint refs set by Seal()),
