@@ -6,6 +6,7 @@ public class WaypointMovementManager : NetworkBehaviour
 {
     [Header("Spline movement reference")]
     public splineMove p53;      // server drives; NetworkTransform replicates to clients
+    public splineMove ATM;
 
     [Header("Game Manager Reference")]
     public GameManager gameManager;
@@ -25,6 +26,7 @@ public class WaypointMovementManager : NetworkBehaviour
         {
             p53.movementEnd.RemoveListener(OnDestinationReached);
             p53.Stop();
+            ATM.Stop();
         }
 
         if (!IsServer) return;
