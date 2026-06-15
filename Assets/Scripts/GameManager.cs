@@ -92,7 +92,7 @@ public class GameManager : NetworkBehaviour
     [ClientRpc]
     void PlayPhaseClientRpc(int phase) => ExecutePhaseLocal(phase);
 
-    void ExecutePhaseLocal(int phase)
+    public void ExecutePhaseLocal(int phase)
     {
         switch (phase)
         {

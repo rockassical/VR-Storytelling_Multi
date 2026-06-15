@@ -174,8 +174,9 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
             // Combine the two poses into the forward source based on the magnitude of input
             var leftHandValue = leftHandMoveInput.ReadValue();
             var rightHandValue = rightHandMoveInput.ReadValue();
+            float verticalInput = rightHandValue.y;
 
-            var totalSqrMagnitude = leftHandValue.sqrMagnitude + rightHandValue.sqrMagnitude;
+            var totalSqrMagnitude = leftHandValue.sqrMagnitude; //+ rightHandValue.sqrMagnitude;
             var leftHandBlend = 0.5f;
             if (totalSqrMagnitude > Mathf.Epsilon)
                 leftHandBlend = leftHandValue.sqrMagnitude / totalSqrMagnitude;
@@ -184,7 +185,24 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
             var combinedRotation = Quaternion.Slerp(m_RightMovementPose.rotation, m_LeftMovementPose.rotation, leftHandBlend);
             m_CombinedTransform.SetPositionAndRotation(combinedPosition, combinedRotation);
 
-            return base.ComputeDesiredMove(input);
+            // *******************************************
+            // *****MODIFYING TO ADD UP/DOWN MOVEMENT*****
+            // *******************************************
+
+            var leftOnlyInput = input - rightHandValue;
+
+            Vector3 move = base.ComputeDesiredMove(leftOnlyInput);
+
+            move = new Vector3(move.x, 0f, move.z);
+
+            if(Mathf.Abs(verticalInput) > 0.3){
+                move += (Vector3.up * verticalInput / 25); //* moveSpeed;
+            }
+
+            Debug.Log("Moving: (X = " + move.x + ", Y = " + move.y + ", Z = " + move.z + ")");
+
+            return move;
+
         }
     }
 }
